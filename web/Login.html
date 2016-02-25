@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>TT1 2015-A092</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="Recursos/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="Recursos/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="Recursos/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="Recursos/css/ie9.css" /><![endif]-->
+                
+                <script>
+                    
+                     var xhttp = new XMLHttpRequest();
+       
+                        xhttp.onreadystatechange=function() {
+                        if (xhttp.readyState == 4 && xhttp.status == 200) 
+                        {
+                            if(xhttp.responseXML.getElementsByTagName("Sesion")[0].childNodes[1].nodeName == "Error")
+                            {
+                                
+                            }
+                            else if(window.location=="http://localhost:8084/TT/Login.html")
+                                 {
+                                     var Perfil = Perfil=xhttp.responseXML.getElementsByTagName("Sesion")[0].childNodes[1].innerHTML;
+                                     window.location.href =Perfil+ "/" + "index.html";
+
+                                 }
+
+                        }
+                        }
+                        var url="http://localhost:8084/TT/VerificarSesion?Clave="+sessionStorage.getItem("SClave");
+                      xhttp.open("GET", url, true);
+                      xhttp.send();
+                </script>
+	</head>
+	<body class="index">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header" class="alt">
+					<h1 id="logo"><a href="index.html">TT1 <span>2015-A092</span></a></h1>
+					
+				</header>
+
+			<!-- Banner -->
+				<section id="banner">
+
+					<!--
+						".inner" is set up as an inline-block so it automatically expands
+						in both directions to fit whatever's inside it. This means it won't
+						automatically wrap lines, so be sure to use line breaks where
+						appropriate (<br />).
+					-->
+					<div class="inner">
+
+						<header>
+							<h2>SSGPE</h2>
+                                                </header>
+	 					
+                                                <div class="content">
+                                                          <div class="form-group">
+                                                              <form  onsubmit="return Iniciar_Sesion()">
+                                                           <label>Usuario:</label>
+                                                          <div class="input-group">
+                                                            <div class="input-group-addon">
+                                                              <i class="fa fa-user"></i>
+                                                            </div>
+                                                         <input name="Correo" type="text" class="input username" placeholder="Usuario" id="Correo"/>
+                                                          </div><!-- /.input group -->
+                                      
+                                                          <label>Contraseña:</label>
+                                                         <div class="input-group">
+                                                           <div class="input-group-addon">
+                                                             <i class="fa fa-lock"></i>
+                                                              </div>
+                                                          <input name="Password" type="password" class="input username" placeholder="Contraseña" id="Password"/>
+                                                         </div><!-- /.input group -->
+                                                     <footer>
+							<ul class="buttons vertical">
+                                                            <li><input type="submit" class="button fit" ></li>
+							</ul>
+                                                     </footer>
+                                      </form>
+
+                                         </div><!-- /.form group -->
+                                        
+						
+  
+					</div>
+
+				</section>
+
+			
+
+
+			<!-- Footer -->
+				<footer id="footer">
+
+					<ul class="icons">
+						<li><a href="#" class="icon circle fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon circle fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon circle fa-google-plus"><span class="label">Google+</span></a></li>
+						
+					</ul>
+
+					<ul class="copyright">
+						<li>&copy; TT1 2015-A092</li>
+					</ul>
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="Recursos/js/jquery.min.js"></script>
+			<script src="Recursos/js/jquery.dropotron.min.js"></script>
+			<script src="Recursos/js/jquery.scrolly.min.js"></script>
+			<script src="Recursos/js/jquery.scrollgress.min.js"></script>
+			<script src="Recursos/js/skel.min.js"></script>
+			<script src="Recursos/js/util.js"></script>
+			<!--[if lte IE 8]><script src="Recursos/js/ie/respond.min.js"></script><![endif]-->
+			<script src="Recursos/js/main.js"></script>
+                        <script type="text/JavaScript" src="Recursos/js/Inicio_Sesion.js"></script>
+                    
+               
+
+	</body>
+</html>
