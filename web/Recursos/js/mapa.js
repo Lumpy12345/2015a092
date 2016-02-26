@@ -97,15 +97,46 @@ var untiled = new ol.layer.Image({
   );
 
    map.on('singleclick', function(evt) {
+        document.getElementById('nodelist').innerHTML = "Loading... please wait...";
         var view = map.getView();
         var viewResolution = view.getResolution();
         var source = untiled.get('visible') ? untiled.getSource() : tiled.getSource();
         var url = source.getGetFeatureInfoUrl(
           evt.coordinate, viewResolution, view.getProjection(),
           {'INFO_FORMAT': 'text/html', 'FEATURE_COUNT': 50});
-        if (url) {
-            document.getElementById("InfoTabla").setAttribute("src",url);
+        if (url) 
+        {
+
+          
+           //'<iframe seamless src="' + url + '"></iframe>';
+          var IFRAME = '<iframe seamless id="idIFRAME"></iframe>';
+
+          document.getElementById('nodelist').innerHTML = IFRAME;
+
+          $('#nodelist').hide();
+            $("#idIFRAME").load
+            (         
+              function()
+              {
+
+                setTimeout
+                (
+                  function()
+                  {
+                    var Estado = $('#nodelist').get(0).children[0].contentDocument.children[0].children[1].children[0].children[1].children[1].children[5].innerHTML;
+                    console.log(Estado);
+                    $('#idEstadoActivo').get(0).innerHTML = Estado;
+                    $('#idEstadoActivo').hide();
+                    $('#idEstadoActivo').fadeIn(600);
+                  }
+                  ,
+                  1000
+                );
+              }
+            );
+            $('#idIFRAME').attr('src',url);
         }
       });
+
 
 
