@@ -1,18 +1,80 @@
-var mousePositionControl = new ol.control.MousePosition({
-        coordinateFormat: ol.coordinate.createStringXY(4),
-        projection: 'EPSG:4326',
-        // comment the following two lines to have the mouse position
-        // be placed within the map.
-        className: 'custom-mouse-position',
-        target: document.getElementById('mouse-position'),
-        undefinedHTML: '&nbsp;'
-      });
+var puerto = 8080;
+
+function asignLayerGroup(cve)
+{
+  return new ol.layer.Group
+  (
+    {
+      layers: 
+      [
+            new ol.layer.Image
+            ({
+                  opacity : 0.9,
+                  source: new ol.source.ImageWMS
+                  ({
+                        ratio: 1,
+                        url: 'http://localhost:8080/geoserver/cite/wms',
+                        params: 
+                        {
+                              'FORMAT': 'image/png',
+                              'VERSION': '1.1.0',  
+                              LAYERS: 'cite:DF',
+                              STYLES: '',
+                              'cql_filter' : "cve_mun = \'" + cve + "\'"
+                        }
+
+                  })
+
+            })
+            ,
+            new ol.layer.Image
+            ({
+                  opacity : 0.2,
+                  source: new ol.source.ImageWMS
+                  ({
+                        ratio: 1,
+                        url: 'http://localhost:' + puerto + '/geoserver/cite/wms',
+                        params: 
+                        {
+                              'FORMAT': 'image/png',
+                              'VERSION': '1.1.0',  
+                              LAYERS: 'cite:DF',
+                              STYLES: '',
+                        }
+
+                  })
+
+
+            })
+      ]
+    }
+  );
+}
+
+function nombreRealDelegacion(estado)
+{
+  if(estado == 'Cuauhtmoc')
+    return 'Cuauhtémoc';
+  if(estado == 'lvaro Obregn')
+    return 'Álvaro Obregón';
+  if(estado == 'Benito Jurez')
+    return 'Benito Juárez';
+  if(estado == 'Coyoacn')
+    return 'Coyoacán';
+  if(estado == 'Tlhuac')
+    return 'Tláhuac';
+
+  return estado;
+}
+
+
+
 
 var format = 'image/png';
 var untiled = new ol.layer.Image({
         source: new ol.source.ImageWMS({
           ratio: 1,
-          url: 'http://localhost:8080/geoserver/cite/wms',
+          url: 'http://localhost:' + puerto + '/geoserver/cite/wms',
           params: {'FORMAT': format,
                    'VERSION': '1.1.0',  
                 LAYERS: 'cite:DF',
@@ -23,7 +85,7 @@ var untiled = new ol.layer.Image({
       var tiled = new ol.layer.Tile({
         visible: false,
         source: new ol.source.TileWMS({
-          url: 'http://localhost:8080/geoserver/cite/wms',
+          url: 'http://localhost:' + puerto + '/geoserver/cite/wms',
           params: {'FORMAT': format, 
                    'VERSION': '1.1.0',
                    tiled: true,
@@ -38,42 +100,16 @@ var untiled = new ol.layer.Image({
   {
 
 
-    controls: ol.control.defaults({
-          attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
-            collapsible: false
-          })
-        }).extend([mousePositionControl]),
-
 
     layers: 
     [
           new ol.layer.Image
           ({
-                opacity : 0.9,
+                opacity : 1,
                 source: new ol.source.ImageWMS
                 ({
                       ratio: 1,
-                      url: 'http://localhost:8080/geoserver/cite/wms',
-                      params: 
-                      {
-                            'FORMAT': 'image/png',
-                            'VERSION': '1.1.0',  
-                            LAYERS: 'cite:DF',
-                            STYLES: '',
-                            'cql_filter' : "cve_mun = '005'"
-                      }
-
-                })
-
-          })
-          ,
-          new ol.layer.Image
-          ({
-                opacity : 0.2,
-                source: new ol.source.ImageWMS
-                ({
-                      ratio: 1,
-                      url: 'http://localhost:8080/geoserver/cite/wms',
+                      url: 'http://localhost:' + puerto + '/geoserver/cite/wms',
                       params: 
                       {
                             'FORMAT': 'image/png',
@@ -123,11 +159,16 @@ var untiled = new ol.layer.Image({
                 (
                   function()
                   {
+                    var CVE = $('#nodelist').get(0).children[0].contentDocument.children[0].children[1].children[0].children[1].children[1].children[4].innerHTML;
                     var Estado = $('#nodelist').get(0).children[0].contentDocument.children[0].children[1].children[0].children[1].children[1].children[5].innerHTML;
-                    console.log(Estado);
+                    console.log(Estado + ":" + CVE);
+                    Estado = nombreRealDelegacion(Estado);
                     $('#idEstadoActivo').get(0).innerHTML = Estado;
                     $('#idEstadoActivo').hide();
                     $('#idEstadoActivo').fadeIn(600);
+
+                    var newLayerGroup = asignLayerGroup(CVE);
+                    map.setLayerGroup(newLayerGroup);
                   }
                   ,
                   1000
