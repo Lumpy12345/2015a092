@@ -150,17 +150,3 @@ function editarU(correo){
 }
 
 
-/*
-<script type='text/javascript'>
-      function poll(){
-       $.ajax({
-           type: "GET", 
-           url: "ObtenerUsuarios",
-           success: function(data){
-              $('#usuarios').html(data);
-           }
-       });
-   };
-   setInterval(poll, 5000);
-</script>
-*/

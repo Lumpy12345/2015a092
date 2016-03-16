@@ -32,6 +32,10 @@
         <servlet-name>ObtenerUsuario</servlet-name>
         <servlet-class>Servlets.ObtenerUsuario</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ObtenerDelegacion</servlet-name>
+        <servlet-class>Servlets.ObtenerDelegacion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ActualizarUsuario</servlet-name>
         <url-pattern>/ActualizarUsuario</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>ObtenerUsuario</servlet-name>
         <url-pattern>/ObtenerUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ObtenerDelegacion</servlet-name>
+        <url-pattern>/ObtenerDelegacion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

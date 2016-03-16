@@ -7,6 +7,7 @@
     <title>TT1 2015-A092</title>
     <!-- Bootstrap -->
     <link href="../Recursos/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+     <script src="../Recursos/multiselect/dist/css/bootstrap-multiselect.css"></script>
     <link rel="stylesheet" href="../Recursos/css/styles.css">
     <link rel="stylesheet" href="../Recursos/css/queries.css">
     <link rel="stylesheet" href="../Recursos/openlayers/ol.css" type="text/css">
@@ -59,37 +60,26 @@
         <div class="row">
           <div class="col-md-3" >
           <label for="sel1">Año de Elección</label>
-          <select class="form-control" id="sel1">
-            <option>2009</option>
+          <select class="form-control" id="año" name="año">
+            <option>2012</option>
             <option>2006</option>
-            <option>2003</option>
             <option>2000</option>
-            <option>1997</option>
             <option>1994</option>
-            
           </select>
           
           </div>
           <div class="col-md-3">
-           <label for="sel1">Tipo de Elección</label>
-          <select class="form-control" id="sel1">
-            <option>Federal</option>
-            <option>Senadores</option>
-            <option>Diputado</option>
-            
+           <label for="sel1">Parametros</label>
+          
+          <select class="form-control" id="param" name="param">
+            <option name="participacion" id="participacion" value="participacion">Participación Ciudadana</option>
+            <option name="partido" id="partido" value="partido">Partidos Politicos</option>
+         
           </select>
-          
+
+
           </div>
-          <div class="col-md-4">
-           <label for="sel1">Información</label><br>
-           <form>
-            <label class="radio-inline"><input type="radio" name="optradio">Participación Ciudadana</label>
-            <label class="radio-inline"><input type="radio" name="optradio">Votos</label>
-            <label class="radio-inline"><input type="radio" name="optradio">Partido Politico</label>
-           </form>
-          
-          
-        </div>
+     
         <div class="col-md-2">
           <button type="button" class="btn  btn-sm"><i class="fa fa-file-pdf-o"> Reporte</i></button>
         </div>
@@ -101,12 +91,20 @@
     <!-- Contenedores del mapa-->
     <!-- **************************** -->
 
-    <div class="container">
+    <div class="content-wrapper">
          <h1 id="idTitulo">Entidad Federativa: Distrito Federal</h1>
-          <div id="map" ></div>
-          <div id="idEstadoActivo"></div>
+         <div class="col-md-6">
+             <div id="map" ></div>
+         </div>
+         <div class="col-md-6">
+             <div id="idEstadoActivo"></div>
+         </div>
+          
+          
           <div id="nodelist"></div>
+      
     </div>
+ 
     <style type="text/css">
       #map
       {
@@ -132,15 +130,24 @@
         text-align : center;
         font-size: 2em;
       }
+      #mostrardatos
+      {
+     font-size: 14px;
+        }  
+     
 
+
+      
+     
 
     </style>
+    
     <!-- **************************** -->
     <!-- Contenedores del mapa-->
     <!-- **************************** -->
 
   
-    <footer>
+   <!-- <footer>
       <div class="container">
         <div class="row">
           <div class="col-md-2">
@@ -169,10 +176,10 @@
           </div>
         </div>
       </div>  
-    </footer>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    </footer>-->
+    <script src="../Recursos/js/jquery-1.12.1.min.js"></script>
     <script src="../Recursos/bootstrap/dist/js/bootstrap.min.js"></script>
-
+    <script src="../Recursos/multiselect/dist/js/bootstrap-multiselect.js"></script>
     <script src="../Recursos/js/mapa.js"></script>
    
   </body>
