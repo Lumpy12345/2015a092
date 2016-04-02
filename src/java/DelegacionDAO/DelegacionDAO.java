@@ -15,5 +15,6 @@ import Delegacion.Delegacion;
 public interface DelegacionDAO {
     
     public Delegacion getDelegacion(String id,String fecha);
+    public String[][] compararParticipacion(String id);
     
 }
