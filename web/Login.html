@@ -21,7 +21,7 @@
                             {
                                 
                             }
-                            else if(window.location=="http://localhost:8084/TT/Login.html")
+                            else if(window.location=="http://localhost:8080/TT/Login.html")
                                  {
                                      var Perfil = Perfil=xhttp.responseXML.getElementsByTagName("Sesion")[0].childNodes[1].innerHTML;
                                      window.location.href =Perfil+ "/" + "index.html";
@@ -30,7 +30,7 @@
 
                         }
                         }
-                        var url="http://localhost:8084/TT/VerificarSesion?Clave="+sessionStorage.getItem("SClave");
+                        var url="http://localhost:8080/TT/VerificarSesion?Clave="+sessionStorage.getItem("SClave");
                       xhttp.open("GET", url, true);
                       xhttp.send();
                 </script>

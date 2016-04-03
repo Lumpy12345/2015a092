@@ -240,7 +240,7 @@
     function listaUsuarios(){
        $.ajax({
            type: "GET", 
-           url: "http://localhost:8084/TT/ObtenerUsuarios?Clave=" + sessionStorage.getItem("SClave"),
+           url: "http://localhost:8080/TT/ObtenerUsuarios?Clave=" + sessionStorage.getItem("SClave"),
            success: function(data){
               
               $('#usuarios').html(data);

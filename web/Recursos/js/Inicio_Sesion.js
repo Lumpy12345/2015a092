@@ -33,7 +33,7 @@ function Iniciar_Sesion()
   };
   var correo=$("#Correo").val();
   var pass=$("#Password").val();
-  var url="http://localhost:8084/TT/Login?Correo="+correo+"&Password="+pass;
+  var url="http://localhost:8080/TT/Login?Correo="+correo+"&Password="+pass;
   xhttp.open("GET", url, true);
   xhttp.send();
     return false;

@@ -9,7 +9,7 @@
             {
                 // mostramos el error en la interfaz
               window.location.href ="/TT/Login.html"; 
-            }else if(window.location=="http://localhost:8084/TT/Login.html")
+            }else if(window.location=="http://localhost:8080/TT/Login.html")
                  {
                      var Perfil = Perfil=xhttp.responseXML.getElementsByTagName("Sesion")[0].childNodes[1].innerHTML;
                      window.location.href =Perfil+ "/" + "index.html";
@@ -17,7 +17,7 @@
 
         }
     }
-    var url="http://localhost:8084/TT/VerificarSesion?Clave="+sessionStorage.getItem("SClave");
+    var url="http://localhost:8080/TT/VerificarSesion?Clave="+sessionStorage.getItem("SClave");
     console.log(sessionStorage.getItem("SClave") + " <-------");
   xhttp.open("GET", url, true);
   xhttp.send();
@@ -33,7 +33,7 @@ function Cerrar_Sesion(){
          sessionStorage.clear();
     }
     }
-    var url="http://localhost:8084/TT/Logout?Clave="+sessionStorage.getItem("SClave");
+    var url="http://localhost:8080/TT/Logout?Clave="+sessionStorage.getItem("SClave");
     console.log(sessionStorage.getItem("SClave") + " <-------");
   xhttp.open("GET", url, true);
   xhttp.send();
@@ -60,7 +60,7 @@ function eliminarU(correo){
     }
  
   };
-  var url="http://localhost:8084/TT/EliminarUsuario?Clave="+sessionStorage.getItem("SClave")+"&Correo="+correo;
+  var url="http://localhost:8080/TT/EliminarUsuario?Clave="+sessionStorage.getItem("SClave")+"&Correo="+correo;
   xhttp.open("GET", url, true);
   xhttp.send();
     return false;
@@ -86,7 +86,7 @@ function ingresarUsuario(){
  
   };
 
-  var url="http://localhost:8084/TT/AgregarUsuario?Clave="+sessionStorage.getItem("SClave")+'&Correo='+$("#Correo").val()+'&Password='+$("#Password").val()+'&Nombre='+$("#Nombre").val()+'&APaterno='+$("#APaterno").val()+'&AMaterno='+$("#AMaterno").val()
+  var url="http://localhost:8080/TT/AgregarUsuario?Clave="+sessionStorage.getItem("SClave")+'&Correo='+$("#Correo").val()+'&Password='+$("#Password").val()+'&Nombre='+$("#Nombre").val()+'&APaterno='+$("#APaterno").val()+'&AMaterno='+$("#AMaterno").val()
                         +'&Perfil='+$("#Perfil").val();
   xhttp.open("GET", url, true);
   xhttp.send();
@@ -114,7 +114,7 @@ function actualizarUsuario(correo){
  
   };
  // console.log(correo);
-  var url="http://localhost:8084/TT/ActualizarUsuario?Clave="+sessionStorage.getItem("SClave")+'&Correo='+$("#Correo").val()+'&Password='+$("#Password").val()+'&Nombre='+$("#Nombre").val()+'&APaterno='+$("#APaterno").val()+'&AMaterno='+$("#AMaterno").val()
+  var url="http://localhost:8080/TT/ActualizarUsuario?Clave="+sessionStorage.getItem("SClave")+'&Correo='+$("#Correo").val()+'&Password='+$("#Password").val()+'&Nombre='+$("#Nombre").val()+'&APaterno='+$("#APaterno").val()+'&AMaterno='+$("#AMaterno").val()
                         +'&Perfil='+$("#Perfil").val()+'&email='+correo;
   alert(url);
   xhttp.open("GET", url, true);
@@ -143,7 +143,7 @@ function editarU(correo){
  
   };
   alert("Entro");
-  var url="http://localhost:8084/TT/ObtenerUsuario?Correo="+correo;
+  var url="http://localhost:8080/TT/ObtenerUsuario?Correo="+correo;
   xhttp.open("GET", url, true);
   xhttp.send();
     return false;
