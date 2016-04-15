@@ -69,11 +69,10 @@
           <div class="col-md-3">
            <label for="sel1">Parametros</label>
           
-          <select class="form-control" id="param" name="param">
-            <option name="participacion" id="participacion" value="participacion">Participación Ciudadana</option>
+        <select class="form-control" id="param" name="param">
             <option name="partido" id="partido" value="partido">Partidos Politicos</option>
-         
-          </select>
+            <option name="participacion" id="participacion" value="participacion">Participación Ciudadana</option>
+        </select>
 
 
           </div>
@@ -89,39 +88,67 @@
     <!-- Contenedores del mapa-->
     <!-- **************************** -->
 
-    <div class="content-wrapper">
-         <h1 id="idTitulo">Entidad Federativa: Distrito Federal</h1>
+    <div class="container-fluid">
+         
          <div class="col-md-6">
+             <h1 id="idTitulo">Entidad Federativa: Distrito Federal</h1>
              <div id="map" ></div>
          </div>
          
          <div class="col-md-6">
-                <!--   
-                <div class="col-md-3">
-                          <div id="idEstadoActivo"></div>
-               </div>
-                -->
-                
-                <div class="col-md-6">
-                        <div id="graficaPartidos">
-                            <canvas id="myChart" width="300" height="300"></canvas> 
+                    <div class="col-md-6">
+                        
+                        <h1 id="idEstadoActivo" class="titulo"></h1>
+                        
+                            <div id="graficaPartidos">
+                                <canvas id="myChart" width="300" height="300"></canvas> 
+                                
+                            </div>
+                        
+                    </div>  
+
+                    <div class="col-md-6 titulo">
+                        
+                        <div id="g2">
+                                <canvas id="myChart2" width="300" height="300"></canvas> 
                         </div>
-                </div>
-                
-                <div class="col-md-6">
-                        <div id="js-legend" class="chart-legend"></div>
-                </div>
-                
+                        <div id="js-legend" class="chart-legend"></div>    
+                  
+                    </div> 
          </div>
          
          <div id="nodelist"></div>
       
     </div>
+    <div class="container">
+        <div  class="centerTable">
+            <div id="tabla-par" ></div>
+        </div>
+    </div>
     
  
  
     <style type="text/css">
-   
+        div.centerTable{
+        text-align: center;
+        padding-top: 10px;
+        }
+        
+        div.centerTable table {
+       margin: 0 auto;
+       text-align: left;
+       border: 1px solid rgba(0,0,0,.075);
+        }  
+        
+        div.centerTable td{
+            padding: 7px;
+        }
+      
+        .titulo
+        {
+            margin-top: 30px;
+            text-align: center;
+        }
       #map
       {
         border-radius: 10px;
@@ -145,7 +172,7 @@
         margin-bottom: 14px;
         height: 50px;
         text-align : center;
-        font-size: 2em;
+        font-size: 1.5em;
       }
       #mostrardatos
       {

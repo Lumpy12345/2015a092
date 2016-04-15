@@ -7,7 +7,7 @@
 
 .legend {
     width: 20em;
-    border: 1px solid black;
+    border: 1px solid rgba(0,0,0,.075);
 }
 
 .legend .title {
