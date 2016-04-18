@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">  
+    <title>TT1 2015-A092</title>
+
+    <script src="../Recursos/js/jquery-1.12.1.min.js"></script>
+    <script type="text/JavaScript" src="../Recursos/js/Funciones.js"></script>
+    <link href="../Recursos/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../Recursos/css/styles.css">
+    <script src="../Recursos/openlayers/ol.js"></script>
+    <link rel="stylesheet" href="../Recursos/openlayers/ol.css" type="text/css">
+    
+    <link href="../Recursos/js/demo.css" rel="stylesheet" type="text/css">
+
+
+    <script src="../Recursos/js/Chart.js"></script>
+
+  </head>
+  
+  <body>
+       
+    <header class="clearfix">
+        <div class="logo col-md-3"><h2 class="logo-text">SSGPE</h2></div>
+       
+        <nav class="clearfix">
+            <ul class="clearfix">
+                <li><a href="index.html" class="active">Inicio</a></li>
+                <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Consulta<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="mapa.html">Historial</a></li>
+            <li><a href="comparativa.html">Comparativa</a></li>
+          </ul>
+        </li>
+                <li><a href="#" onclick="Cerrar_Sesion()">Cerrar Sesion</a></li>
+            </ul>
+             
+        </nav>
+
+        <div class="pullcontainer">
+        <a href="#" id="pull"><i class="fa fa-bars fa-2x"></i></a>
+        </div>   
+    </header>
+
+
+    <div class="container-fluid selectAnioPartido">
+      <div  class="row">
+        <div class="col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-2">
+          <p>Año</p>
+        </div>
+        <div class="col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-10">
+          <select class="form-control" onchange="mostrarMapa();" id="idSelectAnio">
+            <option>--Ninguno--</option>
+            <option>2012</option>
+            <option>2006</option>
+            <option>2000</option>
+            <option>1994</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row" id="idPartidos">
+        <div class="col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-2">
+          <p>Partido</p>
+        </div>
+        <div class="col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-10">
+          <select class="form-control" id="idSelectPartido">
+          </select>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h1 class="text-center" id="idDelegacion">CDMX</h1>
+          <div id="map" ></div>
+          <div id="nodelist"></div>
+        </div>
+        <div id="partidoGanador" class="col-md-6 partidoGanador">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <h1 class="text-center" id="idTxtTabla1">Resultados</h1>
+          <table id="idTabla1" class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Lugar</th>
+                <th>Partido</th>
+                <th>Voto</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+        <div id="idTabla2" class="col-md-6">
+          <h1 class="text-center" >Victorias en otras delegaciones.</h1>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Delegación</th>
+                <th>Total votos</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4" id="contenedorChart">
+          <div id="js-legend" class="chart-legend"></div>
+          <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+        <div class="col-md-4">
+          <div id="porcentajeVictorias">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      
+
+    </script>
+    
+    <style type="text/css">
+      .row
+      {
+        margin-top: 2em;
+      }
+
+      table tbody tr th 
+      {
+          background-color: #E6EFDA;
+      }
+
+      table thead tr th 
+      {
+          background-color: #E6EFDA;
+      }
+
+      #contenedorChart
+      {
+        //background-color: blue;
+      }
+
+      #myChart
+      {
+        display: inline-block !important;
+        width: 100% !important;
+        height: auto !important;
+      }
+
+      .legend {
+          margin-bottom: 11px !important;
+          width: 80% !important;
+          margin-left: 10% !important;
+          margin-right: 10% !important;
+          border: 1px solid black !important;
+      }
+
+      .selectAnioPartido
+      {
+        background-color: #63c6ae;
+      }
+      .container-fluid
+      { 
+        padding-bottom: 24px;
+      }
+
+      .container-fluid > div > div > p
+      {
+        font-weight: bold;
+      }
+
+      #idPartidos
+      {
+        display: none;
+      }
+
+      #map
+      {
+        margin-top: 20px;
+        border-radius: 10px;
+        border-width: 2px;
+        border-style: solid;
+        border-color: #509CBF;
+        margin-bottom: 10px;
+        width: 70%;
+        height: 500px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .partidoGanador
+      {
+        text-align: center;
+      }
+
+      .partidoGanador h1
+      {
+        margin-top: 19px;
+        margin-bottom: 10px;
+      }
+
+      .partidoGanador > div {
+        padding-top: 10px;
+      }
+
+      .partidoGanador p:first-of-type {
+          font-size: 1.5em;
+      }
+
+      .partidoGanador p {
+          font-size: 1.3em;
+          font-weight: bold;
+      }
+
+      #porcentajeVictorias {
+          height: auto;
+          width: 100%;
+          //background-color: blue;
+      }
+
+      #porcentajeVictorias p:nth-child(1) {
+          font-size: 8em;
+          text-align: center;
+          margin-top: 0px;
+          margin-bottom: 0px;
+      }
+
+      #porcentajeVictorias p:nth-child(2) {
+          font-size: 2em;
+          margin-top: 0px;
+          text-align: center;
+      }
+
+
+
+      @media (max-width: 768px) 
+      {
+        .container-fluid
+        {
+          padding-top: 15px;
+          padding-left: 15px;
+          padding-bottom: 0px !important;
+        }
+        .container-fluid > div > div > p
+        {
+          text-align: center;
+        }
+
+        #myChart
+        {
+          display: inline-block !important;
+          width: 70% !important;
+          height: auto !important;
+          margin-right: 15%;
+          margin-left: 15%;
+        }
+
+        .legend {
+            margin-bottom: 11px !important;
+            width: 60% !important;
+            margin-left: 20% !important;
+            margin-right: 20% !important;
+            border: 1px solid black !important;
+        }
+      }
+    </style>
+
+    <script src="../Recursos/js/comparativa.js"></script>
+    <script src="../Recursos/js/legend.js"></script>
+    <script src="../Recursos/bootstrap/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
