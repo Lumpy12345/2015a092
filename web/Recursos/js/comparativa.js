@@ -9,6 +9,7 @@ var delegacionSeleccionada;
 var CVE = "";
 var anio = "";
 var primerIntento = true;
+var porcentajeVictoria;
 
 function partido(nombre,color,high,voto,anio)
 {
@@ -369,7 +370,7 @@ function doughnutChart()
 	var myDoughnutChart = new Chart(ctx).Doughnut(data,options);
 	legend(document.getElementById("js-legend"), data, myDoughnutChart, "<%=label%>: <%=value%>");
 
-	var porcentajeVictoria = ((victoriaDelegaciones.length) * 100) / 16;
+	porcentajeVictoria = ((victoriaDelegaciones.length) * 100) / 16;
 
 	$('#porcentajeVictorias').empty();
 	$('#porcentajeVictorias').show();
@@ -606,6 +607,3 @@ function obtenerURLPartido(partidoGanador)
 		return URL + '' ;
 
 }
-
-
-

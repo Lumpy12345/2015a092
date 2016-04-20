@@ -32,7 +32,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Consulta<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="mapa.html">Historial</a></li>
-            <li><a href="comparativa.html">Comparativa</a></li>
+            <li><a href="mach.html">ML</a></li>
           </ul>
         </li>
                 <li><a href="#" onclick="Cerrar_Sesion()">Cerrar Sesion</a></li>
@@ -73,17 +73,33 @@
       </div>
       
     </div>
+    <div class="container-fluid">
+        <div id="idMapa" class="row">
+            <div class="col-md-4">
+                    <h1 class="text-center" id="idDelegacion">CDMX</h1>
+                    <div id="map" ></div>
+                    <div id="nodelist"></div>
+            </div>
+                  
+        
+        <div id="partidoGanador" class="col-md-4 partidoGanador"></div>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <h1 class="text-center" id="idDelegacion">CDMX</h1>
-          <div id="map" ></div>
-          <div id="nodelist"></div>
-        </div>
-        <div id="partidoGanador" class="col-md-6 partidoGanador">
-        </div>
-      </div>
+            <div class="col-md-4" id="contenedorChart">
+                        <div id="js-legend" class="chart-legend"></div>
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                        <div id="porcentajeVictorias"></div>
+                        <button class="btn btn-primary" onclick="enviarXML(CVE,delegacionSeleccionada,partidoGanador.nombre,partidoGanador.voto,info,victoriaDelegaciones,victoriaDelegaciones.length,(16 - victoriaDelegaciones.length),porcentajeVictoria);" >XML</button>
+            </div>
+            
+           
+            
+        </div>  
+            
+    </div>
+    
+      
+    <div id="idContainer" class="container">
+      
 
       <div class="row">
         <div class="col-md-6">
@@ -116,20 +132,12 @@
       </div>
 
       <div class="row">
-        <div class="col-md-4" id="contenedorChart">
-          <div id="js-legend" class="chart-legend"></div>
-          <canvas id="myChart" width="400" height="400"></canvas>
-        </div>
-        <div class="col-md-4">
-          <div id="porcentajeVictorias">
-          </div>
-        </div>
+        
       </div>
     </div>
 
     <script type="text/javascript">
       
-
     </script>
     
     <style type="text/css">
@@ -187,23 +195,29 @@
         display: none;
       }
 
-      #map
+      #map 
       {
-        margin-top: 20px;
-        border-radius: 10px;
-        border-width: 2px;
-        border-style: solid;
-        border-color: #509CBF;
-        margin-bottom: 10px;
-        width: 70%;
-        height: 500px;
-        margin-left: auto;
-        margin-right: auto;
-      }
+            margin-top: 20px;
+            border-radius: 10px;
+            border-width: 2px;
+            border-style: solid;
+            border-color: #509CBF;
+            margin-bottom: 10px;
+            width: 90%;
+            height: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
       .partidoGanador
       {
         text-align: center;
+      }
+      
+      #partidoGanador > div > img 
+      {
+            width: 90%;
+            height: auto;
       }
 
       .partidoGanador h1
@@ -280,6 +294,8 @@
 
     <script src="../Recursos/js/comparativa.js"></script>
     <script src="../Recursos/js/legend.js"></script>
+    <script src="../Recursos/js/EnviarXML.js"></script>
     <script src="../Recursos/bootstrap/dist/js/bootstrap.min.js"></script>
+    
   </body>
 </html>

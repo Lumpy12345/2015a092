@@ -40,6 +40,18 @@
         <servlet-name>CompararParticipacion</servlet-name>
         <servlet-class>Servlets.CompararParticipacion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RecibeXML</servlet-name>
+        <servlet-class>Servlets.RecibeXML</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ObtenerInfoXML</servlet-name>
+        <servlet-class>Servlets.ObtenerInfoXML</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListarXML</servlet-name>
+        <servlet-class>Servlets.ListarXML</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ActualizarUsuario</servlet-name>
         <url-pattern>/ActualizarUsuario</url-pattern>
@@ -79,6 +91,18 @@
     <servlet-mapping>
         <servlet-name>CompararParticipacion</servlet-name>
         <url-pattern>/CompararParticipacion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecibeXML</servlet-name>
+        <url-pattern>/RecibeXML</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ObtenerInfoXML</servlet-name>
+        <url-pattern>/ObtenerInfoXML</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListarXML</servlet-name>
+        <url-pattern>/ListarXML</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
