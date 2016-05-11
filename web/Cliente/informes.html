@@ -32,8 +32,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Consulta<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="mapa.html">Historial</a></li>
-            <li><a href="comparativa.html">Historial</a></li>
-            <li><a href="mach.html">Pronostico</a></li>
+            <li><a href="mach.html">ML</a></li>
           </ul>
         </li>
                 <li><a href="#" onclick="Cerrar_Sesion()">Cerrar Sesion</a></li>
@@ -55,11 +54,10 @@
         <div class="col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-10">
           <select class="form-control" onchange="mostrarMapa();" id="idSelectAnio">
             <option>--Ninguno--</option>
+            <option>2015</option>
             <option>2012</option>
             <option>2009</option>
             <option>2006</option>
-            <option>2003</option>
-            <option>2000</option>
           </select>
         </div>
       </div>
@@ -85,7 +83,7 @@
                         <div id="js-legend" class="chart-legend"></div>
                         <canvas id="myChart" width="400" height="400"></canvas>
                         <div id="porcentajeVictorias"></div>
-            </div>
+        </div>
             
            
             

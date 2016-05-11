@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">  
+    <title>TT1 2015-A092</title>
+    <!-- Bootstrap -->
+    <script type="text/JavaScript" src="../Recursos/js/Funciones.js"></script>
+    <link href="../Recursos/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../Recursos/css/styles.css">
+    
+    <link href="../Recursos/js/demo.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../Recursos/openlayers/ol.css" type="text/css">
+    <script src="../Recursos/openlayers/ol.js"></script>
+     <script src="../Recursos/js/jquery-1.12.1.min.js"></script>
+    <script src="../Recursos/bootstrap/dist/js/bootstrap.min.js"></script>
+    
+
+
+    
+    <!-- Fonts 
+    <link rel="stylesheet" href="../Recursos/css/queries.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href='http://fonts.googleapis.com/css?family=Sintony:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+    -->
+    <style>
+        #map-id 
+        {
+                width: auto;
+                height: 300px;
+        }
+    </style>
+  </head>
+  
+  <body>
+       
+    <header class="clearfix">
+        <div class="logo col-md-3"><h2 class="logo-text">SSGPE</h2></div>
+       
+        <nav class="clearfix">
+            <ul class="clearfix">
+                <li><a href="index.html" class="active">Inicio</a></li>
+                <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Consulta<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="mapa.html">Historial</a></li>
+            <li><a href="mach.html">Pronostico</a></li>
+          </ul>
+        </li>
+                <li><a href="#" onclick="Cerrar_Sesion()">Cerrar Sesion</a></li>
+            </ul>
+             
+        </nav>
+
+        <div class="pullcontainer">
+        <a href="#" id="pull"><i class="fa fa-bars fa-2x"></i></a>
+        </div>   
+        </header>  
+     <div class="quote-container">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3" >
+          <label for="sel1">Año de Elección</label>
+            <select id="idSelectAnio" class="form-control" id="año" name="año" onchange="renderizarTabla();">
+
+              <option>2018</option>
+              <option selected="selected">2015</option>
+              <option>2012</option>
+              <option>2009</option>
+              <option>2006</option>
+              <option>2003</option>
+              <option>2000</option>
+            </select>
+          </div>
+            <div class="col-md-3">
+          <button type="button" class="btn btn-default" onclick="location.href='http://localhost:8080/TT/Cliente/mapa.html';"><i class="fa fa-file-pdf-o">Historial</i></button>
+            </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Contenedor vista general -->
+<div class="row">
+	<div class="col-md-12 table-responsive" id="idVistaGeneral" />
+</div>
+
+<!-- Contenedor vista general -->
+
+<script type="text/javascript">
+
+var root;
+
+var tabla = $('<table id="idTablaVistaGeneral" class="table table-striped table-hover table-bordered" ></table>');
+$('#idVistaGeneral').append(tabla);
+
+var nombre;
+var tabla1;
+var crearEncabezado = true;
+var arrPartidosPorTabla = [];
+
+var thead = $('<thead></thead>');
+var theadtr = $('<tr class="info"></tr>');
+var nombreD = $('<th>Delegaci&oacute;n</th>');
+theadtr.append(nombreD);
+
+var tbody = $('<tbody class="text-center"></tbody>');
+
+function generarTablas(result)
+{
+	root = result.firstChild;
+
+	nombre = root.children[1].textContent;
+	tabla1 = root.children[3];
+
+	agregarEncabezados(tabla1.children);
+}
+
+function agregarEncabezados(partidos)
+{
+	for(var i = 0; i < partidos.length ; i++ )
+	{
+		if($.inArray(partidos[i].children[0].textContent, arrPartidosPorTabla) == -1 )
+		{
+			var th = $('<th class="text-center">' + partidos[i].children[0].textContent + '</th>');
+
+			theadtr.append(th);
+			arrPartidosPorTabla.push(partidos[i].children[0].textContent);
+		}
+
+		//console.log(partidos[i].children[0].textContent);
+		
+	}
+
+	thead.append(theadtr);
+	tabla.append(thead);
+
+	agregarFila(partidos); /// <-------- revisar
+}
+
+function agregarFila(partidos)
+{
+	var tr = $('<tr></tr>');
+
+	var delegacion = $('<th>' + nombre + '</th>');
+	tr.append(delegacion);
+	
+
+	for(var i = 0; i < partidos.length ; i++ )
+	{
+		for(var j = 0; j < partidos.length ; j++ )
+		{
+			if($.inArray(partidos[j].children[0].textContent, arrPartidosPorTabla) == i )
+			{
+				var td = $('<td>' + partidos[j].children[1].textContent + '</td>');
+				tr.append(td);
+			}
+		}
+	}
+
+	tbody.append(tr);
+}
+
+
+
+
+function getURLIco(partido)
+{
+	var URL = 'http://localhost:8080/TT/Recursos/img/';
+
+	if(partido == 'morena')
+		return URL + 'morena_ico.png';
+
+	if(partido == 'prd_pt')
+		return URL + 'prd_pt_ico.png';
+
+	if(partido == 'pan')
+		return URL + 'pan_ico.png';
+
+	if(partido == 'pri_pvem')
+		return URL + 'pri_pvem_ico.png';
+
+	if(partido == 'pes')
+		return URL + 'pes_ico.png';
+
+	if(partido == 'panal' || partido == 'na')
+		return URL + 'panal_ico.png';
+
+	if(partido == 'ph')
+		return URL + 'ph_ico.png';
+
+	if(partido == 'mc')
+		return URL + 'mc_ico.png';
+
+	if(partido == 'prd_pt_panal')
+		return URL + 'prd_pt_panal.png';
+
+	if(partido == 'prd')
+		return URL + 'prd_ico.png';
+
+	if(partido == 'pt')
+		return URL + 'pt_ico.png';
+
+	if(partido == 'indep')
+		return URL + 'indep_ico.png';
+
+	if(partido == 'pri')
+		return URL + 'pri_ico.png';
+
+	if(partido == 'prd_pt_mc')
+		return URL + 'PRD-PT-MC.jpg';
+
+	if(partido == 'pvem')
+		return URL + 'pvem_ico.png';
+
+	if(partido == 'con')
+		return URL + 'con_ico.png';
+
+	if(partido == 'prd_pt_con')
+		return URL + 'PorElBienDeTodos.jpg';
+
+	if(partido == 'prd_con')
+		return URL + 'prd_con.jpg';
+
+	if(partido == 'psd' || partido == 'pasc')
+		return URL + 'psd_ico.png';
+
+	if(partido == 'pt_con')
+		return URL + 'pt_con_ico.png';
+
+	if(partido == 'pan_na')
+		return URL + 'pan_na.jpg';
+
+
+	
+
+
+}
+
+
+/////////////////////////////////////////////////////////
+function primerRenderizado()
+{
+    
+
+
+for(var i = 2 ; i <= 16 ; i++ )
+{
+	var clave;
+	if(i < 10)
+		clave = '00' + i;
+	if(i >= 10)
+		clave = '0' + i;
+
+	$.ajax
+	({ 
+		type: "GET",  
+		async: false,
+		url: "http://localhost:8080/TT/SComparativa",  
+		data: "cve=" + clave + "&anio=" +$('#idSelectAnio').val(),  
+		success: generarTablas
+		,
+		error: function (xhr, ajaxOptions, thrownError)
+		{
+		    console.log("Error: "+xhr.status);
+		    console.log("Error: "+ thrownError);
+		}
+	});
+}
+
+tabla.append(tbody);
+
+
+
+$('#idVistaGeneral table thead tr th').each
+(
+	function(index)
+	{
+		if(index != 0)
+		{
+			console.log($(this).get(0).textContent);
+			var urlICO = getURLIco($(this).get(0).textContent);
+			$(this).empty();
+			$(this).append('<img src=' + urlICO + ' height="42px" width="auto" ></img>');
+		}
+	}
+);
+
+$('#idVistaGeneral table tbody tr').each
+(
+	function()
+	{
+		//console.log($(this).get(0).children);
+
+		var $menor = $(this).get(0).children[1];
+		var $mayor = $(this).get(0).children[2];
+
+		if(parseInt($menor.textContent) > parseInt($mayor.textContent))
+			$mayor = $menor;
+
+		for(var i = 3 ; i < $(this).get(0).children.length ; i++ )
+		{
+			$menor = $(this).get(0).children[i];
+
+			if(parseInt($menor.textContent) > parseInt($mayor.textContent))
+				$mayor = $menor;
+		}
+
+		//console.log($mayor);
+		$mayor.bgColor ='#E6EFDA';
+	}
+);
+
+}
+function renderizarTabla()
+{
+    tabla.empty();
+    arrPartidosPorTabla = [];
+
+	thead = $('<thead></thead>');
+	theadtr = $('<tr class="info"></tr>');
+	nombreD = $('<th>Delegaci&oacute;n</th>');
+	theadtr.append(nombreD);
+	tbody = $('<tbody class="text-center"></tbody>');
+    primerRenderizado();
+}
+
+primerRenderizado();
+</script>
+
+
+
+</body>
+</html>

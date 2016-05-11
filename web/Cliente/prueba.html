@@ -43,7 +43,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Consulta<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       <li><a href="mapa.html">Historial</a></li>
-                      <li><a href="mach.html">Pronostico</a></li>
+                      <li><a href="comparativa.html">Comparativa</a></li>
                     </ul>
                 </li>
                 <li><a href="#" onclick="Cerrar_Sesion()">Cerrar Sesion</a></li>
@@ -51,9 +51,6 @@
              
         </nav>
 
-        <span class="ir-arriba">Ir Arriba</span>
-        
-        
         <div class="pullcontainer">
         <a href="#" id="pull"><i class="fa fa-bars fa-2x"></i></a>
         </div>   
@@ -64,8 +61,7 @@
           <div class="col-md-3" >
           <label for="sel1">Año de Elección</label>
           <select class="form-control" id="año" name="año">
-           
-<!--            <option>2018</option>-->
+            <option>--Ninguno--</option>
             <option selected="selected">2015</option>
             <option>2012</option>
             <option>2009</option>
@@ -75,21 +71,21 @@
           </select>
           
           </div>
-            <div class="col-md-3">
+          <div class="col-md-3">
            <label for="sel1">Parametros</label>
           
         <select class="form-control" id="param" name="param">
             <option name="partido" id="partido" value="partido">Partidos Politicos</option>
-            <option name="participacion" id="participacion" value="participacion">Participación Ciudadana</option>
-<!--            <option name="pronostico" id="pronostico" value="pronostico">Pronostico</option>-->
+<!--            <option name="participacion" id="participacion" value="participacion">Participación Ciudadana</option>
+            <option name="pronostico" id="pronostico" value="pronostico">Pronostico</option>-->
         </select>
 
 
           </div>
      
-       <div class="col-md-3">
-          <button type="button" class="btn btn-default" onclick="location.href='http://localhost:8080/TT/Cliente/vistageneral.html';"><i class="fa fa-file-pdf-o"> Vista General</i></button>
-        </div>
+<!--        <div class="col-md-2">
+          <button type="button" class="btn  btn-sm"><i class="fa fa-file-pdf-o"> Reporte</i></button>
+        </div>-->
         </div>
       </div>
     </div>
@@ -114,7 +110,7 @@
                         
                         <h1 id="idEstadoActivo" class="titulo"></h1>
                         
-                        <div id="myChart"></div>
+                        <div id="myChart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
                                  
                                 
                             
@@ -126,7 +122,7 @@
                         <div id="g2">
                                 <canvas id="myChart2" width="300" height="300"></canvas> 
                         </div>
-                        
+                        <div id="js-legend" class="chart-legend"></div>    
                   
                     </div> 
          </div>
@@ -141,21 +137,20 @@
                 </div>
         </div>
     </div>
-    
-    
-<div id="idContainer" class="container">
-    
-            
-                <div id="partidoGanador" class="col-md-6 partidoGanador"></div>
-            
-    
-            <div class="col-md-6" id="contenedorChart">
-                        <canvas id="myChart3" width="400" height="400"></canvas>
+   <!--Comparativa-->
+   
+   <div id="partidoGanador" class="col-md-4 partidoGanador"></div>
+
+            <div class="col-md-4" id="contenedorChart">
+                        <div id="js-legend" class="chart-legend"></div>
+                        <canvas id="myChart" width="400" height="400"></canvas>
                         <div id="porcentajeVictorias"></div>
-                        <div id="js-legend" class="chart-legend"></div>   
-            </div>
-     
+        </div>
     
+   
+    <div id="idContainer" class="container">
+      
+
       <div class="row">
         <div class="col-md-6">
           <h1 class="text-center" id="idTxtTabla1">Resultados</h1>
@@ -190,109 +185,87 @@
         
       </div>
     </div>
+    
+    
+<!--    <div id="pan" class="container">
+        <div id="PAN"></div>
+    </div>
+    <div id="pan" class="container">
+        <div id="PRI"></div>
+    </div>-->
 
     
  
  
     <style type="text/css">
-        #idContainer{
-            padding-top: 20px;
-        }
-.ir-arriba {
-	display:none;
-	padding:20px;
-        
-	background:#024959;
-	font-size:20px;
-	color:#fff;
-	cursor:pointer;
-	position: fixed;
-	bottom:170px;
-	right:20px;
-}
-       #tabla-par th{
-        background-color: #63c6ae;
-        opacity: 0.8;
-        }
-        #tabla-par td{
-        background-color: #dce2e5;
-        
-        }
-        
-        div.centerTable{
-        text-align: center;
-        padding-top: 10px;
-        }
-        
-        div.centerTable table {
-       margin: 0 auto;
-       text-align: center;
-       border: 1px solid rgba(0,0,0,.075);
-        }  
-        
-        div.centerTable td{
-            padding: 7px;
-        }
-      
-        .titulo
-        {
-            margin-top: 30px;
-            text-align: center;
-        }
-      #map
+       .row
       {
-        border-radius: 10px;
-        border-width: 2px;
-        border-style: solid;
-        border-color: #509CBF;
-        margin-bottom: 10px;
-        width: 70%;
-        height: 500px;
-        margin-left: 8%;
-        margin-right: 25%;
+        margin-top: 2em;
       }
-      #idTitulo
+
+      table tbody tr th 
       {
-        margin-top: 30px;
-        text-align: center;
+          background-color: #E6EFDA;
       }
-      #idEstadoActivo
+
+      table thead tr th 
       {
-        width : 100%;
-        margin-bottom: 14px;
-        height: 50px;
-        text-align : center;
-        font-size: 1.5em;
+          background-color: #E6EFDA;
       }
-      #mostrardatos
+
+      #contenedorChart
       {
-     font-size: 14px;
-        }  
-    
-        div#myChart
-        {
-            display: inline-block !important;
-            margin: 10px;
-            width: 555px;
-            height: 452px;
-            border: 0px solid black;
-        }
-        
-/*      #myChart
+        //background-color: blue;
+      }
+
+      #myChart
       {
         display: inline-block !important;
         width: 100% !important;
         height: auto !important;
-       
-      }*/
+      }
 
       .legend {
           margin-bottom: 11px !important;
-          width: 50% !important;
+          width: 80% !important;
           margin-left: 10% !important;
           margin-right: 10% !important;
           border: 1px solid black !important;
       }
+
+      .selectAnioPartido
+      {
+        background-color: #63c6ae;
+      }
+      .container-fluid
+      { 
+        padding-bottom: 24px;
+      }
+
+      .container-fluid > div > div > p
+      {
+        font-weight: bold;
+      }
+
+      #idPartidos
+      {
+        display: none;
+      }
+
+      #map 
+      {
+            margin-top: 20px;
+            border-radius: 10px;
+            border-width: 2px;
+            border-style: solid;
+            border-color: #509CBF;
+            margin-bottom: 10px;
+            width: 90%;
+            height: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
       .partidoGanador
       {
         text-align: center;
@@ -342,6 +315,39 @@
           text-align: center;
       }
 
+
+
+      @media (max-width: 768px) 
+      {
+        .container-fluid
+        {
+          padding-top: 15px;
+          padding-left: 15px;
+          padding-bottom: 0px !important;
+        }
+        .container-fluid > div > div > p
+        {
+          text-align: center;
+        }
+
+        #myChart
+        {
+          display: inline-block !important;
+          width: 70% !important;
+          height: auto !important;
+          margin-right: 15%;
+          margin-left: 15%;
+        }
+
+        .legend {
+            margin-bottom: 11px !important;
+            width: 60% !important;
+            margin-left: 20% !important;
+            margin-right: 20% !important;
+            border: 1px solid black !important;
+        }
+      }
+
     </style>
     
     
@@ -385,8 +391,10 @@
     </footer>
    <script src="../Recursos/js/demo.js"></script>
    -->
+   
     <script src="../Recursos/js/jquery-1.12.1.min.js"></script>
     <script src="../Recursos/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../Recursos/js/comparativa.js"></script>
     <script src="../Recursos/js/mapa.js"></script>
     <script src="../Recursos/js/Chart.js"></script>
     <script src="../Recursos/js/legend.js"></script>

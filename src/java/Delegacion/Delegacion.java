@@ -21,54 +21,128 @@ public class Delegacion {
     
    private String Did;
    private String DNombre;
-   private String DSecciones;
-   private String DCasillas;
-   private String Alianza;
-   private String Porelbien;
-   private String NuevaAlianza;
-   private String Alternativa; 
-   private String Movimiento;
-   private String PRIPVEM;
-   private String PRDPTMovimiento;
-   private String PRDPT;
-   private String PRDMovimiento;
-   private String PTMovimiento;
-   private String Ac;
-   private String Am;
-   private String Pcd;
-   private String Dsppn;
-   private String Pan;
-   private String Pri;
-   private String Pps;
+   //2015
+   private String PRDPTNuevaAlianza;
+   private String Morena;
+   private String PH;
+   private String PES;
+   private String Independiente;
+   //2012
+   private String PAN;
+   private String PRI;
    private String PRD;
-   private String Pfcrn;
-   private String Parm;
-   private String Unopdm;
    private String Pt;
    private String Pvem;
+   private String Movimiento;
+   private String NuevaAlianza;
+   private String PRIPVEM;
+   private String PRDPTMovimiento;
+   //completos
+   //2009
+   /*
+   existentes
+   PAN PRI PRD PT PVEM Nueva Alianza
+   
+   */
+   private String Convergencia;
   
-   private String DNoRegistrados;
+   private String PRDPTConvergencia;
+   private String PRDPT;
+   private String PRDConvergencia;
+   private String PTConvergencia;
+   private String PSD;
+   //completo
+   
+   //2006
+   /*
+   existentes 
+   PAN PRIPVEM PRDPTCONV NuevaALianza
+   */
+   private String PASC;
+   private String PANNuevaAlianza;
+   //completo
+   //2003
+   /*
+   existentes
+   PAN PRI PRD PT Convergencia PVEM 
+   */
+   private String FC;
+   private String MP;
+   private String PAS;
+   private String PSN;
+   private String PLM;
+   //completo
+   //2000
+   /*
+   existentes 
+   PRI PRD PT CONVERGENCIA PSN PAS 
+   */
+   private String PANPVEM;
+   private String PCD;
+   private String PARM;
+   private String DS;
+   
+  //completos
+   
+   
+  
    private String Validos;
    private String DNulos;
    private String DTotal;
    private String DListaNominal;
    private String DParticipacion;
 
- //1994
+ //2000-17
    public Delegacion(String Did,
                      String DNombre,
-                     String DSecciones,
-                     String DCasillas,
+                     String panpvem,
+                     String pri,
+                     String prd,
+                     String pt,
+                     String conver,
+                     String pcd,
+                     String psn,
+                     String parm,
+                     String pas,
+                     String ds,
+                     String validos,
+                     String DNulos,
+                     String DTotal,
+                     String DListaNominal,
+                     String DParticipacion){
+       this.Did=Did;
+       this.DNombre= DNombre;
+       this.PANPVEM=panpvem;
+       this.PRI=pri;
+       this.PRD=prd;
+       this.Pt=pt;
+       this.Convergencia=conver;
+       this.PCD=pcd;
+       this.PSN=psn;
+       this.PARM=parm;
+       this.PAS=pas;
+       this.DS=ds;
+       this.Validos=validos;
+       this.DNulos=DNulos;
+       this.DTotal=DTotal;
+       this.DListaNominal=DListaNominal;
+       this.DParticipacion=DParticipacion;
+       
+   }
+   //2003-18
+     public Delegacion(String Did,
+                     String DNombre,
                      String pan,
                      String pri,
-                     String pps,
                      String prd,
-                     String pfcrn,
-                     String parm,
-                     String uno,
                      String pt,
                      String pvem,
-                     String DNoRegistrados,
+                     String conver,
+                     String psn,
+                     String pas,
+                     String mp,
+                     String plm,
+                     String fc,
                      String validos,
                      String DNulos,
                      String DTotal,
@@ -76,18 +150,17 @@ public class Delegacion {
                      String DParticipacion){
        this.Did=Did;
        this.DNombre= DNombre;
-       this.DSecciones=DSecciones;
-       this.DCasillas=DCasillas;
-       this.Pan=pan;
-       this.Pri=pri;
-       this.Pps=pps;
+       this.PAN=pan;
+       this.PRI=pri;
        this.PRD=prd;
-       this.Pfcrn=pfcrn;
-       this.Parm=parm;
-       this.Unopdm=uno;
        this.Pt=pt;
        this.Pvem=pvem;
-       this.DNoRegistrados=DNoRegistrados;
+       this.Convergencia=conver;
+       this.PSN=psn;
+       this.PAS=pas;
+       this.MP=mp;
+       this.PLM=plm;
+       this.FC=fc;
        this.Validos=validos;
        this.DNulos=DNulos;
        this.DTotal=DTotal;
@@ -95,52 +168,15 @@ public class Delegacion {
        this.DParticipacion=DParticipacion;
        
    }
-   //2000
+      //2006-13
      public Delegacion(String Did,
                      String DNombre,
-                     String DSecciones,
-                     String DCasillas,
-                     String ac,
-                     String pri,
-                     String am,
-                     String pcd,
-                     String parm,
-                     String dsppn,
-                     String DNoRegistrados,
-                     String validos,
-                     String DNulos,
-                     String DTotal,
-                     String DListaNominal,
-                     String DParticipacion){
-       this.Did=Did;
-       this.DNombre= DNombre;
-       this.DSecciones=DSecciones;
-       this.DCasillas=DCasillas;
-       this.Ac=ac;
-       this.Pri=pri;
-       this.Am=am;
-       this.Pcd=pcd;
-       this.Parm=parm;
-       this.Dsppn=dsppn;
-       this.DNoRegistrados=DNoRegistrados;
-       this.Validos=validos;
-       this.DNulos=DNulos;
-       this.DTotal=DTotal;
-       this.DListaNominal=DListaNominal;
-       this.DParticipacion=DParticipacion;
-       
-   }
-      //2006
-     public Delegacion(String Did,
-                     String DNombre,
-                     String DSecciones,
-                     String DCasillas,
                      String pan,
-                     String alianza,
-                     String porelbien,
+                     String pripvem,
+                     String prdptconver,
                      String nuevaalianza,
-                     String alternativa,
-                     String DNoRegistrados,
+                     String pasc,
+                     String pannuevaalianza,
                      String validos,
                      String DNulos,
                      String DTotal,
@@ -148,14 +184,12 @@ public class Delegacion {
                      String DParticipacion){
        this.Did=Did;
        this.DNombre= DNombre;
-       this.DSecciones=DSecciones;
-       this.DCasillas=DCasillas;
-       this.Pan=pan;
-       this.Alianza=alianza;
-       this.Porelbien=porelbien;
+       this.PAN=pan;
+       this.PRIPVEM=pripvem;
+       this.PRDPTConvergencia=prdptconver;
        this.NuevaAlianza=nuevaalianza;
-       this.Alternativa=alternativa;
-       this.DNoRegistrados=DNoRegistrados;
+       this.PASC=pasc;
+       this.PANNuevaAlianza=pannuevaalianza;
        this.Validos=validos;
        this.DNulos=DNulos;
        this.DTotal=DTotal;
@@ -163,52 +197,123 @@ public class Delegacion {
        this.DParticipacion=DParticipacion;
        
    }
-      //2012
+      //2009 19
      public Delegacion(String Did,
                      String DNombre,
-                     String DSecciones,
-                     String DCasillas,
                      String pan,
                      String pri,
                      String prd,
+                     String pt,
                      String pvem,
+                     String conver,
+                     String nuevaalianza,
+                     String psd,
+                     String prdptconver,
+                     String prdpt,
+                     String prdconver,
+                     String ptconver,
+                     String validos,
+                     String DNulos,
+                     String DTotal,
+                     String DListaNominal,
+                     String DParticipacion){
+       this.Did=Did;
+       this.DNombre= DNombre;
+       this.PAN=pan;
+       this.PRI=pri;
+       this.PRD=prd;
+       this.Pt=pt;
+       this.Pvem=pvem;
+       this.Convergencia=conver;
+       this.NuevaAlianza=nuevaalianza;
+       this.PSD=psd;
+       this.PRDPTConvergencia=prdptconver;
+       this.PRDPT=prdpt;
+       this.PRDConvergencia=prdconver;
+       this.PTConvergencia=ptconver;
+       this.Validos=validos;
+       this.DNulos=DNulos;
+       this.DTotal=DTotal;
+       this.DListaNominal=DListaNominal;
+       this.DParticipacion=DParticipacion;
+       
+   }
+     //2012-16
+     public Delegacion(String Did,
+                     String DNombre,
+                     String pan,
+                     String pri,
+                     String prd,
+                     String pt,
+                     String pvem,
+                     String mc,
+                     String na,
+                     String pripvem,
+                     String prdptmc,
+                     String validos,
+                     String DNulos,
+                     String DTotal,
+                     String DListaNominal,
+                     String DParticipacion){
+       this.Did=Did;
+       this.DNombre= DNombre;
+       this.PAN=pan;
+       this.PRI=pri;
+       this.PRD=prd;
+       this.Pt=pt;
+       this.Pvem=pvem;
+       this.Movimiento=mc;
+       this.NuevaAlianza=na;
+       this.PRIPVEM=pripvem;
+       this.PRDPTMovimiento=prdptmc;
+       this.Validos=validos;
+       this.DNulos=DNulos;
+       this.DTotal=DTotal;
+       this.DListaNominal=DListaNominal;
+       this.DParticipacion=DParticipacion;
+       
+   }
+    //2015-20
+     public Delegacion(String Did,
+                     String DNombre,
+                     String pan,
+                     String pripvem,
+                     String prdpt,
+                     String prdptnuevaalianza,
+                     String prd,
                      String pt,
                      String movimiento,
                      String nuevaalianza,
-                     String pripvem,
-                     String prdptmc,
-                     String prdpt,
-                     String prdmc,
-                     String ptmc,
-                     String DNoRegistrados,
+                     String morena,
+                     String ph,
+                     String pes,
+                     String inde,
+                     String validos,
                      String DNulos,
                      String DTotal,
                      String DListaNominal,
-                     String DParticipacion){
+                     String DParticipacion,String a){
        this.Did=Did;
        this.DNombre= DNombre;
-       this.DSecciones=DSecciones;
-       this.DCasillas=DCasillas;
-       this.Pan=pan;
-       this.Pri=pri;
+       this.PAN=pan;
+       this.PRIPVEM=pripvem;
+       this.PRDPT=prdpt;
+       this.PRDPTNuevaAlianza=prdptnuevaalianza;
        this.PRD=prd;
-       this.Pvem=pvem;
        this.Pt=pt;
        this.Movimiento=movimiento;
        this.NuevaAlianza=nuevaalianza;
-       this.PRIPVEM=pripvem;
-       this.PRDPTMovimiento=prdptmc;
-       this.PRDPT=prdpt;
-       this.PRDMovimiento=prdmc;
-       this.PTMovimiento=ptmc;
-       this.DNoRegistrados=DNoRegistrados;
+       this.Morena=morena;
+       this.PH=ph;
+       this.PES=pes;
+       this.Independiente=inde;
+       this.Validos=validos;
        this.DNulos=DNulos;
        this.DTotal=DTotal;
        this.DListaNominal=DListaNominal;
        this.DParticipacion=DParticipacion;
        
    }
-     
 
     /**
      * @return the Did
@@ -239,269 +344,101 @@ public class Delegacion {
     }
 
     /**
-     * @return the DSecciones
+     * @return the PRDPTNuevaAlianza
      */
-    public String getDSecciones() {
-        return DSecciones;
+    public String getPRDPTNuevaAlianza() {
+        return PRDPTNuevaAlianza;
     }
 
     /**
-     * @param DSecciones the DSecciones to set
+     * @param PRDPTNuevaAlianza the PRDPTNuevaAlianza to set
      */
-    public void setDSecciones(String DSecciones) {
-        this.DSecciones = DSecciones;
+    public void setPRDPTNuevaAlianza(String PRDPTNuevaAlianza) {
+        this.PRDPTNuevaAlianza = PRDPTNuevaAlianza;
     }
 
     /**
-     * @return the DCasillas
+     * @return the Morena
      */
-    public String getDCasillas() {
-        return DCasillas;
+    public String getMorena() {
+        return Morena;
     }
 
     /**
-     * @param DCasillas the DCasillas to set
+     * @param Morena the Morena to set
      */
-    public void setDCasillas(String DCasillas) {
-        this.DCasillas = DCasillas;
+    public void setMorena(String Morena) {
+        this.Morena = Morena;
     }
 
     /**
-     * @return the Alianza
+     * @return the PH
      */
-    public String getAlianza() {
-        return Alianza;
+    public String getPH() {
+        return PH;
     }
 
     /**
-     * @param Alianza the Alianza to set
+     * @param PH the PH to set
      */
-    public void setAlianza(String Alianza) {
-        this.Alianza = Alianza;
+    public void setPH(String PH) {
+        this.PH = PH;
     }
 
     /**
-     * @return the Porelbien
+     * @return the PES
      */
-    public String getPorelbien() {
-        return Porelbien;
+    public String getPES() {
+        return PES;
     }
 
     /**
-     * @param Porelbien the Porelbien to set
+     * @param PES the PES to set
      */
-    public void setPorelbien(String Porelbien) {
-        this.Porelbien = Porelbien;
+    public void setPES(String PES) {
+        this.PES = PES;
     }
 
     /**
-     * @return the NuevaAlianza
+     * @return the Independiente
      */
-    public String getNuevaAlianza() {
-        return NuevaAlianza;
+    public String getIndependiente() {
+        return Independiente;
     }
 
     /**
-     * @param NuevaAlianza the NuevaAlianza to set
+     * @param Independiente the Independiente to set
      */
-    public void setNuevaAlianza(String NuevaAlianza) {
-        this.NuevaAlianza = NuevaAlianza;
+    public void setIndependiente(String Independiente) {
+        this.Independiente = Independiente;
     }
 
     /**
-     * @return the Alternativa
+     * @return the PAN
      */
-    public String getAlternativa() {
-        return Alternativa;
+    public String getPAN() {
+        return PAN;
     }
 
     /**
-     * @param Alternativa the Alternativa to set
+     * @param PAN the PAN to set
      */
-    public void setAlternativa(String Alternativa) {
-        this.Alternativa = Alternativa;
+    public void setPAN(String PAN) {
+        this.PAN = PAN;
     }
 
     /**
-     * @return the Movimiento
+     * @return the PRI
      */
-    public String getMovimiento() {
-        return Movimiento;
+    public String getPRI() {
+        return PRI;
     }
 
     /**
-     * @param Movimiento the Movimiento to set
+     * @param PRI the PRI to set
      */
-    public void setMovimiento(String Movimiento) {
-        this.Movimiento = Movimiento;
-    }
-
-    /**
-     * @return the PRIPVEM
-     */
-    public String getPRIPVEM() {
-        return PRIPVEM;
-    }
-
-    /**
-     * @param PRIPVEM the PRIPVEM to set
-     */
-    public void setPRIPVEM(String PRIPVEM) {
-        this.PRIPVEM = PRIPVEM;
-    }
-
-    /**
-     * @return the PRDPTMovimiento
-     */
-    public String getPRDPTMovimiento() {
-        return PRDPTMovimiento;
-    }
-
-    /**
-     * @param PRDPTMovimiento the PRDPTMovimiento to set
-     */
-    public void setPRDPTMovimiento(String PRDPTMovimiento) {
-        this.PRDPTMovimiento = PRDPTMovimiento;
-    }
-
-    /**
-     * @return the PRDPT
-     */
-    public String getPRDPT() {
-        return PRDPT;
-    }
-
-    /**
-     * @param PRDPT the PRDPT to set
-     */
-    public void setPRDPT(String PRDPT) {
-        this.PRDPT = PRDPT;
-    }
-
-    /**
-     * @return the PRDMovimiento
-     */
-    public String getPRDMovimiento() {
-        return PRDMovimiento;
-    }
-
-    /**
-     * @param PRDMovimiento the PRDMovimiento to set
-     */
-    public void setPRDMovimiento(String PRDMovimiento) {
-        this.PRDMovimiento = PRDMovimiento;
-    }
-
-    /**
-     * @return the PTMovimiento
-     */
-    public String getPTMovimiento() {
-        return PTMovimiento;
-    }
-
-    /**
-     * @param PTMovimiento the PTMovimiento to set
-     */
-    public void setPTMovimiento(String PTMovimiento) {
-        this.PTMovimiento = PTMovimiento;
-    }
-
-    /**
-     * @return the Ac
-     */
-    public String getAc() {
-        return Ac;
-    }
-
-    /**
-     * @param Ac the Ac to set
-     */
-    public void setAc(String Ac) {
-        this.Ac = Ac;
-    }
-
-    /**
-     * @return the Am
-     */
-    public String getAm() {
-        return Am;
-    }
-
-    /**
-     * @param Am the Am to set
-     */
-    public void setAm(String Am) {
-        this.Am = Am;
-    }
-
-    /**
-     * @return the Pcd
-     */
-    public String getPcd() {
-        return Pcd;
-    }
-
-    /**
-     * @param Pcd the Pcd to set
-     */
-    public void setPcd(String Pcd) {
-        this.Pcd = Pcd;
-    }
-
-    /**
-     * @return the Dsppn
-     */
-    public String getDsppn() {
-        return Dsppn;
-    }
-
-    /**
-     * @param Dsppn the Dsppn to set
-     */
-    public void setDsppn(String Dsppn) {
-        this.Dsppn = Dsppn;
-    }
-
-    /**
-     * @return the Pan
-     */
-    public String getPan() {
-        return Pan;
-    }
-
-    /**
-     * @param Pan the Pan to set
-     */
-    public void setPan(String Pan) {
-        this.Pan = Pan;
-    }
-
-    /**
-     * @return the Pri
-     */
-    public String getPri() {
-        return Pri;
-    }
-
-    /**
-     * @param Pri the Pri to set
-     */
-    public void setPri(String Pri) {
-        this.Pri = Pri;
-    }
-
-    /**
-     * @return the Pps
-     */
-    public String getPps() {
-        return Pps;
-    }
-
-    /**
-     * @param Pps the Pps to set
-     */
-    public void setPps(String Pps) {
-        this.Pps = Pps;
+    public void setPRI(String PRI) {
+        this.PRI = PRI;
     }
 
     /**
@@ -516,48 +453,6 @@ public class Delegacion {
      */
     public void setPRD(String PRD) {
         this.PRD = PRD;
-    }
-
-    /**
-     * @return the Pfcrn
-     */
-    public String getPfcrn() {
-        return Pfcrn;
-    }
-
-    /**
-     * @param Pfcrn the Pfcrn to set
-     */
-    public void setPfcrn(String Pfcrn) {
-        this.Pfcrn = Pfcrn;
-    }
-
-    /**
-     * @return the Parm
-     */
-    public String getParm() {
-        return Parm;
-    }
-
-    /**
-     * @param Parm the Parm to set
-     */
-    public void setParm(String Parm) {
-        this.Parm = Parm;
-    }
-
-    /**
-     * @return the Unopdm
-     */
-    public String getUnopdm() {
-        return Unopdm;
-    }
-
-    /**
-     * @param Unopdm the Unopdm to set
-     */
-    public void setUnopdm(String Unopdm) {
-        this.Unopdm = Unopdm;
     }
 
     /**
@@ -589,17 +484,297 @@ public class Delegacion {
     }
 
     /**
-     * @return the DNoRegistrados
+     * @return the Movimiento
      */
-    public String getDNoRegistrados() {
-        return DNoRegistrados;
+    public String getMovimiento() {
+        return Movimiento;
     }
 
     /**
-     * @param DNoRegistrados the DNoRegistrados to set
+     * @param Movimiento the Movimiento to set
      */
-    public void setDNoRegistrados(String DNoRegistrados) {
-        this.DNoRegistrados = DNoRegistrados;
+    public void setMovimiento(String Movimiento) {
+        this.Movimiento = Movimiento;
+    }
+
+    /**
+     * @return the NuevaAlianza
+     */
+    public String getNuevaAlianza() {
+        return NuevaAlianza;
+    }
+
+    /**
+     * @param NuevaAlianza the NuevaAlianza to set
+     */
+    public void setNuevaAlianza(String NuevaAlianza) {
+        this.NuevaAlianza = NuevaAlianza;
+    }
+
+    /**
+     * @return the PRIPVEM
+     */
+    public String getPRIPVEM() {
+        return PRIPVEM;
+    }
+
+    /**
+     * @param PRIPVEM the PRIPVEM to set
+     */
+    public void setPRIPVEM(String PRIPVEM) {
+        this.PRIPVEM = PRIPVEM;
+    }
+
+    /**
+     * @return the PRDPTMovimiento
+     */
+    public String getPRDPTMovimiento() {
+        return PRDPTMovimiento;
+    }
+
+    /**
+     * @param PRDPTMovimiento the PRDPTMovimiento to set
+     */
+    public void setPRDPTMovimiento(String PRDPTMovimiento) {
+        this.PRDPTMovimiento = PRDPTMovimiento;
+    }
+
+    /**
+     * @return the Convergencia
+     */
+    public String getConvergencia() {
+        return Convergencia;
+    }
+
+    /**
+     * @param Convergencia the Convergencia to set
+     */
+    public void setConvergencia(String Convergencia) {
+        this.Convergencia = Convergencia;
+    }
+
+    /**
+     * @return the PRDPTConvergencia
+     */
+    public String getPRDPTConvergencia() {
+        return PRDPTConvergencia;
+    }
+
+    /**
+     * @param PRDPTConvergencia the PRDPTConvergencia to set
+     */
+    public void setPRDPTConvergencia(String PRDPTConvergencia) {
+        this.PRDPTConvergencia = PRDPTConvergencia;
+    }
+
+    /**
+     * @return the PRDPT
+     */
+    public String getPRDPT() {
+        return PRDPT;
+    }
+
+    /**
+     * @param PRDPT the PRDPT to set
+     */
+    public void setPRDPT(String PRDPT) {
+        this.PRDPT = PRDPT;
+    }
+
+    /**
+     * @return the PRDConvergencia
+     */
+    public String getPRDConvergencia() {
+        return PRDConvergencia;
+    }
+
+    /**
+     * @param PRDConvergencia the PRDConvergencia to set
+     */
+    public void setPRDConvergencia(String PRDConvergencia) {
+        this.PRDConvergencia = PRDConvergencia;
+    }
+
+    /**
+     * @return the PTConvergencia
+     */
+    public String getPTConvergencia() {
+        return PTConvergencia;
+    }
+
+    /**
+     * @param PTConvergencia the PTConvergencia to set
+     */
+    public void setPTConvergencia(String PTConvergencia) {
+        this.PTConvergencia = PTConvergencia;
+    }
+
+    /**
+     * @return the PSD
+     */
+    public String getPSD() {
+        return PSD;
+    }
+
+    /**
+     * @param PSD the PSD to set
+     */
+    public void setPSD(String PSD) {
+        this.PSD = PSD;
+    }
+
+    /**
+     * @return the PASC
+     */
+    public String getPASC() {
+        return PASC;
+    }
+
+    /**
+     * @param PASC the PASC to set
+     */
+    public void setPASC(String PASC) {
+        this.PASC = PASC;
+    }
+
+    /**
+     * @return the PANNuevaAlianza
+     */
+    public String getPANNuevaAlianza() {
+        return PANNuevaAlianza;
+    }
+
+    /**
+     * @param PANNuevaAlianza the PANNuevaAlianza to set
+     */
+    public void setPANNuevaAlianza(String PANNuevaAlianza) {
+        this.PANNuevaAlianza = PANNuevaAlianza;
+    }
+
+    /**
+     * @return the FC
+     */
+    public String getFC() {
+        return FC;
+    }
+
+    /**
+     * @param FC the FC to set
+     */
+    public void setFC(String FC) {
+        this.FC = FC;
+    }
+
+    /**
+     * @return the MP
+     */
+    public String getMP() {
+        return MP;
+    }
+
+    /**
+     * @param MP the MP to set
+     */
+    public void setMP(String MP) {
+        this.MP = MP;
+    }
+
+    /**
+     * @return the PAS
+     */
+    public String getPAS() {
+        return PAS;
+    }
+
+    /**
+     * @param PAS the PAS to set
+     */
+    public void setPAS(String PAS) {
+        this.PAS = PAS;
+    }
+
+    /**
+     * @return the PSN
+     */
+    public String getPSN() {
+        return PSN;
+    }
+
+    /**
+     * @param PSN the PSN to set
+     */
+    public void setPSN(String PSN) {
+        this.PSN = PSN;
+    }
+
+    /**
+     * @return the PLM
+     */
+    public String getPLM() {
+        return PLM;
+    }
+
+    /**
+     * @param PLM the PLM to set
+     */
+    public void setPLM(String PLM) {
+        this.PLM = PLM;
+    }
+
+    /**
+     * @return the PANPVEM
+     */
+    public String getPANPVEM() {
+        return PANPVEM;
+    }
+
+    /**
+     * @param PANPVEM the PANPVEM to set
+     */
+    public void setPANPVEM(String PANPVEM) {
+        this.PANPVEM = PANPVEM;
+    }
+
+    /**
+     * @return the PCD
+     */
+    public String getPCD() {
+        return PCD;
+    }
+
+    /**
+     * @param PCD the PCD to set
+     */
+    public void setPCD(String PCD) {
+        this.PCD = PCD;
+    }
+
+    /**
+     * @return the PARM
+     */
+    public String getPARM() {
+        return PARM;
+    }
+
+    /**
+     * @param PARM the PARM to set
+     */
+    public void setPARM(String PARM) {
+        this.PARM = PARM;
+    }
+
+    /**
+     * @return the DS
+     */
+    public String getDS() {
+        return DS;
+    }
+
+    /**
+     * @param DS the DS to set
+     */
+    public void setDS(String DS) {
+        this.DS = DS;
     }
 
     /**
@@ -671,7 +846,9 @@ public class Delegacion {
     public void setDParticipacion(String DParticipacion) {
         this.DParticipacion = DParticipacion;
     }
+
    
+
    
     
 }

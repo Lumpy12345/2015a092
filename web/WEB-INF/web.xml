@@ -52,6 +52,14 @@
         <servlet-name>ListarXML</servlet-name>
         <servlet-class>Servlets.ListarXML</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Pronostico</servlet-name>
+        <servlet-class>Servlets.Pronostico</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SComparativa</servlet-name>
+        <servlet-class>Servlets.SComparativa</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ActualizarUsuario</servlet-name>
         <url-pattern>/ActualizarUsuario</url-pattern>
@@ -103,6 +111,14 @@
     <servlet-mapping>
         <servlet-name>ListarXML</servlet-name>
         <url-pattern>/ListarXML</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Pronostico</servlet-name>
+        <url-pattern>/Pronostico</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SComparativa</servlet-name>
+        <url-pattern>/SComparativa</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

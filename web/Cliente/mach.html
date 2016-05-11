@@ -4,30 +4,21 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">  
-     <title>TT1 2015-A092</title>
+    <title>TT1 2015-A092</title>
     <!-- Bootstrap -->
     <script type="text/JavaScript" src="../Recursos/js/Funciones.js"></script>
-      <link href="../Recursos/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Recursos/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../Recursos/css/styles.css">
-    <link rel="stylesheet" href="../Recursos/css/queries.css">
-  <link rel="stylesheet" href="../Recursos/openlayers/ol.css" type="text/css">
+    <link href="../Recursos/js/demo.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../Recursos/openlayers/ol.css" type="text/css">
     <script src="../Recursos/openlayers/ol.js"></script>
-     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+   
+<!--     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />-->
 	  <!-- Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Sintony:400,700' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <style>
-                 #map-id {
-                         width: auto;
-                         height: 200px;
-                 }
-         </style>
+<!--    <link href='http://fonts.googleapis.com/css?family=Sintony:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>-->
+   
+
   </head>
   <body>
       
@@ -38,12 +29,13 @@
             <ul class="clearfix">
                 <li><a href="index.html" class="active">Inicio</a></li>
                  <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Consulta<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="mapa.html">Historial</a></li>
-            <li><a href="comparativa.html">Comparativa</a></li>
-          </ul>
-        </li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Consulta<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="mapa.html">Historial</a></li>
+                      <li><a href="mach.html">Pronostico</a></li>
+                      
+                    </ul>
+                </li>
                 <li><a href="#" onclick="Cerrar_Sesion()">Cerrar Sesion</a></li>
             </ul>
              
@@ -53,6 +45,8 @@
         <a href="#" id="pull"><i class="fa fa-bars fa-2x"></i></a>
         </div>   
         </header> 
+      
+      <span class="ir-arriba">Ir Arriba</span>
    
     <div class="container">
     <div class="arrow"></div>
@@ -60,161 +54,155 @@
 
     <div class="text-inter">
     <div class="container">
-      <div class="row">
+      
         <div class="col-md-6">
-          <h3>Pronosticos a futuro.</h3>
-          <p>Selecciona la regiòn,tipo de eleccion e información deseada.</p>
-         
+          <h3>Pronostico a futuro.</h3>
+          <p>Selecciona la región deseada.</p>
+          <br>
+          <p>Se mostrara el cambio a lo largo de los diferentes procesos politicos del 2000 al 2015</p>
           
-          <div style="padding-right: 70%;">
-           <label for="sel1">Tipo de Elección</label>
-          <select class="form-control" id="sel1">
-            <option>Federal</option>
-            <option>Senadores</option>
-            <option>Diputado</option>
-          </select>
-        </div>
+         
         <br>
-        <label for="sel1">Información</label><br>
+<!--        <label for="sel1">Información</label><br>
           <label class="radio-inline"><input type="radio" name="optradio">Participación Ciudadana</label>
           <label class="radio-inline"><input type="radio" name="optradio">Votos</label>
           <label class="radio-inline"><input type="radio" name="optradio">Partido Politico</label>
           <br><br>
-        <button type="button" class="btn  btn-md">Generar Pronostico</button>
+        <button type="button" class="btn  btn-md">Generar Pronostico</button>-->
         </div>
           
-        <div class="col-md-6"  style="padding-bottom: 250px;">
-       
-             <h1>Entidad Federativa: Distrito Federal</h1>
-            <div id="mouse-position"></div>
-         <div id="map" ></div>
-<script>
-
-
-
-var mousePositionControl = new ol.control.MousePosition({
-        coordinateFormat: ol.coordinate.createStringXY(4),
-        projection: 'EPSG:4326',
-        // comment the following two lines to have the mouse position
-        // be placed within the map.
-        className: 'custom-mouse-position',
-        target: document.getElementById('mouse-position'),
-        undefinedHTML: '&nbsp;'
-      });
-
- var format = 'image/png';
-var untiled = new ol.layer.Image({
-        source: new ol.source.ImageWMS({
-          ratio: 1,
-          url: 'http://localhost:8080/geoserver/cite/wms',
-          params: {'FORMAT': format,
-                   'VERSION': '1.1.0',  
-                LAYERS: 'cite:DF',
-                STYLES: '',
-          }
-        })
-      });
-      var tiled = new ol.layer.Tile({
-        visible: false,
-        source: new ol.source.TileWMS({
-          url: 'http://localhost:8080/geoserver/cite/wms',
-          params: {'FORMAT': format, 
-                   'VERSION': '1.1.0',
-                   tiled: true,
-                LAYERS: 'cite:DF',
-                STYLES: '',
-          }
-        })
-      });
-      
-  var map = new ol.Map
-  (
-  {
-
-
-    controls: ol.control.defaults({
-          attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
-            collapsible: false
-          })
-        }).extend([mousePositionControl]),
-
-
-    layers: 
-    [
-          new ol.layer.Image
-          ({
-                opacity : 0.9,
-                source: new ol.source.ImageWMS
-                ({
-                      ratio: 1,
-                      url: 'http://localhost:8080/geoserver/cite/wms',
-                      params: 
-                      {
-                            'FORMAT': 'image/png',
-                            'VERSION': '1.1.0',  
-                            LAYERS: 'cite:DF',
-                            STYLES: '',
-                            'cql_filter' : "cve_mun = '005'"
-                      }
-
-                })
-
-          })
-          ,
-          new ol.layer.Image
-          ({
-                opacity : 0.2,
-                source: new ol.source.ImageWMS
-                ({
-                      ratio: 1,
-                      url: 'http://localhost:8080/geoserver/cite/wms',
-                      params: 
-                      {
-                            'FORMAT': 'image/png',
-                            'VERSION': '1.1.0',  
-                            LAYERS: 'cite:DF',
-                            STYLES: '',
-                      }
-
-                })
-
-
-          })
-    ],
-
-    view: new ol.View({
-      center: ol.proj.transform([-58.0930, 2.7979], 'EPSG:4326', 'EPSG:3857'),
-      zoom: 9
-    }),
-    target: 'map'
-  }
-  );
-
-   map.on('singleclick', function(evt) {
-        document.getElementById('nodelist').innerHTML = "Loading... please wait...";
-        var view = map.getView();
-        var viewResolution = view.getResolution();
-        var source = untiled.get('visible') ? untiled.getSource() : tiled.getSource();
-        var url = source.getGetFeatureInfoUrl(
-          evt.coordinate, viewResolution, view.getProjection(),
-          {'INFO_FORMAT': 'text/html', 'FEATURE_COUNT': 50});
-        if (url) {
-          document.getElementById('nodelist').innerHTML = '<iframe seamless src="' + url + '"></iframe>';
-        }
-      });
-
-document.getElementById("mouse-position").style.display = 'none';
-document.getElementById("mouse-position").style.display = 'block';
-
-</script>
-            
-            
-            
+        <div class="col-md-6">
+                <h1>Entidad Federativa: Ciudad de México</h1>
+                <div id="map" ></div>
+                
+                <div id="nodelist"></div>
         </div>  
-      </div>
+          
+      
     </div>
+    
+   <!--Graficas-->
+   <div class="container-fluid">
+       <h1 id="idEstadoActivo" class="titulo" align="center"></h1>
+       <section class="col-xs-12">
+            <div class="col-md-6">
+            <!--Incremento -->
+                <div id="p03" style="max-width: 600px; height: 400px; margin: 0 auto"></div>
+            </div>
+             
+            
+            <div class="col-md-6">
+                <div id="p36" style="max-width: 600px; height: 400px; margin: 0 auto"></div>
+            </div>
+             
+        
+       
+            <div class="col-md-6">
+                <div id="p69" style="max-width: 600px; height: 400px; margin: 0 auto"></div>
+            </div>
+             
+            
+            <div class="col-md-6">
+                <div id="p92" style="max-width: 600px; height: 400px; margin: 0 auto"></div>
+            </div>
+           
+            
+            <div class="col-md-12">
+                <div id="p25" style="max-width: 750px; height: 400px; margin: 0 auto"></div>
+            </div>
+           
+           <div class="container">
+            <!-- Comparacion de Participación-->
+            <div class="col-md-12">
+                <div class="centerTable" id="tituloP"></div>
+                    <div class="col-md-4">
+                        
+                         <div id="p1"> <canvas id="myChart" width="300" height="300"></canvas> </div>
+                    </div> 
+                    <div id="leyenda" class="col-md-3 ">
+                         <div id="js-legend" class="chart-legend centerTable"></div>   
+                         
+                    </div>
+                    <div class="col-md-4">
+                         <div id="p2"> <canvas id="myChart2" width="300" height="300"></canvas> </div>
+                         
+                    </div>
+            </div>
+         </div>
+       
+        
+        
+           
+        
+       </section>
     </div>
-  
+   
+   <div class="container" id="porcen">
+        <div  class="centerTable">
+           <div id="p18" ></div>
+        </div>
+      
+    </div>
+   </div>
+  <style type="text/css">
+
+.ir-arriba {
+	display:none;
+	padding:20px;
+        
+	background:#024959;
+	font-size:20px;
+	color:#fff;
+	cursor:pointer;
+	position: fixed;
+	bottom:170px;
+	right:20px;
+}
+      table, th
+      {
+        background-color:  #63c6ae;
+        opacity: 0.8;
+      }
+      table, td
+      {
+        background-color:  #d7dfe2;
+      }
+      #leyenda
+      {
+              padding-top: 20%;
+      }
+      #idTitulo
+      {
+        margin-top: 30px;
+        text-align: center;
+      }
+       div.centerTable{
+        text-align: center;
+        padding-top: 10px;
+        }
+        
+        div.centerTable table {
+       margin: 0 auto;
+       text-align: left;
+       border: 1px solid rgba(0,0,0,.075);
+        }  
+        
+        div.centerTable td{
+            padding: 7px;
+        }
+      #map
+      {
+        border-radius: 10px;
+        border-width: 2px;
+        border-style: solid;
+        border-color: #509CBF;
+       
+        width: 60%;
+        height: 500px;
+        margin-left: 8%;
+        margin-right: 25%;
+      }
+  </style>
     <footer>
       <div class="container">
         <div class="row">
@@ -245,8 +233,14 @@ document.getElementById("mouse-position").style.display = 'block';
         </div>
       </div>  
     </footer>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-     <script src="../Recursos/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../Recursos/js/jquery-1.12.1.min.js"></script>
+    <script src="../Recursos/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../Recursos/js/pronostico.js"></script>
+    <script src="../Recursos/js/Chart.js"></script>
+    <script src="../Recursos/js/legend.js"></script>
+    <script type="text/javascript" src="../Recursos/js/highcharts.js"></script>
+<!--    <script src="../Recursos/js/exporting.js"></script>-->
+    <script src="../Recursos/js/pattern-fill.js"></script>
       
   </body>
 </html>

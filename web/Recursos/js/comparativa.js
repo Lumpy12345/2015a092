@@ -1,32 +1,11 @@
-var info = [];
-var victoriaDelegaciones = [];
-var listCVE = ['002','003','004','005','006','007','008','009','010','011','012','013','014','015','016','017'];
-var listNombreDelegacion = ['Azcapotzalco','Coyoacán','Cuajimalpa de Morelos','Gustavo A. Madero','Iztacalco',
-							'Iztapalapa','La Magdalena Contreras', 'Milpa Alta','Álvaro Obregón','Tláhuac',
-							'Tlalpan','Xochimilco','Benito Juárez','Cuauhtémoc','Miguel Hidalgo','Venustiano Carranza'];
-var partidoGanador; 
-var delegacionSeleccionada;
+
 var CVE = "";
 var anio = "";
 var primerIntento = true;
-var porcentajeVictoria;
 
-function partido(nombre,color,high,voto,anio)
-{
-    this.nombre=nombre;
-    this.color=color;
-    this.high=high;
-    this.voto=voto;
-    this.anio = anio;
-}
-
-function victoriaDelegacion(nombreDelegacion,votos)
-{
-	this.nombreDelegacion = nombreDelegacion;
-	this.votos = votos;
-}
 
 $('#idDelegacion').hide();
+$('#generarInforme').hide();
 $('#map').hide();
 $('#idTabla1').hide();
 $('#idTabla2').hide();
@@ -37,52 +16,6 @@ $('#partidoGanador').hide();
 
 $('#myChart').hide();
 $('#porcentajeVictorias').hide();
-
-/////////////////////////////////////////////////////////////
-function obtenerPartidoGanador(lista)
-{
-	var Partido1 = lista[0];
-	var PartidoGanador = lista[1];
-
-	if(parseInt(Partido1.voto) > parseInt(PartidoGanador.voto))
-	{
-		PartidoGanador = Partido1;
-	}
-
-	for(var i = 2 ; i < lista.length ; i++ )
-	{
-		Partido1 = lista[i];
-		
-		if(parseInt(Partido1.voto) > parseInt(PartidoGanador.voto))
-		{
-			PartidoGanador = Partido1;
-		}
-	}
-
-	return PartidoGanador;
-}
-
-function mostrarPartidoGanador()
-{
-	partidoGanador = obtenerPartidoGanador(info);
-	var imgURL = obtenerURLPartido(partidoGanador);
-
-	
-
-	$('#partidoGanador').empty();
-	$('#partidoGanador').append('<h1>Partido ganador.</h1>');
-	$('#partidoGanador').append('<div><img src=\"'+ imgURL +'\" width="350" height="350" /></div>');
-	//$('#partidoGanador').append('<p>' + partidoGanador.nombre + '</p>');
-	$('#partidoGanador').append('<p>Votos : ' + partidoGanador.voto + '</p>');
-
-	info = info.sort(function(a, b)
-			{
-				return parseInt(b.voto) - parseInt(a.voto);
-			});
-	//$('#partidoGanador').append(info);
-	$('#partidoGanador').fadeIn('slow');
-
-}
 
 function mostrarMapa()
 {
@@ -102,283 +35,6 @@ function mostrarMapa()
 		}
 	}
 }
-
-function mostrarTabla1()
-{
-	$('#idTxtTabla1').show();
-	$('#idTabla1').show();
-	$('#idTabla1 tbody').empty();
-
-	info = info.sort(function(a, b)
-			{
-				return parseInt(b.voto) - parseInt(a.voto);
-			});
-
-	for(var i = 0 ; i < info.length ; i ++)
-	{
-		var $row = $('<tr></tr>');
-
-		$row.append('<th scope="row" >'+ (i+1) +'</th>');
-		$row.append('<td>'+ info[i].nombre +'</td>');
-		$row.append('<td>'+ info[i].voto +'</td>');
-
-		$('#idTabla1 tbody').append($row);
-	}
-}
-
-function mostrarTabla2()
-{
-	victoriaDelegaciones.length = 0;
-	$('#idTabla2 table tbody').empty();
-
-	for(var i = 0 ; i < listCVE.length ; i++ )
-	{
-		$.ajax
-		({ 
-	        type: "GET",  
-	        async: false,
-	        url: "http://localhost:8080/TT/ObtenerDelegacion",  
-	        data: "Clave=" +listCVE[i]+ "&ano=ano" +anio,  
-	        success: function(result)
-	        {
-	        	listaPartidos_v2(result,partidoGanador,i);
-	        }
-	       	,
-		    error: function (xhr, ajaxOptions, thrownError)
-		    {
-		        alert("Error: "+xhr.status);
-		        alert("Error: "+ thrownError);
-		    }
-	  	});
-	}
-
-	victoriaDelegaciones = victoriaDelegaciones.sort(function(a, b)
-			{
-				return parseInt(b.votos) - parseInt(a.votos);
-			});
-
-	for(var j = 0 ; j < victoriaDelegaciones.length ; j++)
-	{
-		var $row = $('<tr></tr>');
-
-		//$row.append('<th scope="row" >'+ (i+1) +'</th>');
-		$row.append('<td>'+ victoriaDelegaciones[j].nombreDelegacion +'</td>');
-		$row.append('<td>'+ victoriaDelegaciones[j].votos +'</td>');
-
-		$('#idTabla2 table tbody').append($row);
-	}
-
-	$('#idTabla2').show();
-}
-
-function listaPartidos_v2(result, partidoGanador,indexCVE)
-{
-	var partidos = [];
-
-	if(anio.includes('1994'))
-    {
-    	partidos.push(new partido("PAN","","",result.PAN,1994));
-        partidos.push(new partido("PRI","","",result.PRI,1994));
-        partidos.push(new partido("PPS","","",result.PPS,1994));
-        partidos.push(new partido("PRD","","",result.PRD,1994));
-        partidos.push(new partido("PFCRN","","",result.PFCRN,1994));
-        partidos.push(new partido("PARM","","",result.PARM,1994));
-        partidos.push(new partido("UNO","","",result.UNO,1994));
-        partidos.push(new partido("PT","","",result.PT,1994));
-        partidos.push(new partido("PVEM","","",result.PVEM,1994));
-    }
-    if(anio.includes('2000'))
-    {
-        partidos.push(new partido("AC","","",result.AC,2000));
-        partidos.push(new partido("PRI","","",result.PRI,2000));
-        partidos.push(new partido("AM","","",result.AM,2000));
-        partidos.push(new partido("PCD","","",result.PCD,2000));
-        partidos.push(new partido("PARM","","",result.PARM,2000));
-        partidos.push(new partido("DSPPN","","",result.DSPPN,2000));
-    }
-    if(anio.includes('2006'))
-    {
-        partidos.push(new partido("PAN","","",result.PAN,2006));
-        partidos.push(new partido("Alianza por México","","",result.Alianza,2006));
-        partidos.push(new partido("Por el bien de todos","","",result.Porelbien,2006));
-        partidos.push(new partido("Nueva Alianza","","",result.NuevaAlianza,2006));
-        partidos.push(new partido("Alternativa","","",result.Alternativa,2006));
-    }
-    if(anio.includes('2012'))
-    {
-        partidos.push(new partido("PAN","","",result.PAN,2012));
-        partidos.push(new partido("PRI","","",result.PRI,2012));
-        partidos.push(new partido("PRD","","",result.PRD,2012));
-        partidos.push(new partido("PVEM","","",result.PVEM,2012));
-        partidos.push(new partido("PT","","",result.PT,2012));
-        partidos.push(new partido("Movimiento Ciudadano","","",result.Movimiento,2012));
-        partidos.push(new partido("Nueva Alianza","","",result.NuevaAlianza,2012));
-        partidos.push(new partido("Coalición PRI-PVEM","","",result.PRIPVEM,2012));
-        partidos.push(new partido("Coalición PRD-PT-MC","","",result.PRDPTMC,2012));
-        partidos.push(new partido("Coalición PRD-PT","","",result.PRDPT,2012));
-        partidos.push(new partido("Coalición PRD-MC","","",result.PRDMC,2012));
-        partidos.push(new partido("Coalición PT-MC","","",result.PTMC,2012));
-    } 
-
-    partidos = partidos.sort(function(a, b)
-			{
-				return parseInt(b.voto) - parseInt(a.voto);
-			});
-    
-
-    if(partidos[0].nombre == partidoGanador.nombre)
-    {
-    	console.log('Partido[0] : ' + partidos[0].nombre + ' : ' + partidos[0].voto);
-    	console.log('indexCVE : ' + indexCVE);
-    	console.log('listNombreDelegacion[indexCVE] : ' + listNombreDelegacion[indexCVE]);
-
-    	victoriaDelegaciones.push(new victoriaDelegacion(listNombreDelegacion[indexCVE],partidos[0].voto));
-    }
-
-
-}
-
-function obtenerPartidos()
-{
-	info.length = 0;
-
-	obtenerPartidosCallOut(  $('#idSelectAnio').val() );
-}
-
-function obtenerPartidosCallOut(paramAnio)
-{
-	anio = paramAnio;
-
-	$.ajax
-	({ 
-        type: "GET",  
-        async: false,
-        url: "http://localhost:8080/TT/ObtenerDelegacion",  
-        data: "Clave=" +CVE+ "&ano=ano" +paramAnio,  
-        success: listaPartidos
-       	,
-	    error: function (xhr, ajaxOptions, thrownError)
-	    {
-	        alert("Error: "+xhr.status);
-	        alert("Error: "+ thrownError);
-	    }
-  	}); 
-}
-
-function listaPartidos(result)
-{
-	if(anio.includes('1994'))
-    {
-    	info.push(new partido("PAN","","",result.PAN,1994));
-        info.push(new partido("PRI","","",result.PRI,1994));
-        info.push(new partido("PPS","","",result.PPS,1994));
-        info.push(new partido("PRD","","",result.PRD,1994));
-        info.push(new partido("PFCRN","","",result.PFCRN,1994));
-        info.push(new partido("PARM","","",result.PARM,1994));
-        info.push(new partido("UNO","","",result.UNO,1994));
-        info.push(new partido("PT","","",result.PT,1994));
-        info.push(new partido("PVEM","","",result.PVEM,1994));
-    }
-    if(anio.includes('2000'))
-    {
-        info.push(new partido("AC","","",result.AC,2000));
-        info.push(new partido("PRI","","",result.PRI,2000));
-        info.push(new partido("AM","","",result.AM,2000));
-        info.push(new partido("PCD","","",result.PCD,2000));
-        info.push(new partido("PARM","","",result.PARM,2000));
-        info.push(new partido("DSPPN","","",result.DSPPN,2000));
-    }
-    if(anio.includes('2006'))
-    {
-        info.push(new partido("PAN","","",result.PAN,2006));
-        info.push(new partido("Alianza por México","","",result.Alianza,2006));
-        info.push(new partido("Por el bien de todos","","",result.Porelbien,2006));
-        info.push(new partido("Nueva Alianza","","",result.NuevaAlianza,2006));
-        info.push(new partido("Alternativa","","",result.Alternativa,2006));
-    }
-    if(anio.includes('2012'))
-    {
-        info.push(new partido("PAN","","",result.PAN,2012));
-        info.push(new partido("PRI","","",result.PRI,2012));
-        info.push(new partido("PRD","","",result.PRD,2012));
-        info.push(new partido("PVEM","","",result.PVEM,2012));
-        info.push(new partido("PT","","",result.PT,2012));
-        info.push(new partido("Movimiento Ciudadano","","",result.Movimiento,2012));
-        info.push(new partido("Nueva Alianza","","",result.NuevaAlianza,2012));
-        info.push(new partido("Coalición PRI-PVEM","","",result.PRIPVEM,2012));
-        info.push(new partido("Coalición PRD-PT-MC","","",result.PRDPTMC,2012));
-        info.push(new partido("Coalición PRD-PT","","",result.PRDPT,2012));
-        info.push(new partido("Coalición PRD-MC","","",result.PRDMC,2012));
-        info.push(new partido("Coalición PT-MC","","",result.PTMC,2012));
-    } 
-
-    mostrarPartidos();
-}
-
-function mostrarPartidos()
-{
-	$('#idSelectPartido').empty();
-	$('#idSelectPartido').append('<option>-- Ninguno --</option>');
-
-	info.forEach
-	(
-		function(partido)
-		{
-			$('#idSelectPartido').append('<option>' + partido.nombre + '</option>');
-		}
-	);
-
-	
-	$('#idPartidos').show();
-}
-
-
-function doughnutChart()
-{
-	$('#myChart').show();
-
-	var data = 
-	[
-	  {
-	      value: victoriaDelegaciones.length,
-	      color: "#46BFBD",
-	      highlight: "#5AD3D1",
-	      label: "Delegaciones ganadas"
-	  },
-	  {
-	      value: 16 - victoriaDelegaciones.length,
-	      color: "#F7464A",
-	      highlight: "#FF5A5E",
-	      label: "Delegaciones perdidas"
-	  }
-	];
-
-	var options = 
-	{
-	  segmentShowStroke : true,
-	  segmentStrokeColor : "#fff",
-	  segmentStrokeWidth : 4,
-	  percentageInnerCutout : 50,
-	  animationSteps : 100,
-	  animationEasing : "easeOutBounce",
-	  animateRotate : true,
-	  animateScale : false,
-	  legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-	}
-
-	var ctx = $("#myChart").get(0).getContext("2d");
-	var myDoughnutChart = new Chart(ctx).Doughnut(data,options);
-	legend(document.getElementById("js-legend"), data, myDoughnutChart, "<%=label%>: <%=value%>");
-
-	porcentajeVictoria = ((victoriaDelegaciones.length) * 100) / 16;
-
-	$('#porcentajeVictorias').empty();
-	$('#porcentajeVictorias').show();
-	$('#porcentajeVictorias').append('<p>' + porcentajeVictoria + '%</p>');
-	$('#porcentajeVictorias').append('<p>de éxito en CDMX</p>');
-
-}
-
 
 /////////////////////////////////////////////////////////////////////
 function asignLayerGroup(cve)
@@ -526,84 +182,328 @@ var untiled = new ol.layer.Image
           	$('#nodelist').hide();
             $("#idIFRAME").load
             (         
-				function()
-				{
-					setTimeout(
-						function()
-						{
-							CVE = $('#nodelist').get(0).children[0].contentDocument.children[0].children[1].children[0].children[1].children[1].children[4].innerHTML;
-		                    var Estado = $('#nodelist').get(0).children[0].contentDocument.children[0].children[1].children[0].children[1].children[1].children[5].innerHTML;
-		                    Estado = nombreRealDelegacion(Estado);
-		                    delegacionSeleccionada = Estado;
-		                    obtenerPartidos();
-
-		                    var newLayerGroup = asignLayerGroup(CVE);
-                    		map.setLayerGroup(newLayerGroup);
-
-                    		$('#idDelegacion').text(Estado);
-
-                    		mostrarPartidoGanador();
-                    		mostrarTabla1();
-                    		mostrarTabla2();
-                    		doughnutChart();
-						},1000
-					);
-				}
-			);
+      				function()
+      				{
+      					setTimeout(
+      						function()
+      						{
+      							CVE = $('#nodelist').get(0).children[0].contentDocument.children[0].children[1].children[0].children[1].children[1].children[4].innerHTML;
+      		                    var Estado = $('#nodelist').get(0).children[0].contentDocument.children[0].children[1].children[0].children[1].children[1].children[5].innerHTML;
+      		                    Estado = nombreRealDelegacion(Estado);
+      		                    delegacionSeleccionada = Estado;
+      		                    //obtenerPartidos();
+                              $.ajax
+                              ({ 
+                                  type: "GET",  
+                                  async: false,
+                                  url: "http://localhost:8080/TT/SComparativa",  
+                                  data: "cve=" +CVE+ "&anio=" +$('#idSelectAnio').val(),  
+                                  success: getComparativa
+                                  ,
+                                error: function (xhr, ajaxOptions, thrownError)
+                                {
+                                    console.log("Error: "+xhr.status);
+                                    console.log("Error: "+ thrownError);
+                                }
+                              });
+                              var newLayerGroup = asignLayerGroup(CVE);
+                              map.setLayerGroup(newLayerGroup);
+      						},1000
+      					);
+      				}
+			     );
 
 			$('#idIFRAME').attr('src',url);
+
 		}
 	});
+
+
+///////////// =============== /////////////
+var respuesta;
+
+var cve_mun;
+var nombre;
+var partidoganador;
+var tabla1 = [];
+var tabla2 = [];
+var delegacionesganadas;
+var delegacionesperdidas;
+var porcentaje;
+var votos;
+
+var root;
+
+function generarInforme()
+{
+  var rootXML = $('<root></root>');
+
+  var cve_munXML = $('<cve_mun>' + cve_mun + '</cve_mun>');
+  rootXML.append(cve_munXML);
+
+  var nombreXML = $('<nombre>' + nombre + '</nombre>');
+  rootXML.append(nombreXML);
+
+  var partidoganadorXML = $('<partidoganador>' + partidoganador + '</partidoganador>');
+  rootXML.append(partidoganadorXML);
+
+  ///////// tabla1
+  var tabla1XML = $('<tabla1></tabla1>');
+
+  for(var j = 0 ; j < tabla1.children.length ; j++)
+  {
+    var $row = $('<tr></tr>');
+
+      $row.append('<td>'+ tabla1.children[j].children[0].textContent +'</td>');
+      $row.append('<td>'+ tabla1.children[j].children[1].textContent +'</td>');
+
+    tabla1XML.append($row);
+  }
+  rootXML.append(tabla1XML);
+
+  ///////// tabla2
+  var tabla2XML = $('<tabla2></tabla2>');
+
+  for(var j = 0 ; j < tabla2.children.length ; j++)
+  {
+    var $row = $('<tr></tr>');
+
+      $row.append('<td>'+ tabla2.children[j].children[0].textContent +'</td>');
+      $row.append('<td>'+ tabla2.children[j].children[1].textContent +'</td>');
+      $row.append('<td>'+ tabla2.children[j].children[2].textContent +'</td>');
+
+    tabla2XML.append($row);
+  }
+  rootXML.append(tabla2XML);
+
+  //////////
+
+  var delegacionesganadasXML = $('<delegacionesganadas>' + delegacionesganadas + '</delegacionesganadas>');
+  rootXML.append(delegacionesganadasXML);
+
+  var delegacionesperdidasXML = $('<delegacionesperdidas>' + delegacionesperdidas + '</delegacionesperdidas>');
+  rootXML.append(delegacionesperdidasXML);
+
+  var porcentajeXML = $('<porcentaje>' + porcentaje + '</porcentaje>');
+  rootXML.append(porcentajeXML);
+
+  var votosXML = $('<votos>' + votos + '</votos>');
+  rootXML.append(votosXML);
+
+  console.log(rootXML.get(0).outerHTML);
+
+  $.ajax
+  ({ 
+      type: "POST",  
+      async: true,
+      url: "http://localhost:8080/TT/RecibeXML",  
+      data: "sesion=" + sessionStorage.getItem('SClave') + "&xml=" + rootXML.get(0).outerHTML ,  
+      success: function(result){console.log(result);}
+      ,
+    error: function (xhr, ajaxOptions, thrownError)
+    {
+        console.log("Error: "+xhr.status);
+        console.log("Error: "+ thrownError);
+    }
+  });
+
+}
+
+function getComparativa(result)
+{
+  root = result.firstChild;
+
+  cve_mun = root.children[0].textContent;
+  nombre = root.children[1].textContent;
+  partidoganador = root.children[2].textContent;
+
+  tabla1 = root.children[3];
+  tabla2 = root.children[4];
+  delegacionesganadas = root.children[5].textContent;
+  delegacionesperdidas = root.children[6].textContent;
+  porcentaje = root.children[7].textContent;
+  votos = root.children[8].textContent;
+
+  actualizarUI();
+}
+
+function actualizarUI()
+{
+  $('#generarInforme').show();
+  $('#idDelegacion').get(0).textContent = nombre;
+  mostrarPartido();
+  doughnutChart();
+  mostrarTabla1();
+  mostrarTabla2();
+}
+
+function mostrarPartido()
+{
+  var imgURL = obtenerURLPartido(partidoganador);
+  $('#partidoGanador').empty();
+  $('#partidoGanador').append('<h1>Partido ganador.</h1>');
+  $('#partidoGanador').append('<div><img src=\"'+ imgURL +'\" width="350" height="350" /></div>');
+  //$('#partidoGanador').append('<p>' + partidoGanador.nombre + '</p>');
+  $('#partidoGanador').append('<p>Votos : ' + votos + '</p>');
+  $('#partidoGanador').show();
+}
+
+function doughnutChart()
+{
+
+  $('#contenedorChart').empty();
+
+  var elChart = $('<div id="js-legend" class="chart-legend"></div><canvas id="myChart" width="400" height="400"></canvas><div id="porcentajeVictorias"></div>');
+
+  $('#contenedorChart').append(elChart);
+  //$('#myChart').show();
+
+  var data = 
+  [
+    {
+        value: delegacionesganadas,
+        color: "#46BFBD",
+        highlight: "#5AD3D1",
+        label: "Delegaciones ganadas"
+    },
+    {
+        value: delegacionesperdidas,
+        color: "#F7464A",
+        highlight: "#FF5A5E",
+        label: "Delegaciones perdidas"
+    }
+  ];
+
+  var options = 
+  {
+    segmentShowStroke : true,
+    segmentStrokeColor : "#fff",
+    segmentStrokeWidth : 4,
+    percentageInnerCutout : 50,
+    animationSteps : 100,
+    animationEasing : "easeOutBounce",
+    animateRotate : true,
+    animateScale : false,
+    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+  }
+
+  var ctx = $("#myChart").get(0).getContext("2d");
+  var myDoughnutChart = new Chart(ctx).Doughnut(data,options);
+  legend(document.getElementById("js-legend"), data, myDoughnutChart, "<%=label%>: <%=value%>");
+
+  $('#porcentajeVictorias').empty();
+  $('#porcentajeVictorias').show();
+  $('#porcentajeVictorias').append('<p>' + porcentaje + '%</p>');
+  $('#porcentajeVictorias').append('<p>de éxito en CDMX</p>');
+
+}
+
+function mostrarTabla1()
+{
+  $('#idTxtTabla1').show();
+  $('#idTabla1').show();
+  $('#idTabla1 tbody').empty();
+
+  for(var i = 0 ; i < tabla1.children.length ; i ++)
+  {
+    var $row = $('<tr></tr>');
+
+    $row.append('<th scope="row" >'+ (i+1) +'</th>');
+    $row.append('<td>'+ tabla1.children[i].children[0].textContent +'</td>');
+    $row.append('<td>'+ tabla1.children[i].children[1].textContent +'</td>');
+
+    $('#idTabla1 tbody').append($row);
+  }
+}
+
+function mostrarTabla2()
+{
+  $('#idTabla2 table tbody').empty();
+
+  for(var j = 0 ; j < tabla2.children.length ; j++)
+  {
+    var $row = $('<tr></tr>');
+
+      $row.append('<td>'+ tabla2.children[j].children[0].textContent +'</td>');
+      $row.append('<td>'+ tabla2.children[j].children[2].textContent +'</td>');
+
+    $('#idTabla2 table tbody').append($row);
+  }
+
+  $('#idTabla2').show();
+}
 
 function obtenerURLPartido(partidoGanador)
 {
 	var URL = 'http://localhost:8080/TT/Recursos/img/';
 
-	if(partidoGanador.nombre == 'PAN')
+	if(partidoGanador == 'pan')
 		return URL + 'PAN.png' ;
-	if(partidoGanador.nombre == 'PRI')
+
+	if(partidoGanador == 'pri')
 		return URL + 'PRI.jpg' ;
-	if(partidoGanador.nombre == 'PPS')
+
+	if(partidoGanador == 'PPS')
 		return URL + 'PPS.gif' ;
-	if(partidoGanador.nombre == 'PRD')
+
+	if(partidoGanador == 'prd')
 		return URL + 'PRD.jpg' ;
-	if(partidoGanador.nombre == 'PFCRN')
+
+	if(partidoGanador == 'PFCRN')
 		return URL + 'PFCRN.png' ;
-	if(partidoGanador.nombre == 'PARM')
+
+	if(partidoGanador == 'PARM')
 		return URL + 'PARM.png' ;
-	if(partidoGanador.nombre == 'UNO') // falta
-		return URL + '' ;
-	if(partidoGanador.nombre == 'PT')
+
+	if(partidoGanador == 'pan_na') // falta
+		return URL + 'pan_na.jpg' ;
+
+	if(partidoGanador == 'pt')
 		return URL + 'PT.png' ;
-	if(partidoGanador.nombre == 'PVEM')
+
+	if(partidoGanador == 'pvem')
 		return URL + 'PVEM.png' ;
-	if(partidoGanador.nombre == 'AC') // falta
+
+	if(partidoGanador == 'AC') // falta
 		return URL + '' ;
-	if(partidoGanador.nombre == 'AM') // falta
+
+	if(partidoGanador == 'AM') // falta
 		return URL + '' ;
-	if(partidoGanador.nombre == 'PCD')
+
+	if(partidoGanador == 'PCD')
 		return URL + 'PCD.jpg' ;
-	if(partidoGanador.nombre == 'DSPPN') //falta
-		return URL + '' ;
-	if(partidoGanador.nombre == 'Alianza por México')
+
+	if(partidoGanador == 'prd_con') //falta
+		return URL + 'prd_con.jpg' ;
+
+	if(partidoGanador == 'Alianza por México')
 		return URL + 'Alianza_por_México.jpg' ;
-	if(partidoGanador.nombre == 'Por el bien de todos')
+
+	if(partidoGanador == 'prd_pt_con')
 		return URL + 'PorElBienDeTodos.jpg' ;
-	if(partidoGanador.nombre == 'Nueva Alianza')
+
+	if(partidoGanador == 'panal')
 		return URL + 'NuevaAlianza.png' ;
-	if(partidoGanador.nombre == 'Alternativa')
+
+	if(partidoGanador == 'Alternativa')
 		return URL + 'alternativa.jpg' ;
-	if(partidoGanador.nombre == 'Movimiento Ciudadano')
+
+	if(partidoGanador == 'mc')
 		return URL + 'MC.jpeg' ;
-	if(partidoGanador.nombre == 'Coalición PRI-PVEM')
+
+	if(partidoGanador == 'pri_pvem')
 		return URL + 'PRI-PVEM.jpg' ;
-	if(partidoGanador.nombre == 'Coalición PRD-PT-MC')
+
+	if(partidoGanador == 'prd_pt_mc')
 		return URL + 'PRD-PT-MC.jpg' ;
-	if(partidoGanador.nombre == 'Coalición PRD-PT')
+
+	if(partidoGanador == 'prd_pt')
 		return URL + 'PRD-PT.jpg' ;
-	if(partidoGanador.nombre == 'Coalición PRD-MC')// falta
-		return URL + '' ;
-	if(partidoGanador.nombre == 'Coalición PT-MC') // falta
-		return URL + '' ;
+
+	if(partidoGanador == 'prd_pt_panal')// falta
+		return URL + 'prd_pt_panal.png' ;
+
+	if(partidoGanador == 'morena') // falta
+		return URL + 'morena.jpg' ;
 
 }

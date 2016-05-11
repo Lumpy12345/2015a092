@@ -6,18 +6,46 @@ var parti=[];
 var ctx ='';
 var myNewChart ='';
 var graf=[];
-var ca=new Array();
-var nor=new Array();
-var val=new Array();
-var nul=new Array();
-var tot=new Array();
-var lis=new Array();
+
+ 
 var partic=new Array();
 var CVE;
 var Estado;
 var año;
 //parametro
 var par;
+
+$('#generarInforme').hide();
+
+$('#idTabla1').hide();
+$('#idTabla2').hide();
+$('#idTxtTabla1').hide();
+
+$('#idPartidos').hide();
+$('#partidoGanador').hide();
+
+$('#myChart').hide();
+$('#porcentajeVictorias').hide();
+
+$(document).ready(function(){
+ 
+	$('.ir-arriba').click(function(){
+		$('body, html').animate({
+			scrollTop: '0px'
+		}, 300);
+	});
+ 
+	$(window).scroll(function(){
+		if( $(this).scrollTop() > 0 ){
+			$('.ir-arriba').slideDown(300);
+		} else {
+			$('.ir-arriba').slideUp(300);
+		}
+	});
+ 
+});       
+
+
 function asignLayerGroup(cve)
 {
   return new ol.layer.Group
@@ -183,76 +211,28 @@ var untiled = new ol.layer.Image({
                     
                     localStorage.setItem("CVE", CVE);
                     localStorage.setItem("par",par);
-                
-                    datosDelegacion(CVE,año,par);
+                   
+                        datosDelegacion(CVE,año,par);
+                    
                     Estado = $('#nodelist').get(0).children[0].contentDocument.children[0].children[1].children[0].children[1].children[1].children[5].innerHTML;
                     console.log(Estado + ":" + CVE);
                     Estado = nombreRealDelegacion(Estado);
-                    /*
-                    if(par!=null)
-                    {
-                            if(par.includes('participacion'))
-                            {
-                               
-                                datos="<div id='mostrardatos'>\n\
-                                            <div class='span3 tiny'> \n\
-                                                            <div class='pricing-table-header-tiny'>\n\
-                                                                    <h2 align='left'>Delegación:</h2>\n\
-                                                                    <h3 align='left'>"+Estado+"</h3>\n\
-                                                             </div>\n\
-                                                             <div class='pricing-table-features'>";
-                                                                        for(x=0;x<info.length;x++)
-                                                                        {
-                                                                            var y=info[x];
-                                                                            console.log(y);
-                                                                            datos=datos+"<p align='left'>"+y+"</p>";
-                                                                        }
-                                                            info.length=0;
-                                                            datos=datos+"</div>\n\
-                                            </div>\n\
-                                        </div>";  
-                             
-                            }
-
-                            else 
-
-                            if(par.includes('partido'))
-                            {
-
-                                        datos="<div id='mostrardatos'>\n\
-                                                    <div class='span3 tiny'> \n\
-                                                                    <div class='pricing-table-header-tiny'>\n\
-                                                                            <h2 align='left'>Delegación:</h2>\n\
-                                                                            <h3 align='left'>"+Estado+"</h3>\n\
-                                                                     </div>\n\
-                                                                      <div class='pricing-table-features'>";
-                                                                                for(x=0;x<info.length;x++)
-                                                                                {
-                                                                                    var y=info[x];
-                                                                                    console.log(y);
-                                                                                    datos=datos+"<p align='left'>"+y+"</p>";
-                                                                                }
-                                                                    info.length=0;
-                                                                    datos=datos+"</div>\n\
-                                                    </div>\n\
-                                                </div>";  
-                            }
-                           
-                    }
-                       */ 
-                     
-                    
+                   
                    $('#idEstadoActivo').get(0).innerHTML ="Delegación: "+delegacion;
                     $('#idEstadoActivo').hide();
                     $('#idEstadoActivo').fadeIn(0);
                    
                   
                     grafica(par,CVE);
+                    comparativa(CVE,año);
+                    
+                    
                    
                     var newLayerGroup = asignLayerGroup(CVE);
                     map.setLayerGroup(newLayerGroup);
                   }
                   ,
+                  //checar tiempos 
                   1000
                 );
               }
@@ -260,14 +240,14 @@ var untiled = new ol.layer.Image({
             $('#idIFRAME').attr('src',url);
         }
       });
-      
+
     //Cambio automatico al cambiar la fecha con partidos politicos  
 /***************************************************************************************************************/
     
-    document.getElementById('año').addEventListener('change',cambioselect,false);
+    document.getElementById('año').addEventListener('change',cambioPartido,false);
 
       
-        function cambioselect()
+        function cambioPartido()
              {
 
                 var leano=document.getElementById('año').value;
@@ -275,6 +255,7 @@ var untiled = new ol.layer.Image({
                  var para=localStorage.getItem("par");
                  datosDelegacion(cv,leano,para);
                  grafica(para,cv);
+                 comparativa(cv,leano);
 
              }
 /***************************************************************************************************************/
@@ -308,7 +289,7 @@ var untiled = new ol.layer.Image({
                 }
             }
 /***************************************************************************************************************/
-    
+
 function grafica(par,idEstado)
 {
         var para=par;
@@ -338,7 +319,7 @@ function grafica(par,idEstado)
                                             pointHighlightFill: "#fff",
                                             pointHighlightStroke: "rgba(220,220,220,1)",
                                             data: [val[0],nul[0],tot[0],lis[0]],
-                                            label: "Año 1994"
+                                            label: "Año 2000"
                                 },
                                 {
                                             fillColor: "rgba(152,251,152,0.2)",
@@ -348,7 +329,7 @@ function grafica(par,idEstado)
                                             pointHighlightFill: "#fff",
                                             pointHighlightStroke: "rgba(151,187,205,1)",
                                             data: [val[1],nul[1],tot[1],lis[1]],
-                                            label: "Año 2000"
+                                            label: "Año 2003"
                                 },
                                 {
                                             fillColor : "rgba(147,112,219,0.2)",
@@ -367,8 +348,28 @@ function grafica(par,idEstado)
                                             pointStrokeColor: "#fff",
                                             pointHighlightFill: "#fff",
                                             pointHighlightStroke: "rgba(220,220,220,1)",
-                                            data: [val[3],nul[2],tot[2],lis[3]],
+                                            data: [val[3],nul[3],tot[3],lis[3]],
+                                            label: "Año 2009"
+                                },
+                                {
+                                            fillColor: "rgba(255,215,0,0.1)",
+                                            strokeColor: "rgba(255,215,0,1)",
+                                            pointColor: "rgba(220,220,220,1)",
+                                            pointStrokeColor: "#fff",
+                                            pointHighlightFill: "#fff",
+                                            pointHighlightStroke: "rgba(220,220,220,1)",
+                                            data: [val[4],nul[4],tot[4],lis[4]],
                                             label: "Año 2012"
+                                },
+                                {
+                                            fillColor: "rgba(255,215,0,0.1)",
+                                            strokeColor: "rgba(255,215,0,1)",
+                                            pointColor: "rgba(220,220,220,1)",
+                                            pointStrokeColor: "#fff",
+                                            pointHighlightFill: "#fff",
+                                            pointHighlightStroke: "rgba(220,220,220,1)",
+                                            data: [val[5],nul[5],tot[5],lis[5]],
+                                            label: "Año 2015"
                                 }
                         ]
                 };
@@ -385,6 +386,7 @@ function grafica(par,idEstado)
                 var piec = document.getElementById('g2');
                 piec.innerHTML = '&nbsp;';
                 $('#g2').append('<canvas id="myChart2" class="titulo" width="290" height="450"></canvas>');
+                
                 var dataa = 
                 {
                         labels:["Participación Ciudadana"],  
@@ -398,7 +400,7 @@ function grafica(par,idEstado)
                                             pointHighlightFill: "#fff",
                                             pointHighlightStroke: "rgba(220,220,220,1)",
                                             data: [partic[0]],
-                                            label: "Año 1994"
+                                            label: "Año 2000"
                                 },
                                 {
                                             fillColor: "rgba(152,251,152,0.2)",
@@ -408,7 +410,7 @@ function grafica(par,idEstado)
                                             pointHighlightFill: "#fff",
                                             pointHighlightStroke: "rgba(151,187,205,1)",
                                             data: [partic[1]],
-                                            label: "Año 2000"
+                                            label: "Año 2003"
                                 },
                                 {
                                             fillColor : "rgba(147,112,219,0.2)",
@@ -428,7 +430,27 @@ function grafica(par,idEstado)
                                             pointHighlightFill: "#fff",
                                             pointHighlightStroke: "rgba(220,220,220,1)",
                                             data: [partic[3]],
+                                            label: "Año 2009"
+                                },
+                                {
+                                            fillColor: "rgba(255,215,0,0.1)",
+                                            strokeColor: "rgba(255,215,0,1)",
+                                            pointColor: "rgba(220,220,220,1)",
+                                            pointStrokeColor: "#fff",
+                                            pointHighlightFill: "#fff",
+                                            pointHighlightStroke: "rgba(220,220,220,1)",
+                                            data: [partic[4]],
                                             label: "Año 2012"
+                                },
+                                {
+                                            fillColor: "rgba(255,215,0,0.1)",
+                                            strokeColor: "rgba(255,215,0,1)",
+                                            pointColor: "rgba(220,220,220,1)",
+                                            pointStrokeColor: "#fff",
+                                            pointHighlightFill: "#fff",
+                                            pointHighlightStroke: "rgba(220,220,220,1)",
+                                            data: [partic[5]],
+                                            label: "Año 2015"
                                 }
                         ]
                 };
@@ -443,31 +465,91 @@ function grafica(par,idEstado)
         }
       
         if(para.includes('partido'))
-        {
+        {   
+               
                 document.getElementById("año").disabled=false;
                 var myPieChart=null;
                 
-                var pieChartContent = document.getElementById('graficaPartidos');
-                pieChartContent.innerHTML = '&nbsp;';
+//                var pieChartContent = document.getElementById('graficaPartidos');
+//                pieChartContent.innerHTML = '&nbsp;';
                 
                 var pieChartContent = document.getElementById('g2');
                 pieChartContent.innerHTML = '&nbsp;';
                 
-                $('#graficaPartidos').append('<canvas id="myChart" width="400" height="400"></canvas>');
+                var g=[];
+                var co=[];
+                        for(y=0;y<graf.length;y++)
+                        {
+                            var value=graf[y].voto;
+                            var nom=graf[y].ima;
+                            var c=graf[y].color;
+                            g.push([nom,parseInt(value)]);
+                          console.log('Value :v ---> ' + value);
+                            co.push(c);
+                        }
+        
+                        var URL = 'http://localhost:8080/TT/Recursos/img/';
+                        $(function () {
+                            $('#myChart').highcharts({
+                                chart: {
+                                    margin: 80,
+                                    
+                                    plotBackgroundColor: null,
+                                    plotBorderWidth: null,
+                                    plotShadow: false,
+                                    type: 'pie'
+                                   
+                                },
+                                title: {
+                                    text: 'Votacion por Partido'
+                                },
+                                colors: co.valueOf(),
+                                tooltip: {
+                                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                                },
+                                plotOptions: {
+                                    pie: {
+                                        slicedOffset: 0,
+                                        allowPointSelect: true,
+                                        cursor: 'pointer',
+                                        size: '100%',
+                                        dataLabels: {
+                                            enabled: true,
+                                            useHTML: true,  
+                                          format:  '<img height=40px width=auto src='+URL+'{point.name}.png ><img>: {point.percentage:.1f} %',
+                                            style: {
+                                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                            }
+                                        }
+                                    }
+                                },
+                                series: [{
+                                    name: 'Porcentaje: ',
+                                    data: g
+                                }]
+                            });
+                                //var chart = $('#prueba').highcharts();
+                                //chart.series[0].setData(g);
+                        });
+    
+          
+                /*$('#graficaPartidos').append('<canvas id="myChart" width="400" height="400"></canvas>');
                 var ctx = document.getElementById("myChart").getContext("2d");
                 //*********************************************************************
                 var g=[];
-                        for(y=1;y<graf.length;y++)
+                        for(y=0;y<graf.length;y++)
                         {
                             var value=graf[y].voto;
                             var nom=graf[y].nombre;
+                            var c=graf[y].color;
                             g.push({
                                         label: nom,
-                                        value: value
+                                        value: value,
+                                        color: c
                                     });
                         }
-                        //graf.length=0;
-                        g.forEach(function (e, i)
+                      // graf.length=0;
+                       g.forEach(function (e, i)
                              {
                                  e.color = '#'+('00000'+(Math.random()*16777216<<0).toString(16)).substr(-6);
                                  //"hsl(" + (i / g.length * 360) + ", 50%, 50%)";
@@ -475,22 +557,27 @@ function grafica(par,idEstado)
                             })
                         console.log(g);
                 //************************************************************************
-                myPieChart = new Chart(ctx).Doughnut(g,{tooltipTemplate:"<%=label%>: <%=value%>"});
-                legend(document.getElementById("js-legend"), g, myPieChart, "<%=label%>: <%=value%>");
-                
-                
+                myPieChart = new Chart(ctx).Pie(g,{tooltipTemplate:"<%=label%>: <%=value%>"});
+                legend(document.getElementById("js-legend"), g, myPieChart, "<%=label%>: <%=value%>");*/
+                 //pastel();
                 tabla_porcentajes();
-                
+             
                 
         }
+        
+        
 }
+
+
+
+
 
 function tabla_porcentajes(){
            
              // Obtener la referencia del elemento body
             var body = document.getElementById("tabla-par");
             body.innerHTML = '&nbsp;';
-            $('#tabla-par').append('<div id="tabla-par" ></div>');
+            $('#tabla-par').append('<div id="tabla-par" class="table table-striped table-hover table-bordered "></div>');
             // Crea un elemento <table> y un elemento <tbody>
             var tabla   = document.createElement("table");
             var tblBody = document.createElement("tbody");
@@ -498,40 +585,61 @@ function tabla_porcentajes(){
             // Crea las celdas
             for (var i = 0; i < 2; i++)
             {
-                    // Crea las hileras de la tabla
+                // Crea las hileras de la tabla
                 var hilera = document.createElement("tr");
 
-                        for (var j = 1; j < graf.length; j++)
+                        for (var j = 0; j < graf.length; j++)
                         {
                             switch(i)
                             {
-                                case 0:
-                                            var nom=graf[j].ima;
-                                            // Crea un elemento <td> y un nodo de texto, haz que el nodo de
-                                            // texto sea el contenido de <td>, ubica el elemento <td> al final
-                                            // de la hilera de la tabla
-                                            var celda = document.createElement("td");
-                                            var x = document.createElement("IMG");
-                                            x.setAttribute("src", "/TT/Recursos/partidos/"+nom+".jpg");
-                                            x.setAttribute("width", "60");
-                                            x.setAttribute("height", "60");
-                                            x.setAttribute("alt", nom);
-                                           // var textoCelda = document.createTextNode("celda en la hilera "+i+", columna "+j);
-                                            celda.appendChild(x);
-                                            hilera.appendChild(celda);
+                                case 0:     
+                                            if(j===0)
+                                            {
+                                                var celda = document.createElement("th");
+                                                var d=document.createTextNode("Delegación");
+                                                celda.appendChild(d);
+                                                hilera.appendChild(celda);
+                                            }
+                                            else
+                                            {
+                                                var nom=graf[j-1].ima;
+                                                // Crea un elemento <td> y un nodo de texto, haz que el nodo de
+                                                // texto sea el contenido de <td>, ubica el elemento <td> al final
+                                                // de la hilera de la tabla
+                                                var celda = document.createElement("th");
+                                                var x = document.createElement("IMG");
+                                                x.setAttribute("src", "/TT/Recursos/img/"+nom+".png");
+                                                x.setAttribute("width", "60");
+                                                x.setAttribute("height", "60");
+                                                x.setAttribute("alt", nom);
+                                               // var textoCelda = document.createTextNode("celda en la hilera "+i+", columna "+j);
+                                                celda.appendChild(x);
+                                                hilera.appendChild(celda);
+                                            }
                                 break;
                                 case 1:
-                                            var voto=graf[j].voto;
-                                            var t='';
-                                            t=(voto*100)/totales;
-                                            t=t.toFixed(2);
-                                            // Crea un elemento <td> y un nodo de texto, haz que el nodo de
-                                            // texto sea el contenido de <td>, ubica el elemento <td> al final
-                                            // de la hilera de la tabla
-                                            var celda = document.createElement("td");
-                                            var textoCelda = document.createTextNode(t+"%");
-                                            celda.appendChild(textoCelda);
-                                            hilera.appendChild(celda);
+                                            
+                                             if(j===0)
+                                            {
+                                                var celda = document.createElement("td");
+                                                var d=document.createTextNode(delegacion);
+                                                celda.appendChild(d);
+                                                hilera.appendChild(celda);
+                                            }
+                                            else
+                                            {
+                                                var voto=graf[j-1].voto;
+                                              /*  var t='';
+                                                t=(voto*100)/totales;
+                                                t=t.toFixed(2);*/
+                                                // Crea un elemento <td> y un nodo de texto, haz que el nodo de
+                                                // texto sea el contenido de <td>, ubica el elemento <td> al final
+                                                // de la hilera de la tabla
+                                                var celda = document.createElement("td");
+                                                var textoCelda = document.createTextNode(voto);
+                                                celda.appendChild(textoCelda);
+                                                hilera.appendChild(celda);
+                                            }
                                 break;
                                 
                             }
@@ -552,42 +660,16 @@ function tabla_porcentajes(){
             totales='';
 }
 
-function partido(nombre,ima,voto){
+
+
+
+function partido(nombre,ima,voto,color){
     this.nombre=nombre;
     this.ima=ima;
     this.voto=voto;
+    this.color=color;
 }
 
-function ParticipacionC(casillas,noreg,validos,nulos,total,lista,parti,year){
-    this.Casilla=casillas;
-    this.NoRegistrado=noreg;
-    this.Validos=validos;
-    this.Nulos=nulos;
-    this.Total=total;
-    this.Lista=lista;
-    this.Participacion=parti;
-    this.Year=year;
-}
-
-function compararParticipacion(idEstado)
-{
-    $.ajax({  
-            type: "GET",  
-            async: false,
-            url: "http://localhost:8080/TT/CompararParticipacion",  
-            data: "Clave=" +idEstado,  
-            success: function(result)
-            {
-                ca=result.Casilla.split(",");
-                nor=result.Nore.split(",");
-                val=result.Vali.split(",");  
-                nul=result.Nul.split(",");     
-                tot=result.Total.split(",");     
-                lis=result.Lista.split(",");     
-                partic=result.Part.split(","); 
-            }
-        });
-}
 
 function datosDelegacion(idEstado,fecha,par){
     
@@ -605,195 +687,146 @@ $.ajax({
             success: function(result)
             {
                 
-                        if(p.includes('participacion'))
-                        {
-                                if(f.includes('1994'))
-                                {
-                                    delegacion=result.Delegacion;
-                                     /*  info.push("Secciones:"+result.Secciones);
-                                       info.push("Casillas:"+result.Casillas);
-                                       info.push("Votos No Registrados:"+result.DNoRegistrados);
-                                       info.push("Votos validos:"+result.Validos);
-                                       info.push("Votos nulos:"+result.DNulos);
-                                       info.push("Votos totales:"+result.Total);
-                                       info.push("Lista Nominal"+result.Lista);
-                                       info.push("Participación Ciudadana:"+result.Participacion);*/
-                                       graf.push(new ParticipacionC(result.Casillas,result.DNoRegistrados,result.Validos,result.DNulos,result.Total,result.Lista,result.Participacion,"Año 1994"));
-                                            console.log("p2000:"+result.Participacion);
-                                }
-                               if(f.includes('2000'))
-                               {
-                                    delegacion=result.Delegacion;
-                                     /*  info.push("Secciones:"+result.Secciones);
-                                       info.push("Casillas:"+result.Casillas);
-                                       info.push("Votos No Registrados:"+result.DNoRegistrados);
-                                       info.push("Votos validos:"+result.Validos);
-                                       info.push("Votos nulos:"+result.DNulos);
-                                       info.push("Votos totales:"+result.Total);
-                                       info.push("Lista Nominal"+result.Lista);
-                                       info.push("Participación Ciudadana:"+result.Participacion);*/
-                                       graf.push(new ParticipacionC(result.Casillas,result.DNoRegistrados,result.Validos,result.DNulos,result.Total,result.Lista,result.Participacion,"Año 2000"));
-                               }
-                               if(f.includes('2006'))
-                               {
-                                   delegacion=result.Delegacion;
-                                    /*   info.push("Secciones:"+result.Secciones);
-                                       info.push("Casillas:"+result.Casillas);
-                                       info.push("Votos No Registrados:"+result.DNoRegistrados);
-                                       info.push("Votos validos:"+result.Validos);
-                                       info.push("Votos nulos:"+result.DNulos);
-                                       info.push("Votos totales:"+result.Total);
-                                       info.push("Lista Nominal"+result.Lista);
-                                       info.push("Participación Ciudadana:"+result.Participacion);*/
-                                       graf.push(new ParticipacionC(result.Casillas,result.DNoRegistrados,result.Validos,result.DNulos,result.Total,result.Lista,result.Participacion,"Año 2006"));
-                               }
-                               if(f.includes('2012'))
-                               {
-                                    delegacion=result.Delegacion;
-                                      /* info.push("Secciones:"+result.Secciones);
-                                       info.push("Casillas:"+result.Casillas);
-                                       info.push("Votos No Registrados:"+result.DNoRegistrados);
-                                       info.push("Votos nulos:"+result.DNulos);
-                                       info.push("Votos totales:"+result.Total);
-                                       info.push("Lista Nominal"+result.Lista);
-                                       info.push("Participación Ciudadana:"+result.Participacion);*/
-                                       graf.push(new ParticipacionC(result.Casillas,result.DNoRegistrados,result.Validos,result.DNulos,result.Total,result.Lista,result.Participacion,"Año 2012"));
-                               }    
-                          }
-                          else 
+                        
                           if(p.includes('partido'))
                           {
-                                    if(f.includes('1994'))
-                                    {
-                                            delegacion=result.Delegacion;
-                                            graf.push(new partido("Votos totales","","",result.Total));
-
-                                          /*  info.push("Secciones:"+result.Secciones);
-                                            info.push("Casillas:"+result.Casillas);
-                                            info.push("PAN:"+result.PAN);//graf.push("PAN:"+result.PAN);*/
-                                            graf.push(new partido("PAN","PAN",result.PAN));
-                                           // info.push("PRI:"+result.PRI);//graf.push("PRI:"+result.PRI);
-                                            graf.push(new partido("PRI","PRI",result.PRI));
-                                            //info.push("PPS:"+result.PPS);//graf.push("PPS:"+result.PPS);
-                                            graf.push(new partido("PPS","PPS",result.PPS));
-                                           // info.push("PRD:"+result.PRD);//graf.push("PRD:"+result.PRD);
-                                            graf.push(new partido("PRD","PRD",result.PRD));
-                                           // info.push("PFCRN:"+result.PFCRN);//graf.push("PFCRN:"+result.PFCRN);
-                                            graf.push(new partido("PFCRN","PFCRN",result.PFCRN));
-                                            //info.push("PARM:"+result.PARM);//graf.push("PARM:"+result.PARM);
-                                            graf.push(new partido("PARM","PARM",result.PARM));
-                                           // info.push("UNO:"+result.UNO);//graf.push("UNO:"+result.UNO);
-                                            graf.push(new partido("UNO","UNO",result.UNO));
-                                            //info.push("PT:"+result.PT);//graf.push("PT:"+result.PT);
-                                            graf.push(new partido("PT","PT",result.PT));
-                                           // info.push("PVEM:"+result.PVEM);//graf.push("PVEM:"+result.PVEM);
-                                            graf.push(new partido("PVEM","PVEM",result.PVEM));
-                                           // info.push("Votos No Registrados:"+result.DNoRegistrados);//graf.push("Votos No Registrados:"+result.DNoRegistrados);
-                                            graf.push(new partido("Votos No Registrados","noregistrados",result.DNoRegistrados));
-                                           // info.push("Votos validos:"+result.Validos);
-                                           // info.push("Votos nulos:"+result.DNulos);//graf.push("Votos nulos:"+result.DNulos);
-                                            graf.push(new partido("Votos nulos","nulos",result.DNulos));
-                                           // info.push("Votos totales:"+result.Total);
-                                            totales=result.Total;
-                                            //info.push("Lista Nominal"+result.Lista);
-                                           // info.push("Participación Ciudadana:"+result.Participacion);
-
-
-                                    }
                                     if(f.includes('2000'))
                                     {
                                             delegacion=result.Delegacion;
-                                            graf.push(new partido("Votos totales","","",result.Total)); 
-                                          /*  info.push("Secciones:"+result.Secciones);
-                                            info.push("Casillas:"+result.Casillas);
-                                            info.push("AC:"+result.AC);//graf.push("AC:"+result.AC);*/
-                                            graf.push(new partido("AC","AC",result.AC));
-                                           // info.push("PRI:"+result.PRI);//graf.push("PRI:"+result.PRI);
-                                            graf.push(new partido("PRI","PRI",result.PRI));
-                                           // info.push("AM:"+result.AM);//graf.push("AM:"+result.AM);
-                                            graf.push(new partido("AM","AM",result.AM));
-                                           // info.push("PCD:"+result.PCD);//graf.push("PCD:"+result.PCD);
-                                            graf.push(new partido("PCD","PCD",result.PCD));
-                                            //info.push("PARM"+result.PARM);//graf.push("PARM"+result.PARM);
-                                            graf.push(new partido("PARM","PARM",result.PARM));
-                                            //info.push("DSPPN:"+result.DSPPN);//graf.push("DSPPN:"+result.DSPPN);
-                                            graf.push(new partido("DSPPN","DSPPN",result.DSPPN));
-                                            //info.push("Votos No Registrados:"+result.DNoRegistrados);//graf.push("Votos No Registrados:"+result.DNoRegistrados);
-                                            graf.push(new partido("Votos No Registrados","noregistrados",result.DNoRegistrados));
-                                           /* info.push("Votos validos:"+result.Validos);
-                                            info.push("Votos nulos:"+result.DNulos);//graf.push("Votos nulos:"+result.DNulos);*/
-                                            graf.push(new partido("Votos nulos","nulos",result.DNulos));
-                                           // info.push("Votos totales:"+result.Total);
-                                            totales=result.Total;    
-                                           /* info.push("Lista Nominal"+result.Lista);
-                                            info.push("Participación Ciudadana:"+result.Participacion);*/
+                                            
+                                            graf.push(new partido("Coalición PAN-PVEM","panpvem_ico",result.PANPVEM,"#0000ff"));
+                                            graf.push(new partido("PRI","pri_ico",result.PRI,"#008000"));
+                                            graf.push(new partido("PRD","prd_ico",result.PRD,"#ffd700"));
+                                            graf.push(new partido("PT","pt_ico",result.PT,"#ff0000"));
+                                            graf.push(new partido("Convergencia","con_ico",result.Convergencia,"#ffa500"));
+                                            graf.push(new partido("PCD","pcd_ico",result.PCD,"#a13990"));
+                                            graf.push(new partido("PSN","psn_ico",result.PSN,"#808000"));
+                                            graf.push(new partido("PARM","parm_ico",result.PARM,"#bed9c8"));
+                                            graf.push(new partido("PAS","pas_ico",result.PAS,"#b22222"));
+                                            graf.push(new partido("DS","ds_ico",result.DS,"#bc50a5"));;
+                                            graf.push(new partido("Votos nulos","nulos",result.DNulos,"#d7dfe2"));
+                                           // graf.push(new partido("Votos totales","totales",result.Total));
+                                            //graf.push(new partido("Lista Nominal","Lista",result.Lista));
+                                            //graf.push(new partido("Participación Ciudadana","Participacion",result.Participacion));
+                                            
+                                            totales=result.Total;
+                                           
+
+
+                                    }
+                                    if(f.includes('2003'))
+                                    {
+                                            delegacion=result.Delegacion;
+                                            
+                                            graf.push(new partido("PAN","pan_ico",result.PAN,"#0000ff"));
+                                            graf.push(new partido("PRI","pri_ico",result.PRI,"#008000"));
+                                            graf.push(new partido("PRD","prd_ico",result.PRD,"#ffd700"));
+                                            graf.push(new partido("PT","pt_ico",result.PT,"#ff0000"));
+                                            graf.push(new partido("PVEM","pvem_ico",result.PVEM,"#90ee90"));
+                                            graf.push(new partido("Convergencia","con_ico",result.Convergencia,"#ffa500"));
+                                            graf.push(new partido("PSN","psn_ico",result.PSN,"#6b0f72"));
+                                            graf.push(new partido("PAS","pas_ico",result.PAS,"#e63932"));
+                                            graf.push(new partido("MP","mp_ico",result.MP,"#007166"));;
+                                            graf.push(new partido("PLM","plm_ico",result.PLM,"#f39524"));
+                                            graf.push(new partido("FC","fc_ico",result.FC,"#262c8d"));
+                                            graf.push(new partido("Votos nulos","nulos",result.DNulos,"#d7dfe2"));
+                                           // graf.push(new partido("Votos totales","votostotales","",result.Total));
+                                            //graf.push(new partido("Lista Nominal","Lista",result.Lista));
+                                            //graf.push(new partido("Participación Ciudadana","Participacion",result.Participacion));
+                                            
+                                            totales=result.Total;
+                                           
+
 
                                     }
                                     if(f.includes('2006'))
                                     {
                                             delegacion=result.Delegacion;
-                                            graf.push(new partido("Votos totales","","",result.Total));
-                                          /*  info.push("Secciones:"+result.Secciones);
-                                            info.push("Casillas:"+result.Casillas);
-                                            info.push("PAN:"+result.PAN);//graf.push("PAN:"+result.PAN);*/
-                                            graf.push(new partido("PAN","PAN",result.PAN));
-                                            //info.push("Alianza por México:"+result.Alianza);//graf.push("Alianza por México:"+result.Alianza);
-                                            graf.push(new partido("Alianza por México","AlianzaporMexico","",result.Alianza));
-                                            //info.push("Por el bien de todos:"+result.Porelbien);//graf.push("Por el bien de todos:"+result.Porelbien);
-                                            graf.push(new partido("Por el bien de todos","Porelbiendetodos",result.Porelbien));
-                                           // info.push("Nueva Alianza:"+result.NuevaAlianza);//graf.push("Nueva Alianza:"+result.NuevaAlianza);
-                                            graf.push(new partido("Nueva Alianza","NuevaAlianza",result.NuevaAlianza));
-                                            //info.push("Alternativa:"+result.Alternativa);//graf.push("Alternativa:"+result.Alternativa);
-                                            graf.push(new partido("Alternativa","Alternativa",result.Alternativa));
-                                           // info.push("Votos No Registrados:"+result.DNoRegistrados);//graf.push("Votos No Registrados:"+result.DNoRegistrados);
-                                            graf.push(new partido("Votos No Registrados","noregistrados",result.DNoRegistrados));
-                                           /* info.push("Votos validos:"+result.Validos);
-                                            info.push("Votos nulos:"+result.DNulos);//graf.push("Votos nulos:"+result.DNulos);*/
-                                            graf.push(new partido("Votos nulos","nulos",result.DNulos));
-                                            //info.push("Votos totales:"+result.Total);
+                                            //graf.push(new partido("Votos totales","votosvalidos","",result.Total)); 
+                                            graf.push(new partido("PAN","pan_ico",result.PAN,"#0000ff"));
+                                            graf.push(new partido("PRIPVEM","pri_pvem_ico",result.PRIPVEM,"#008000"));
+                                           graf.push(new partido("Por El Bien De Todos","prd_pt_conv_ico",result.PRDPTConvergencia,"#6d3f3f"));
+                                            graf.push(new partido("NuevaAlianza","panal_ico",result.NuevaAlianza,"#40e0d0"));
+                                            graf.push(new partido("PASC","psd_ico",result.PASC,"#ff0000"));
+                                            graf.push(new partido("PANNuevaAlianza","pan_na_ico",result.PANNuevaAlianza,"#008cff"));
+                                            graf.push(new partido("Votos nulos","nulos",result.DNulos,"#d7dfe2"));
+                                          //  graf.push(new partido("Votos totales","votostotales","",result.Total)); 
+                                           // graf.push(new partido("Lista Nominal","Lista",result.Lista));
+                                            //graf.push(new partido("Participación Ciudadana","Participacion",result.Participacion));
                                             totales=result.Total;    
-                                           /* info.push("Lista Nominal"+result.Lista);
-                                            info.push("Participación Ciudadana:"+result.Participacion);*/
+                                            
+
+                                    }
+                                    if(f.includes('2009'))
+                                    {
+                                            delegacion=result.Delegacion;
+                                            
+                                            graf.push(new partido("PAN","pan_ico",result.PAN,"#0000ff"));
+                                            graf.push(new partido("PRI","pri_ico",result.PRI,"#008000"));
+                                            graf.push(new partido("PRD","prd_ico",result.PRD,"#ffd700"));
+                                            graf.push(new partido("PT","pt_ico",result.PT,"#ff0000"));
+                                            graf.push(new partido("PVEM","pvem_ico",result.PVEM,"#90ee90"));
+                                            graf.push(new partido("Convergencia","con_ico",result.Convergencia,"#ffa500"));
+                                            graf.push(new partido("NuevaAlianza","panal_ico",result.NuevaAlianza,"#40e0d0"));
+                                            graf.push(new partido("PSD","psd_ico",result.PSD,"#8b0000"));
+//                                            graf.push(new partido("Por El Bien De Todos","prd_pt_conv_ico",result.PRDPTConvergencia,"#6d3f3f"));
+//                                            graf.push(new partido("PRDPT","prd_pt_ico",result.PRDPT,"#933c1f"));
+//                                            graf.push(new partido("PRDConvergencia","prd_con_ico",result.PRDConvergencia,"#8c5d0c"));
+//                                            graf.push(new partido("PTConv","pt_con_ico",result.PTConvergencia,"#c46833"));
+                                            graf.push(new partido("Votos Nulos","nulos",result.DNulos,"#d7dfe2"));
+                                           // graf.push(new partido("Votos totales","votostotales","",result.Total));
+                                           // graf.push(new partido("Lista Nominal","Lista",result.Lista));
+                                            //graf.push(new partido("Participación Ciudadana","Participacion",result.Participacion));
+                                           
+                                            totales=result.Total;    
+                                           
 
                                     }
                                     if(f.includes('2012'))
                                     {
                                             delegacion=result.Delegacion;
-                                            graf.push(new partido("Votos totales","","",result.Total));
-                                         /*   info.push("Secciones:"+result.Secciones);
-                                            info.push("Casillas:"+result.Casillas);
-                                            info.push("PAN:"+result.PAN);//graf.push("PAN:"+result.PAN);*/
-                                            graf.push(new partido("PAN","PAN",result.PAN));
-                                           // info.push("PRI:"+result.PRI);//graf.push("PRI:"+result.PRI);
-                                            graf.push(new partido("PRI","PRI",result.PRI));
-                                           // info.push("PRD:"+result.PRD);//graf.push("PRD:"+result.PRD);
-                                            graf.push(new partido("PRD","PRD",result.PRD));
-                                           // info.push("PVEM:"+result.PVEM);//graf.push("PVEM:"+result.PVEM);
-                                            graf.push(new partido("PVEM","PVEM",result.PVEM));
-                                           // info.push("PT:"+result.PT);//graf.push("PT:"+result.PT);
-                                            graf.push(new partido("PT","PT",result.PT));
-                                          //  info.push("Movimiento Ciudadano:"+result.Movimiento);//graf.push("Movimiento Ciudadano:"+result.Movimiento);
-                                            graf.push(new partido("Movimiento Ciudadano","MovimientoCiudadano",result.Movimiento));
-                                           // info.push("Nueva Alianza:"+result.NuevaAlianza);//graf.push("Nueva Alianza:"+result.NuevaAlianza);
-                                            graf.push(new partido("Nueva Alianza","NuevaAlianza",result.NuevaAlianza));
-                                          // info.push("Coalición PRI-PVEM:"+result.PRIPVEM);//graf.push("Coalición PRI-PVEM:"+result.PRIPVEM);
-                                            graf.push(new partido("Coalición PRI-PVEM","PRIPVEM",result.PRIPVEM));
-                                           // info.push("Coalición PRD-PT-MC:"+result.PRDPTMC);//graf.push("Coalición PRD-PT-MC:"+result.PRDPTMC);
-                                            graf.push(new partido("Coalición PRD-PT-MC","PRDPTMC",result.PRDPTMC));
-                                           // info.push("Coalición PRD-PT:"+result.PRDPT);//graf.push("Coalición PRD-PT:"+result.PRDPT);
-                                            graf.push(new partido("Coalición PRD-PT","PRDPT",result.PRDPT));
-                                           // info.push("Coalición PRD-MC:"+result.PRDMC);//graf.push("Coalición PRD-MC:"+result.PRDMC);
-                                            graf.push(new partido("Coalición PRD-MC","PRDMC",result.PRDMC));
-                                           // info.push("Coalición PT-MC:"+result.PTMC);//graf.push("Coalición PT-MC:"+result.PTMC);
-                                            graf.push(new partido("Coalición PT-MC","PTMC",result.PTMC));
-                                           // info.push("Votos No Registrados:"+result.DNoRegistrados);//graf.push("Votos No Registrados:"+result.DNoRegistrados);
-                                            graf.push(new partido("Votos No Registrados","noregistrados",result.DNoRegistrados));
-                                           // info.push("Votos nulos:"+result.DNulos);//graf.push("Votos nulos:"+result.DNulos);
-                                            graf.push(new partido("Votos nulos","nulos",result.DNulos));
-                                           // info.push("Votos totales:"+result.Total);
+                                            
+                                            graf.push(new partido("PAN","pan_ico",result.PAN,"#0000ff"));
+                                            graf.push(new partido("PRI","pri_ico",result.PRI,"#008000"));
+                                            graf.push(new partido("PRD","prd_ico",result.PRD,"#ffd700"));
+                                            graf.push(new partido("PT","pt_ico",result.PT,"#ff0000"));
+                                            graf.push(new partido("PVEM","pvem_ico",result.PVEM,"#90ee90"));
+                                            graf.push(new partido("MovimientoCiudadano","mc_ico",result.Movimiento,"#ffa500"));
+                                            graf.push(new partido("NuevaAlianza","panal_ico",result.NuevaAlianza,"#40e0d0"));
+                                            graf.push(new partido("PRIPVEM","pri_pvem_ico",result.PRIPVEM,"#008000"));
+                                            graf.push(new partido("PRDPTMC","prd_pt_mc_ico",result.PRDPTMovimiento,"#933c1f"));
+                                            graf.push(new partido("Votos nulos","nulos",result.DNulos,"#d7dfe2"));
+                                          //  graf.push(new partido("Votos totales","votostotales","",result.Total));
+                                          //  graf.push(new partido("Lista Nominal","Lista",result.Lista));
+                                           // graf.push(new partido("Participación Ciudadana","Participacion",result.Participacion));
+                                           
                                             totales=result.Total;
-                                           /* info.push("Lista Nominal"+result.Lista);
-                                            info.push("Participación Ciudadana:"+result.Participacion);*/
+                                          
+                                    } 
+                                    if(f.includes('2015'))
+                                    {       
+                                            //graf.push(new partido("","",result.));
+                                            delegacion=result.Delegacion;
+                                            
+                                            graf.push(new partido("pan_ico","pan_ico",result.PAN,"#0000ff"));
+                                            graf.push(new partido("pri_pvem_ico","pri_pvem_ico",result.PRIPVEM,"#008000"));
+                                            graf.push(new partido("prd_pt_ico","prd_pt_ico",result.PRDPT,"#933c1f"));
+                                            graf.push(new partido("prd_pt_panal","prd_pt_panal",result.PRDPTNuevaAlianza,"#90ff00"));
+                                            graf.push(new partido("prd_ico","prd_ico",result.PRD,"#ffd700"));
+                                            graf.push(new partido("pt_ico","pt_ico",result.PT,"#ff0000"));
+                                            graf.push(new partido("mc_ico","mc_ico",result.Movimiento,"#ffa500"));
+                                            graf.push(new partido("panal_ico","panal_ico",result.NuevaAlianza,"#40e0d0"));
+                                            graf.push(new partido("morena_ico","morena_ico",result.Morena,"#800000"));
+                                            graf.push(new partido("ph_ico","ph_ico",result.PH,"#c71585"));
+                                            graf.push(new partido("pes_ico","pes_ico",result.PES,"#4b0082"));
+                                            //graf.push(new partido("Independientes","Inde",result.Inde));
+                                            graf.push(new partido("Votos nulos","nulos",result.DNulos,"#d7dfe2"));
+                                          //  graf.push(new partido("Votos totales","votostotales","",result.Total));
+                                           // graf.push(new partido("Lista Nominal","Lista",result.Lista));
+                                            //graf.push(new partido("Participación Ciudadana","Participacion",result.Participacion));
+                                           
+                                            totales=result.Total;
+                                           
                                     } 
 
                            }
@@ -810,3 +843,317 @@ $.ajax({
 
    
 }
+
+
+
+
+
+//**************************************************************
+
+///////////// =============== /////////////
+var respuesta;
+
+var cve_mun;
+var nombre;
+var partidoganador;
+var tabla1 = [];
+var tabla2 = [];
+var delegacionesganadas;
+var delegacionesperdidas;
+var porcentaje;
+var votos;
+
+var root;
+
+function comparativa(CVE,año)
+{
+    $.ajax
+                              ({ 
+                                  type: "GET",  
+                                  async: false,
+                                  url: "http://localhost:8080/TT/SComparativa",  
+                                  data: "cve=" +CVE+ "&anio=" +año,  
+                                  success: getComparativa
+                                  ,
+                                error: function (xhr, ajaxOptions, thrownError)
+                                {
+                                    console.log("Error: "+xhr.status);
+                                    console.log("Error: "+ thrownError);
+                                }
+                              });
+}
+
+function generarInforme()
+{
+  var rootXML = $('<root></root>');
+
+  var cve_munXML = $('<cve_mun>' + cve_mun + '</cve_mun>');
+  rootXML.append(cve_munXML);
+
+  var nombreXML = $('<nombre>' + nombre + '</nombre>');
+  rootXML.append(nombreXML);
+
+  var partidoganadorXML = $('<partidoganador>' + partidoganador + '</partidoganador>');
+  rootXML.append(partidoganadorXML);
+
+  ///////// tabla1
+  var tabla1XML = $('<tabla1></tabla1>');
+
+  for(var j = 0 ; j < tabla1.children.length ; j++)
+  {
+    var $row = $('<tr></tr>');
+
+      $row.append('<td>'+ tabla1.children[j].children[0].textContent +'</td>');
+      $row.append('<td>'+ tabla1.children[j].children[1].textContent +'</td>');
+
+    tabla1XML.append($row);
+  }
+  rootXML.append(tabla1XML);
+
+  ///////// tabla2
+  var tabla2XML = $('<tabla2></tabla2>');
+
+  for(var j = 0 ; j < tabla2.children.length ; j++)
+  {
+    var $row = $('<tr></tr>');
+
+      $row.append('<td>'+ tabla2.children[j].children[0].textContent +'</td>');
+      $row.append('<td>'+ tabla2.children[j].children[1].textContent +'</td>');
+      $row.append('<td>'+ tabla2.children[j].children[2].textContent +'</td>');
+
+    tabla2XML.append($row);
+  }
+  rootXML.append(tabla2XML);
+
+  //////////
+
+  var delegacionesganadasXML = $('<delegacionesganadas>' + delegacionesganadas + '</delegacionesganadas>');
+  rootXML.append(delegacionesganadasXML);
+
+  var delegacionesperdidasXML = $('<delegacionesperdidas>' + delegacionesperdidas + '</delegacionesperdidas>');
+  rootXML.append(delegacionesperdidasXML);
+
+  var porcentajeXML = $('<porcentaje>' + porcentaje + '</porcentaje>');
+  rootXML.append(porcentajeXML);
+
+  var votosXML = $('<votos>' + votos + '</votos>');
+  rootXML.append(votosXML);
+
+  console.log(rootXML.get(0).outerHTML);
+
+  $.ajax
+  ({ 
+      type: "POST",  
+      async: true,
+      url: "http://localhost:8080/TT/RecibeXML",  
+      data: "sesion=" + sessionStorage.getItem('SClave') + "&xml=" + rootXML.get(0).outerHTML ,  
+      success: function(result){console.log(result);}
+      ,
+    error: function (xhr, ajaxOptions, thrownError)
+    {
+        console.log("Error: "+xhr.status);
+        console.log("Error: "+ thrownError);
+    }
+  });
+
+}
+
+function getComparativa(result)
+{
+  root = result.firstChild;
+
+  cve_mun = root.children[0].textContent;
+  nombre = root.children[1].textContent;
+  partidoganador = root.children[2].textContent;
+
+  tabla1 = root.children[3];
+  tabla2 = root.children[4];
+  delegacionesganadas = root.children[5].textContent;
+  delegacionesperdidas = root.children[6].textContent;
+  porcentaje = root.children[7].textContent;
+  votos = root.children[8].textContent;
+
+  actualizarUI();
+}
+
+function actualizarUI()
+{
+  $('#generarInforme').show();
+ // $('#idDelegacion').get(0).textContent = nombre;
+  mostrarPartido();
+  doughnutChart();
+  mostrarTabla1();
+  mostrarTabla2();
+}
+
+function mostrarPartido()
+{
+  var imgURL = obtenerURLPartido(partidoganador);
+  $('#partidoGanador').empty();
+  $('#partidoGanador').append('<h1>Partido ganador.</h1>');
+  $('#partidoGanador').append('<div><img src=\"'+ imgURL +'\" width="350" height="350" /></div>');
+  //$('#partidoGanador').append('<p>' + partidoGanador.nombre + '</p>');
+  $('#partidoGanador').append('<p>Votos : ' + votos + '</p>');
+  $('#partidoGanador').show();
+}
+
+function doughnutChart()
+{
+
+  $('#contenedorChart').empty();
+
+  var elChart = $('<div id="js-legend" class="chart-legend"></div><canvas id="myChart3" width="400" height="400"></canvas><div id="porcentajeVictorias"></div>');
+
+  $('#contenedorChart').append(elChart);
+  //$('#myChart').show();
+
+  var data = 
+  [
+    {
+        value: delegacionesganadas,
+        color: "#46BFBD",
+        highlight: "#5AD3D1",
+        label: "Delegaciones ganadas"
+    },
+    {
+        value: delegacionesperdidas,
+        color: "#F7464A",
+        highlight: "#FF5A5E",
+        label: "Delegaciones perdidas"
+    }
+  ];
+
+  var options = 
+  {
+    segmentShowStroke : true,
+    segmentStrokeColor : "#fff",
+    segmentStrokeWidth : 4,
+    percentageInnerCutout : 50,
+    animationSteps : 100,
+    animationEasing : "easeOutBounce",
+    animateRotate : true,
+    animateScale : false,
+    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+  }
+
+  var ctx = $("#myChart3").get(0).getContext("2d");
+  var myDoughnutChart = new Chart(ctx).Doughnut(data,options);
+  legend(document.getElementById("js-legend"), data, myDoughnutChart, "<%=label%>: <%=value%>");
+
+  $('#porcentajeVictorias').empty();
+  $('#porcentajeVictorias').show();
+  $('#porcentajeVictorias').append('<p>' + porcentaje + '%</p>');
+  $('#porcentajeVictorias').append('<p>de éxito en CDMX</p>');
+
+}
+
+function mostrarTabla1()
+{
+  $('#idTxtTabla1').show();
+  $('#idTabla1').show();
+  $('#idTabla1 tbody').empty();
+
+  for(var i = 0 ; i < tabla1.children.length ; i ++)
+  {
+    var $row = $('<tr></tr>');
+
+    $row.append('<th scope="row" >'+ (i+1) +'</th>');
+    $row.append('<td>'+ tabla1.children[i].children[0].textContent +'</td>');
+    $row.append('<td>'+ tabla1.children[i].children[1].textContent +'</td>');
+
+    $('#idTabla1 tbody').append($row);
+  }
+}
+
+function mostrarTabla2()
+{
+  $('#idTabla2 table tbody').empty();
+
+  for(var j = 0 ; j < tabla2.children.length ; j++)
+  {
+    var $row = $('<tr></tr>');
+
+      $row.append('<td>'+ tabla2.children[j].children[0].textContent +'</td>');
+      $row.append('<td>'+ tabla2.children[j].children[2].textContent +'</td>');
+
+    $('#idTabla2 table tbody').append($row);
+  }
+
+  $('#idTabla2').show();
+}
+
+function obtenerURLPartido(partidoGanador)
+{
+	var URL = 'http://localhost:8080/TT/Recursos/img/';
+
+	if(partidoGanador == 'pan')
+		return URL + 'PAN.png' ;
+
+	if(partidoGanador == 'pri')
+		return URL + 'PRI.jpg' ;
+
+	if(partidoGanador == 'PPS')
+		return URL + 'PPS.gif' ;
+
+	if(partidoGanador == 'prd')
+		return URL + 'PRD.jpg' ;
+
+	if(partidoGanador == 'PFCRN')
+		return URL + 'PFCRN.png' ;
+
+	if(partidoGanador == 'PARM')
+		return URL + 'PARM.png' ;
+
+	if(partidoGanador == 'pan_na') // falta
+		return URL + 'pan_na.jpg' ;
+
+	if(partidoGanador == 'pt')
+		return URL + 'PT.png' ;
+
+	if(partidoGanador == 'pvem')
+		return URL + 'PVEM.png' ;
+
+	if(partidoGanador == 'AC') // falta
+		return URL + '' ;
+
+	if(partidoGanador == 'AM') // falta
+		return URL + '' ;
+
+	if(partidoGanador == 'PCD')
+		return URL + 'PCD.jpg' ;
+
+	if(partidoGanador == 'prd_con') //falta
+		return URL + 'prd_con.jpg' ;
+
+	if(partidoGanador == 'Alianza por México')
+		return URL + 'Alianza_por_México.jpg' ;
+
+	if(partidoGanador == 'prd_pt_con')
+		return URL + 'PorElBienDeTodos.jpg' ;
+
+	if(partidoGanador == 'panal')
+		return URL + 'NuevaAlianza.png' ;
+
+	if(partidoGanador == 'Alternativa')
+		return URL + 'alternativa.jpg' ;
+
+	if(partidoGanador == 'mc')
+		return URL + 'MC.jpeg' ;
+
+	if(partidoGanador == 'pri_pvem')
+		return URL + 'PRI-PVEM.jpg' ;
+
+	if(partidoGanador == 'prd_pt_mc')
+		return URL + 'PRD-PT-MC.jpg' ;
+
+	if(partidoGanador == 'prd_pt')
+		return URL + 'PRD-PT.jpg' ;
+
+	if(partidoGanador == 'prd_pt_panal')// falta
+		return URL + 'prd_pt_panal.png' ;
+
+	if(partidoGanador == 'morena') // falta
+		return URL + 'morena.jpg' ;
+
+}
+

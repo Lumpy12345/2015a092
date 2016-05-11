@@ -45,40 +45,41 @@ public class ObtenerDelegacion extends HttpServlet {
         DelegacionDAOImpl del= new DelegacionDAOImpl();
         Delegacion delegacion=del.getDelegacion(id,año);
         Map map=new HashMap();
+       
 
-        if(año.equals("ano1994"))
+        if(año.equals("ano2000"))
         {
                 map.put("Delegacion", delegacion.getDNombre());
-                map.put("Secciones",delegacion.getDSecciones() );
-                map.put("Casillas",delegacion.getDCasillas() );
-                map.put("PAN",delegacion.getPan() );
-                map.put("PRI",delegacion.getPri() );
-                map.put("PPS",delegacion.getPps() );
+                map.put("PANPVEM",delegacion.getPANPVEM());
+                map.put("PRI",delegacion.getPRI() );
                 map.put("PRD",delegacion.getPRD() );
-                map.put("PFCRN",delegacion.getPfcrn() );
-                map.put("PARM",delegacion.getParm() );
-                map.put("UNO",delegacion.getUnopdm() );
                 map.put("PT",delegacion.getPt() );
-                map.put("PVEM",delegacion.getPvem() );
-                map.put("DNoRegistrados",delegacion.getDNoRegistrados() );
+                map.put("Convergencia",delegacion.getConvergencia());
+                map.put("PCD",delegacion.getPCD() );
+                map.put("PSN",delegacion.getPSN());
+                map.put("PARM",delegacion.getPARM());
+                map.put("PAS",delegacion.getPAS());
+                map.put("DS",delegacion.getDS());
                 map.put("Validos",delegacion.getValidos() );
                 map.put("DNulos",delegacion.getDNulos() );
                 map.put("Total",delegacion.getDTotal() );
                 map.put("Lista",delegacion.getDListaNominal() );
                 map.put("Participacion",delegacion.getDParticipacion() );
         }
-        if(año.equals("ano2000"))
+        if(año.equals("ano2003"))
         {
-                map.put("Delegacion",delegacion.getDNombre() );
-                map.put("Secciones",delegacion.getDSecciones() );
-                map.put("Casillas",delegacion.getDCasillas());
-                map.put("AC",delegacion.getAc() );
-                map.put("PRI",delegacion.getPri() );
-                map.put("AM",delegacion.getAm() );
-                map.put("PCD",delegacion.getPcd() );
-                map.put("PARM",delegacion.getParm() );
-                map.put("DSPPN",delegacion.getDsppn() );
-                map.put("DNoRegistrados",delegacion.getDNoRegistrados() );
+                map.put("Delegacion", delegacion.getDNombre());
+                map.put("PAN",delegacion.getPAN() );
+                map.put("PRI",delegacion.getPRI() );
+                map.put("PRD",delegacion.getPRD() );
+                map.put("PT",delegacion.getPt() );
+                map.put("PVEM",delegacion.getPvem() );
+                map.put("Convergencia",delegacion.getConvergencia());
+                map.put("PSN",delegacion.getPSN());
+                map.put("PAS",delegacion.getPAS());
+                map.put("MP",delegacion.getMP());
+                map.put("PLM",delegacion.getPLM());
+                map.put("FC",delegacion.getFC());
                 map.put("Validos",delegacion.getValidos() );
                 map.put("DNulos",delegacion.getDNulos() );
                 map.put("Total",delegacion.getDTotal() );
@@ -88,14 +89,33 @@ public class ObtenerDelegacion extends HttpServlet {
         if(año.equals("ano2006"))
         {
                 map.put("Delegacion",delegacion.getDNombre() );
-                map.put("Secciones",delegacion.getDSecciones() );
-                map.put("Casillas",delegacion.getDCasillas());
-                map.put("PAN",delegacion.getPan() );
-                map.put("Alianza",delegacion.getAlianza() );
-                map.put("Porelbien", delegacion.getPorelbien());
+                map.put("PAN",delegacion.getPAN() );
+                map.put("PRIPVEM",delegacion.getPRIPVEM());
+                map.put("PRDPTConvergencia",delegacion.getPRDPTConvergencia());
+                map.put("NuevaAlianza",delegacion.getNuevaAlianza());
+                map.put("PASC",delegacion.getPASC() );
+                map.put("PANNuevaAlianza",delegacion.getPANNuevaAlianza() );
+                map.put("Validos",delegacion.getValidos() );
+                map.put("DNulos",delegacion.getDNulos() );
+                map.put("Total",delegacion.getDTotal() );
+                map.put("Lista",delegacion.getDListaNominal() );
+                map.put("Participacion",delegacion.getDParticipacion() );
+        }
+        if(año.equals("ano2009"))
+        {
+                map.put("Delegacion",delegacion.getDNombre() );
+                map.put("PAN",delegacion.getPAN() );
+                map.put("PRI",delegacion.getPRI());
+                map.put("PRD", delegacion.getPRD());
+                map.put("PT",delegacion.getPt());
+                map.put("PVEM",delegacion.getPvem());
+                map.put("Convergencia",delegacion.getConvergencia());
                 map.put("NuevaAlianza",delegacion.getNuevaAlianza() );
-                map.put("Alternativa",delegacion.getAlternativa() );
-                map.put("DNoRegistrados",delegacion.getDNoRegistrados() );
+                map.put("PSD",delegacion.getPSD());
+                map.put("PRDPTConvergencia",delegacion.getPRDPTConvergencia());
+                map.put("PRDPT",delegacion.getPRDPT());
+                map.put("PRDConvergencia",delegacion.getPRDConvergencia());
+                map.put("PTConvergencia",delegacion.getPTConvergencia());
                 map.put("Validos",delegacion.getValidos() );
                 map.put("DNulos",delegacion.getDNulos() );
                 map.put("Total",delegacion.getDTotal() );
@@ -106,25 +126,50 @@ public class ObtenerDelegacion extends HttpServlet {
         if(año.equals("ano2012"))
         {
                 map.put("Delegacion",delegacion.getDNombre() );
-                map.put("Secciones",delegacion.getDSecciones() );
-                map.put("Casillas",delegacion.getDCasillas());
-                map.put("PAN",delegacion.getPan() );
-                map.put("PRI",delegacion.getPri() );
+                map.put("PAN",delegacion.getPAN() );
+                map.put("PRI",delegacion.getPRI() );
                 map.put("PRD",delegacion.getPRD() );
-                map.put("PVEM",delegacion.getPvem() );
                 map.put("PT",delegacion.getPt());
+                map.put("PVEM",delegacion.getPvem() );
                 map.put("Movimiento",delegacion.getMovimiento() );
                 map.put("NuevaAlianza",delegacion.getNuevaAlianza() );
                 map.put("PRIPVEM",delegacion.getPRIPVEM() );
-                map.put("PRDPTMC",delegacion.getPRDPTMovimiento() );
-                map.put("PRDPT",delegacion.getPRDPT() );
-                map.put("PRDMC",delegacion.getPRDMovimiento() );
-                map.put("PTMC",delegacion.getPTMovimiento() );
-                map.put("DNoRegistrados",delegacion.getDNoRegistrados() );
+                map.put("PRDPTMovimiento",delegacion.getPRDPTMovimiento() );
+                map.put("Validos",delegacion.getValidos());
                 map.put("DNulos",delegacion.getDNulos() );
                 map.put("Total",delegacion.getDTotal() );
                 map.put("Lista",delegacion.getDListaNominal() );
                 map.put("Participacion",delegacion.getDParticipacion() );
+               /* System.out.println("pan:"+delegacion.getPAN()+"pri:"+delegacion.getPRI()+"prd:"+delegacion.getPRD()+"prdpt:"+delegacion.getPRDPT()+
+                        "pvem:"+delegacion.getPvem()+"movimiento:"+delegacion.getMovimiento()+"nuevalaianza:"+delegacion.getNuevaAlianza()+
+                        "pripvem:"+delegacion.getPRIPVEM()
+                +"prdptmov:"+delegacion.getPRDPTMovimiento()+"validos:"+delegacion.getValidos()+"nulos:"+delegacion.getDTotal()
+                +"total:"+delegacion.getDTotal()+"participacion"+delegacion.getDParticipacion());*/
+        }
+        if(año.equals("ano2015"))
+        {
+                map.put("Delegacion",delegacion.getDNombre() );
+                map.put("PAN",delegacion.getPAN() );
+                map.put("PRIPVEM",delegacion.getPRIPVEM() );
+                map.put("PRDPT",delegacion.getPRDPT() );
+                map.put("PRDPTNuevaAlianza",delegacion.getPRDPTNuevaAlianza());
+                map.put("PRD",delegacion.getPRD() );
+                map.put("PT",delegacion.getPt());
+                map.put("Movimiento",delegacion.getMovimiento() );
+                map.put("NuevaAlianza",delegacion.getNuevaAlianza() );
+                map.put("Morena",delegacion.getMorena());
+                map.put("PH",delegacion.getPH());
+                map.put("PES",delegacion.getPES());
+                map.put("Inde",delegacion.getIndependiente());
+                map.put("Validos",delegacion.getValidos());
+                map.put("DNulos",delegacion.getDNulos() );
+                map.put("Total",delegacion.getDTotal() );
+                map.put("Lista",delegacion.getDListaNominal() );
+                map.put("Participacion",delegacion.getDParticipacion() );
+             /*   System.out.println("pan:"+delegacion.getPAN()+"pripvem:"+delegacion.getPRIPVEM()+"prdpt:"+delegacion.getPRDPT()+"prdptnuevalainza:"+delegacion.getPRDPTNuevaAlianza()
+                +"prd:"+delegacion.getPRD()+"pt:"+delegacion.getPt()+"movimiento:"+"nuevalaianza:"+delegacion.getNuevaAlianza()+"morena:"+delegacion.getMorena()
+                +"ph:"+delegacion.getPH()+"pes:"+delegacion.getPES()+"inde:"+delegacion.getIndependiente()+"validos:"+delegacion.getValidos()+"nulos:"+delegacion.getDTotal()
+                +"total:"+delegacion.getDTotal()+"participacion"+delegacion.getDParticipacion());*/
         }
         
     write(response,map);

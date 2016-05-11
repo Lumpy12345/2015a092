@@ -35,13 +35,13 @@ public class CompararParticipacion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+      PrintWriter out = response.getWriter();
     
             
     DelegacionDAOImpl del=new DelegacionDAOImpl();
-    String a[][]=new String[4][7];
+    String a[][]=new String[6][5];
     String id="";
-    id=request.getParameter("Clave").trim();
+    id=request.getParameter("Clave");
     a=del.compararParticipacion(id);
     String casilla = null,nore = null,vali = null,nulos = null,total = null,lista = null,par = null;
     
@@ -53,60 +53,45 @@ public class CompararParticipacion extends HttpServlet {
                           switch(element)
                           {
                                 case 0:
-                                    if(row==0)
-                                    {   casilla=a[row][element]+",";    }
-                                    else if(row==3)
-                                    {   casilla=casilla+a[row][element];   }
-                                    else
-                                    {   casilla=casilla+a[row][element]+",";    }
-                                break;
-                                case 1:
-                                    if(row==0)
-                                    {   nore=a[row][element]+",";   }
-                                    else if(row==3)
-                                    {   nore=nore+a[row][element];  }
-                                    else
-                                    {   nore=nore+a[row][element]+",";  }
-                                break;
-                                case 2:
-                                    if(row==0)
+                                   if(row==0)
                                     {   vali=a[row][element]+",";   }
-                                    else if(row==3)
+                                    else if(row==5)
                                     {   vali=vali+a[row][element];  }
                                     else{   vali=vali+a[row][element]+",";  }
                                 break;
-                                case 3:
+                                case 1:
                                     if(row==0)
                                     {   nulos=a[row][element]+",";  }
-                                    else if(row==3)
+                                    else if(row==5)
                                     {   nulos=nulos+a[row][element];    }
                                     else
                                     {   nulos=nulos+a[row][element]+",";    }
                                 break;
-                                case 4:
+                                case 2:
                                     if(row==0)
                                     {   total=a[row][element]+",";  }
-                                    else if(row==3)
+                                    else if(row==5)
                                     {   total=total+a[row][element];    }
                                     else
                                     {   total=total+a[row][element]+",";    }
                                 break;
-                                case 5:
-                                    if(row==0)
+                                case 3:
+                                     if(row==0)
                                     {   lista=a[row][element]+",";  }
-                                    else if(row==3)
+                                    else if(row==5)
                                     {   lista=lista+a[row][element];    }
                                     else
                                     {   lista=lista+a[row][element]+",";    }
                                 break;
-                                case 6:
-                                    if(row==0)
+                                case 4:
+                                     if(row==0)
                                     {   par=a[row][element]+",";    }
-                                    else if(row==3)
+                                    else if(row==5)
                                     {   par=par+a[row][element];    }
                                     else
                                     {   par=par+a[row][element]+",";    }
                                 break;
+                               
                                 default:
                                 break;
                           }
@@ -114,11 +99,13 @@ public class CompararParticipacion extends HttpServlet {
                     }
              }
           
-            
     Map map=new HashMap();
       
-    map.put("Casilla", casilla);
-    map.put("Nore",nore);
+            System.out.println("validos:"+vali);
+            System.out.println("nul:"+nulos);
+            System.out.println("total"+total);
+            System.out.println("Lista"+lista);
+            System.out.println("Part"+par);
     map.put("Vali",vali);
     map.put("Nul",nulos);
     map.put("Total",total);
@@ -128,10 +115,10 @@ public class CompararParticipacion extends HttpServlet {
      
     write(response,map);
     map.clear();
-        }
+       
     }
     
-private void write(HttpServletResponse response, Map<String, Object> map) throws IOException {
+private void write(HttpServletResponse response, Map<String, Object> map) throws IOException{
     response.setContentType("application/json");
     response.setCharacterEncoding("UTF-8");
     response.getWriter().write(new Gson().toJson(map)); //this is how simple GSON works
