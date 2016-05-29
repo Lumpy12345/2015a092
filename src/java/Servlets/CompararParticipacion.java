@@ -6,6 +6,8 @@
 
 package Servlets;
 
+import Comparativa.DBComparativa.DBComparativa;
+import Comparativa.DBComparativa.Historial;
 import DelegacionDAO.DelegacionDAOImpl;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -42,8 +44,37 @@ public class CompararParticipacion extends HttpServlet {
     String a[][]=new String[6][5];
     String id="";
     id=request.getParameter("Clave");
+    System.out.println("CVE:"+id);
     a=del.compararParticipacion(id);
-    String casilla = null,nore = null,vali = null,nulos = null,total = null,lista = null,par = null;
+    
+//    ***********************************************
+    String sesion = request.getParameter("sesion");
+    String año =request.getParameter("anio");
+        
+        try
+        {
+            int idDel = new DBComparativa().getIdDel(id);
+            int idAnio = new DBComparativa().getIdAnio(año);
+            int idResultadoElectoral =  new DBComparativa().getIdResultadoElectoral(idDel, idAnio);
+            
+            Historial historial = new Historial();
+
+            historial.intSesion = Integer.valueOf(sesion);
+            historial.intIdResultadoElectoral = idResultadoElectoral;
+            historial.strTipo = "Obtener delegacion";
+            historial.setDaemon(true);
+
+            historial.start();
+                
+            
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+//    ******************************************************
+    
+    String vali = null,nulos = null,total = null,lista = null,par = null;
     
            
             for(int row = 0; row < a.length; row++)
@@ -100,12 +131,14 @@ public class CompararParticipacion extends HttpServlet {
              }
           
     Map map=new HashMap();
-      
+            System.out.println("+++++++++++++++++++++++++++++++++++++++++++");
+            System.out.println("Comparar Participacion");
             System.out.println("validos:"+vali);
             System.out.println("nul:"+nulos);
             System.out.println("total"+total);
             System.out.println("Lista"+lista);
             System.out.println("Part"+par);
+            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
     map.put("Vali",vali);
     map.put("Nul",nulos);
     map.put("Total",total);

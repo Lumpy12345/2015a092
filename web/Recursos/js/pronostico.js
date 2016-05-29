@@ -219,7 +219,7 @@ var untiled = new ol.layer.Image
                                     
                                     
                                     
-                                    grafica();
+                                    grafica(CVE);
                                     periodos();
                                     
 
@@ -410,6 +410,12 @@ function grafica(idEstado)
                 
 //*****************************************************************************************************************************************
         
+        partic.lenght=0;
+        objPar.length=0;
+        val.lenght=0;
+        nul.length=0;
+        tot.length=0;
+        lis.lenght=0;
 }
         
 function obtenerPartidos(idEstado)
@@ -426,7 +432,10 @@ function partido(nombre,ima,voto,color){
     this.voto=voto;
     this.color=color;
 }
-
+function tendencia(nombre,voto){
+    this.nombre=nombre;
+    this.voto=voto;
+}
 function pronostico(partido,incremento){
     this.partido=partido;
     this.incremento=incremento;
@@ -444,7 +453,7 @@ function compararParticipacion(idEstado)
             type: "GET",  
             async: false,
             url: "http://localhost:8080/TT/CompararParticipacion",  
-            data: "Clave=" +idEstado,  
+            data: "Clave=" +idEstado+"&sesion="+sessionStorage.getItem("SClave"),  
             success: function(result)
             {
               
@@ -466,12 +475,12 @@ function datosPronostico(cve){
             type: "GET",  
             async: false,
             url: "http://localhost:8080/TT/Pronostico",  
-            data: "CVE=" +cv,  
+            data: "CVE=" +cv+ "&sesion="+sessionStorage.getItem("SClave"),  
             success: function(result)
             {
                 
                 delegacion=result.Delegacion;
-                console.log("success servlet");
+                
                 //00-03
                 proPAN.push(new pronostico("PAN",result.PAN));
                 proPRI.push(new pronostico("PRI",result.PRI));
@@ -548,11 +557,11 @@ function datosPronostico(cve){
                 
                 pro.push(new pronostico("MovimientoCiudadano",result.Movimiento6));
                 pro.push(new pronostico("MORENA",result.Morena6));
-                pro.push(new pronostico("Votos Validos",result.DValidos6));
+                pro.push(new pronostico("VotosValidos",result.DValidos6));
                 pro.push(new pronostico("nulos",result.DNulos6));
-                pro.push(new pronostico("Votos Totales",result.DTotal6));
-                pro.push(new pronostico("Lista Nominal",result.DListaNominal6));
-                pro.push(new pronostico("Participacion",result.Participacion6));
+                pro.push(new pronostico("total",result.DTotal6));
+                pro.push(new pronostico("ListaNominal",result.DListaNominal6));
+                pro.push(new pronostico("ParticipacionCiudadana",result.Participacion6));
                 
                 
             }
@@ -579,88 +588,151 @@ function periodos(){
 function datosInc(){
     for(x=0;x<proPAN.length;x++)
     {
-                   pan[x]=proPAN[x].incremento;
-                   console.log("incrementos:"+pan[x]);
+//                   pan[x]=proPAN[x].incremento;
+                     pan.push(new tendencia("PAN",proPAN[x].incremento));
+                   console.log("incrementosPAN ("+x+")"+pan[x]);
     }
-   // proPAN.length=0;
+    proPAN.length=0;
     
     for(x=0;x<proPRI.length;x++)
     {
-                   pri[x]=proPRI[x].incremento;
-                   console.log("incrementos:"+pri[x]);
+//                  pri[x]=proPRI[x].incremento;
+                    pri.push(new tendencia("PRI",proPRI[x].incremento));
+                   console.log("incrementosPRI("+x+")"+pri[x]);
     }
-    //proPRI.length=0;
+    proPRI.length=0;
+    
     for(x=0;x<proPRD.length;x++)
     {
-                   prd[x]=proPRD[x].incremento;
-                   console.log("incrementos:"+prd[x]);
+//                  prd[x]=proPRD[x].incremento;
+                    prd.push(new tendencia("PRD",proPRD[x].incremento));
+                    console.log("incrementosPRD("+x+")"+prd[x]);
     }
-   // proPRD.length=0;
+    proPRD.length=0;
+    
     for(x=0;x<proPT.length;x++)
     {
-                   pt[x]=proPT[x].incremento;
-                   console.log("incrementos:"+pt[x]);
+//                   pt[x]=proPT[x].incremento;
+                    pt.push(new tendencia("PT",proPT[x].incremento));
+                    console.log("incrementosPT("+x+")"+pt[x]);
     }
-   // proPT.length=0;
+    proPT.length=0;
+    
     for(x=0;x<proPVEM.length;x++)
     {
-                   pvem[x]=proPVEM[x].incremento;
-                   console.log("incrementos:"+pvem[x]);
+//                   pvem[x]=proPVEM[x].incremento;
+                   pvem.push(new tendencia("PVEM",proPVEM[x].incremento));
+                   console.log("incrementosPVEM("+x+")"+pvem[x]);
     }
-   // proPVEM.length=0;
-    for(x=0;x<proValidos.length;x++)
-    {
-                   vali[x]=proValidos[x].incremento;
-                   console.log("incrementos:"+vali[x]);
-    }
-    //proValidos.length=0;
-    for(x=0;x<proNulos.length;x++)
-    {
-                   nulo[x]=proNulos[x].incremento;
-                   console.log("incrementos:"+nulo[x]);
-    }
-   // proNulos.length=0;
-    for(x=0;x<proTotal.length;x++)
-    {
-                   tota[x]=proTotal[x].incremento;
-                   console.log("incrementos:"+tota[x]);
-    }
-    //proTotal.length=0;
-    for(x=0;x<proList.length;x++)
-    {
-                   list[x]=proList[x].incremento;
-                   console.log("incrementos:"+list[x]);
-    }
-   // proList.length=0;
-    for(x=0;x<proPart.length;x++)
-    {
-                   prd[x]=proPart[x].incremento;
-                   console.log("incrementos:"+prd[x]);
-    }
-   // proPRD.length=0;
+    proPVEM.length=0;
+    
     for(x=0;x<proNA.length;x++)
     {
-                   na[x]=proNA[x].incremento;
-                   console.log("incrementos:"+na[x]);
+//                   na[x]=proNA[x].incremento;
+                    na.push(new tendencia("Nueva Alianza",proNA[x].incremento));
+                   console.log("incrementosNA("+x+")"+na[x]);
     }
-   // proNA.length=0;
+    proNA.length=0;
     
-                   mc[0]=proMC[0].incremento;
+//                   mc[0]=proMC[0].incremento;
+                    mc.push(new tendencia("Movimiento Ciudadano",proMC[0].incremento));
                    console.log("movimiento:"+mc[0]);
-   // proMC.length=0;
+    proMC.length=0;
    
-                   mo[0]=proMo[0].incremento;
+//                   mo[0]=proMo[0].incremento;
+                    mo.push(new tendencia("Morena",proMo[0].incremento));
                    console.log("morena"+mo[0]);
+    proMo.length=0;
+    
+//    for(x=0;x<proValidos.length;x++)
+//    {
+//                   vali[x]=proValidos[x].incremento;
+//                   console.log("incrementosValidos("+x+")"+vali[x]);
+//    }
+    proValidos.length=0;
+    
+//    for(x=0;x<proNulos.length;x++)
+//    {
+//                   nulo[x]=proNulos[x].incremento;
+//                   console.log("incrementosNulos("+x+")"+nulo[x]);
+//    }
+//    proNulos.length=0;
+//    
+////    for(x=0;x<proTotal.length;x++)
+////    {
+////                   tota[x]=proTotal[x].incremento;
+////                   console.log("incrementosTotal("+x+")"+tota[x]);
+////    }
+    proTotal.length=0;
+    
+//    for(x=0;x<proList.length;x++)
+//    {
+//                   list[x]=proList[x].incremento;
+//                   console.log("incrementosLista("+x+")"+list[x]);
+//    }
+    proList.length=0;
+    
+//    for(x=0;x<proPart.length;x++)
+//    {
+//                   par[x]=proPart[x].incremento;
+//                   console.log("incrementosPart("+x+")"+prd[x]);
+//    }
+    proPart.length=0;
+    
                    
-                   //proMo.length=0;
+                  
     
 }
 
 
 function tabla03() {
+    var a03=[pan[0].voto,pri[0].voto,prd[0].voto,pt[0].voto,pvem[0].voto];
+    var min=Math.min.apply(null, a03);
+    var max=Math.max.apply(null, a03);
+    var instanciaG;
+    var instanciaP;
+    switch(max){
+        case pan[0].voto:
+            instanciaG="PAN";
+            break;
+            case pri[0].voto:
+                instanciaG="PRI";
+            break;
+            case prd[0].voto:
+                instanciaG="PRD";
+            break;
+            case pt[0].voto:
+                instanciaG="PT";
+            break;
+            case pvem[0].voto:
+                instanciaG="PVEM"
+            break;
+    }
+    switch(min){
+        case pan[0].voto:
+            instanciaP="PAN";
+        break;
+        case pri[0].voto:
+            instanciaP="PRI";
+        break;
+        case prd[0].voto:
+            instanciaP="PRD";
+        break;
+        case pt[0].voto:
+            instanciaP="PT";
+        break;
+        case pvem[0].voto:
+            instanciaP="PVEM"
+        break;
+    }
+    
+    var piec = document.getElementById('a03');
+    piec.innerHTML = '&nbsp;';
+    document.getElementById("a03").innerHTML="El siguiente partido: <b>"+ instanciaG +"</b> obtuvo un porcentaje de: <b>"+max+"%</b> , siendo el partido con el mayor aumento de presencia política en esta delegación, "+
+            "en cambio el partido:<b>"+instanciaP+"</b>, obtuvo un porcentaje de: <b>"+min+"%</b> lo que lo ubica como el partido con la mayor pérdida de presencia política en el periodo comprendido del 2000 al 2003.";
     
     
-
+    
    $('#p03').highcharts({
         chart: {
             type: 'column'
@@ -727,12 +799,58 @@ function tabla03() {
         series: [{
             //name: '<img style="width: 50px; height: 50px;" src="http://localhost:8080//TT//Recursos//partidos//PAN.jpg" />',
          //   name: 'PAN',
-            data: [pan[0],pri[0],prd[0],pt[0],pvem[0]]
+            data: [pan[0].voto,pri[0].voto,prd[0].voto,pt[0].voto,pvem[0].voto]
         }]
     });
+    a03.length=0;
 }
 
 function tabla36() {
+    var a36=[pan[1].voto,pri[1].voto,prd[1].voto,pt[1].voto,pvem[1].voto];
+    var min=Math.min.apply(null, a36);
+    var max=Math.max.apply(null, a36);
+    var instanciaG;
+    var instanciaP;
+    switch(max){
+        case pan[1].voto:
+            instanciaG="PAN";
+            break;
+            case pri[1].voto:
+                instanciaG="PRI";
+            break;
+            case prd[1].voto:
+                instanciaG="PRD";
+            break;
+            case pt[1].voto:
+                instanciaG="PT";
+            break;
+            case pvem[1].voto:
+                instanciaG="PVEM"
+            break;
+    }
+    switch(min){
+        case pan[1].voto:
+            instanciaP="PAN";
+        break;
+        case pri[1].voto:
+            instanciaP="PRI";
+        break;
+        case prd[1].voto:
+            instanciaP="PRD";
+        break;
+        case pt[1].voto:
+            instanciaP="PT";
+        break;
+        case pvem[1].voto:
+            instanciaP="PVEM"
+        break;
+    }
+    
+    var piec = document.getElementById('a36');
+    piec.innerHTML = '&nbsp;';
+    document.getElementById("a36").innerHTML= "El siguiente partido: <b>"+ instanciaG +"</b> obtuvo un porcentaje de: <b>"+max+"%</b> , siendo el partido con el mayor aumento de presencia política en esta delegación, "+
+            "en cambio el partido:<b>"+instanciaP+"</b>, obtuvo un porcentaje de: <b>"+min+"%</b> lo que lo ubica como el partido con la mayor pérdida de presencia política en el periodo comprendido del 2003 al 2006.";
+    
     
    $('#p36').highcharts({
         chart: {
@@ -750,7 +868,7 @@ function tabla36() {
             text: 'Proceso 2003-2006'
         },
         xAxis: {
-            categories: ['PAN', 'PRI', 'PRD', 'PT', 'PVEM','NA'],
+            categories: ['PAN', 'PRI', 'PRD', 'PT', 'PVEM'],
              labels: {
                     x: 6,
                     useHTML: true,                        
@@ -801,11 +919,64 @@ function tabla36() {
         series: [{
             //name: '<img style="width: 50px; height: 50px;" src="http://localhost:8080//TT//Recursos//partidos//PAN.jpg" />',
            name: 'Porcentaje',
-            data: [pan[1],pri[1],prd[1],pt[1],pvem[1],na[0]]
+            data: [pan[1].voto,pri[1].voto,prd[1].voto,pt[1].voto,pvem[1].voto]
         }]
     });
+    a36.lenght=0;
 }
 function tabla69() {
+    
+    var a69=[pan[2].voto,pri[2].voto,prd[2].voto,pt[2].voto,pvem[2].voto,na[0].voto];
+    var min=Math.min.apply(null, a69);
+    var max=Math.max.apply(null, a69);
+    var instanciaG;
+    var instanciaP;
+    switch(max){
+        case pan[2].voto:
+            instanciaG="PAN";
+            break;
+            case pri[2].voto:
+                instanciaG="PRI";
+            break;
+            case prd[2].voto:
+                instanciaG="PRD";
+            break;
+            case pt[2].voto:
+                instanciaG="PT";
+            break;
+            case pvem[2].voto:
+                instanciaG="PVEM"
+            break;
+            case na[0].voto:
+                instanciaG="Nueva Alianza"
+            break;
+    }
+    switch(min){
+        case pan[2].voto:
+            instanciaP="PAN";
+        break;
+        case pri[2].voto:
+            instanciaP="PRI";
+        break;
+        case prd[2].voto:
+            instanciaP="PRD";
+        break;
+        case pt[2].voto:
+            instanciaP="PT";
+        break;
+        case pvem[2].voto:
+            instanciaP="PVEM"
+        break;
+        case na[0].voto:
+                instanciaP="Nueva Alianza"
+            break;
+    }
+    
+    var piec = document.getElementById('a69');
+    piec.innerHTML = '&nbsp;';
+    document.getElementById("a69").innerHTML="El siguiente partido: <b>"+ instanciaG +"</b> obtuvo un porcentaje de: <b>"+max+"%</b> , siendo el partido con el mayor aumento de presencia política en esta delegación, "+
+            "en cambio el partido:<b>"+instanciaP+"</b>, obtuvo un porcentaje de: <b>"+min+"%</b> lo que lo ubica como el partido con la mayor pérdida de presencia política en el periodo comprendido del 2006 al 2009.";
+    
     
    $('#p69').highcharts({
         chart: {
@@ -874,11 +1045,62 @@ function tabla69() {
         series: [{
             //name: '<img style="width: 50px; height: 50px;" src="http://localhost:8080//TT//Recursos//partidos//PAN.jpg" />',
          name: 'Porcentaje',
-             data: [pan[2],pri[2],prd[2],pt[2],pvem[2],na[1]]
+             data: [pan[2].voto,pri[2].voto,prd[2].voto,pt[2].voto,pvem[2].voto,na[0].voto]
         }]
     });
+    a69.lenght=0;
 }
 function tabla92() {
+    var a92=[pan[3].voto,pri[3].voto,prd[3].voto,pt[3].voto,pvem[3].voto,na[1].voto];
+    var min=Math.min.apply(null, a92);
+    var max=Math.max.apply(null, a92);
+    var instanciaG;
+    var instanciaP;
+    switch(max){
+        case pan[3].voto:
+            instanciaG="PAN";
+            break;
+            case pri[3].voto:
+                instanciaG="PRI";
+            break;
+            case prd[3].voto:
+                instanciaG="PRD";
+            break;
+            case pt[3].voto:
+                instanciaG="PT";
+            break;
+            case pvem[3].voto:
+                instanciaG="PVEM"
+            break;
+            case na[1].voto:
+                instanciaG="Nueva Alianza"
+            break;
+    }
+    switch(min){
+        case pan[3].voto:
+            instanciaG="PAN";
+            break;
+            case pri[3].voto:
+                instanciaP="PRI";
+            break;
+            case prd[3].voto:
+                instanciaP="PRD";
+            break;
+            case pt[3].voto:
+                instanciaP="PT";
+            break;
+            case pvem[3].voto:
+                instanciaP="PVEM"
+            break;
+            case na[1].voto:
+                instanciaP="Nueva Alianza"
+            break;
+    }
+    
+    var piec = document.getElementById('a92');
+    piec.innerHTML = '&nbsp;';
+    document.getElementById("a92").innerHTML="El siguiente partido: <b>"+ instanciaG +"</b> obtuvo un porcentaje de: <b>"+max+"%</b> , siendo el partido con el mayor aumento de presencia política en esta delegación, "+
+            "en cambio el partido:<b>"+instanciaP+"</b>, obtuvo un porcentaje de: <b>"+min+"%</b> lo que lo ubica como el partido con la mayor pérdida de presencia política en el periodo comprendido del 2009 al 2012.";
     
    $('#p92').highcharts({
         chart: {
@@ -947,11 +1169,75 @@ function tabla92() {
         series: [{
             //name: '<img style="width: 50px; height: 50px;" src="http://localhost:8080//TT//Recursos//partidos//PAN.jpg" />',
         name: 'Porcentaje',
-             data: [pan[3],pri[3],prd[3],pt[3],pvem[3],na[2]]
+             data: [pan[3].voto,pri[3].voto,prd[3].voto,pt[3].voto,pvem[3].voto,na[1].voto]
         }]
     });
+    a92.legnth=0;
 }
 function tabla25() {
+    var a25=[pan[4].voto,pri[4].voto,prd[4].voto,pt[4].voto,pvem[4].voto,na[2].voto,mc[0].voto,mo[0].voto];
+    var min=Math.min.apply(null, a25);
+    var max=Math.max.apply(null, a25);
+    var instanciaG;
+    var instanciaP;
+    switch(max){
+        case pan[4].voto:
+            instanciaG="PAN";
+            break;
+            case pri[4].voto:
+                instanciaG="PRI";
+            break;
+            case prd[4].voto:
+                instanciaG="PRD";
+            break;
+            case pt[4].voto:
+                instanciaG="PT";
+            break;
+            case pvem[4].voto:
+                instanciaG="PVEM"
+            break;
+            case na[2].voto:
+                instanciaG="Nueva Alianza"
+            break;
+            case mc[0].voto:
+                instanciaG="Movimiento Ciudadano"
+            break;
+            case mo[0].voto:
+                instanciaG="Morena"
+            break;
+    }
+    switch(min){
+         case pan[4].voto:
+            instanciaP="PAN";
+            break;
+            case pri[4].voto:
+                instanciaP="PRI";
+            break;
+            case prd[4].voto:
+                instanciaP="PRD";
+            break;
+            case pt[4].voto:
+                instanciaP="PT";
+            break;
+            case pvem[4].voto:
+                instanciaP="PVEM"
+            break;
+            case na[2].voto:
+                instanciaP="Nueva Alianza"
+            break;
+            case mc[0].voto:
+                instanciaP="Movimiento Ciudadano"
+            break;
+            case mo[0].voto:
+                instanciaP="Morena"
+            break;
+    }
+    
+    var piec = document.getElementById('a25');
+    piec.innerHTML = '&nbsp;';
+    document.getElementById("a25").innerHTML="El siguiente partido: <b>"+ instanciaG +"</b> obtuvo un porcentaje de: <b>"+max+"%</b> , siendo el partido con el mayor aumento de presencia política en esta delegación, "+
+            "en cambio el partido:<b>"+instanciaP+"</b>, obtuvo un porcentaje de: <b>"+min+"%</b> lo que lo ubica como el partido con la mayor pérdida de presencia política en el periodo comprendido del 2012 al 2015.";
+    
     
    $('#p25').highcharts({
         chart: {
@@ -1021,20 +1307,21 @@ function tabla25() {
         },
         series: [{
              name: 'Porcentaje',
-             data: [pan[4],pri[4],prd[4],pt[4],pvem[4],na[3],mc[0],mo[0]]
+             data: [pan[4].voto,pri[4].voto,prd[4].voto,pt[4].voto,pvem[4].voto,na[2].voto,mc[0].voto,mo[0].voto]
         }]
     });
+    proMo.length=0;
+    a25.legnth=0;
 }
 
 
 function p2018(){
            
-           
-            console.log();
+           console.log();
              // Obtener la referencia del elemento body
             var body = document.getElementById("p18");
             body.innerHTML = '&nbsp;';
-            $('#p18').append('<p>Pronostico 2018<p><div id="p18" class="table table-striped table-hover table-bordered "></div>');
+            $('#p18').append('<p>Pronostico 2018<br>Por último se muestra una tabla con datos estimados para el siguiente proceso electoral, en este caso, 2018. Estos datos son calculados a partir del análisis previo además de considerar otros factores externos.<p><div id="p18" class="table table-striped table-hover table-bordered "></div>');
             // Crea un elemento <table> y un elemento <tbody>
             var tabla   = document.createElement("table");
             var tblBody = document.createElement("tbody");
@@ -1093,4 +1380,12 @@ function p2018(){
             tabla.setAttribute("border", "2");
             pro.length=0;
             totales='';
+            pan.length=0;
+            pri.length=0;
+            prd.length=0;
+            pt.length=0;
+            pvem.length=0;
+            na.length=0;
+            mc.length=0;
+            mo.lenght=0;
 }

@@ -6,6 +6,8 @@
 
 package DelegacionDAO;
 
+import Comparativa.DBComparativa.DBComparativa;
+import Comparativa.DBComparativa.PartidoPorDelegacion;
 import ConexionBD.ConexionBD;
 import Delegacion.Delegacion;
 import java.sql.Array;
@@ -13,6 +15,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,74 +27,287 @@ import java.util.logging.Logger;
  */
 public class DelegacionDAOImpl implements DelegacionDAO {
 
-private Connection VMobjConn;
+//private Connection VMobjConn;
 private ResultSet VLsqlRS=null;
-private Delegacion  del=null;
+private Connection VMobjConn;
+
 
 @Override
 public Delegacion getDelegacion(String id,String fecha) 
 {
             Delegacion VLobjDelegacion = null;
-
-            try 
-            {
-                    String query="";
-                    VMobjConn = ConexionBD.getConexion();
-                    Statement VLsqlST = VMobjConn.createStatement();
-                   if(fecha.equals("ano2015"))
-                   {
-                       VLsqlRS = VLsqlST.executeQuery("SELECT * FROM ano2015 WHERE clave =\'" + id + "\'");
-                       VLobjDelegacion= getDelegacion(VLsqlRS,fecha);
-                   }
-                    if(fecha.equals("ano2012"))
-                   {
-                       VLsqlRS = VLsqlST.executeQuery("SELECT * FROM ano2012 WHERE clave =\'" + id + "\'");
-                       VLobjDelegacion= getDelegacion(VLsqlRS,fecha);
-                   }
-                   if(fecha.equals("ano2009"))
-                   {
-                       VLsqlRS = VLsqlST.executeQuery("SELECT * FROM ano2009 WHERE clave =\'" + id + "\'");
-                       VLobjDelegacion= getDelegacion(VLsqlRS,fecha);
-                   }
-                   if(fecha.equals("ano2006"))
-                   {
-                       VLsqlRS = VLsqlST.executeQuery("SELECT * FROM ano2006 WHERE clave =\'" + id + "\'");
-                       VLobjDelegacion= getDelegacion(VLsqlRS,fecha);
-                   }
-                   if(fecha.equals("ano2003"))
-                   {
-                       VLsqlRS = VLsqlST.executeQuery("SELECT * FROM ano2003 WHERE clave =\'" + id + "\'");
-                       VLobjDelegacion= getDelegacion(VLsqlRS,fecha);
-                   }
-                   if(fecha.equals("ano2000"))
-                   {
-                       VLsqlRS = VLsqlST.executeQuery("SELECT * FROM ano2000 WHERE clave =\'" + id + "\'");
-                       VLobjDelegacion= getDelegacion(VLsqlRS,fecha);
-                   }
-            } 
-            catch (SQLException ex) 
-            {
-                 Logger.getLogger(DelegacionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            finally
-            {
-                    try 
-                    {
-                        VMobjConn.close();
-                        VLsqlRS.close();
-                    } 
-                    catch (SQLException ex) 
-                    {
-                        Logger.getLogger(DelegacionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-             }
+            List<List<PartidoPorDelegacion>> lista;
+           try { 
+                        if(fecha.equals("2015")) 
+                        {
+                            
+                            lista = new DBComparativa().getInfoByYear(fecha);
+                            VLobjDelegacion= getDelegacion(lista,id,fecha);
+                    
+                    //                       VLsqlRS = VLsqlST.executeQuery("SELECT * FROM ano2015 WHERE clave =\'" + id + "\'");
+                    //                       VLobjDelegacion= getDelegacion(VLsqlRS,fecha);
+               
+                        }
+                        if(fecha.equals("2012"))
+                        {
+                            lista = new DBComparativa().getInfoByYear(fecha);
+                            VLobjDelegacion= getDelegacion(lista,id,fecha);
+                    //                       VLsqlRS = VLsqlST.executeQuery("SELECT * FROM ano2012 WHERE clave =\'" + id + "\'");
+                    //                       VLobjDelegacion= getDelegacion(VLsqlRS,fecha);
+                        }
+                        if(fecha.equals("2009"))
+                        {
+                            lista = new DBComparativa().getInfoByYear(fecha);
+                            VLobjDelegacion= getDelegacion(lista,id,fecha);
+                    //                       VLsqlRS = VLsqlST.executeQuery("SELECT * FROM ano2009 WHERE clave =\'" + id + "\'");
+                    //                       VLobjDelegacion= getDelegacion(VLsqlRS,fecha);
+                        }
+                        if(fecha.equals("2006"))
+                        {
+                            lista = new DBComparativa().getInfoByYear(fecha);
+                            VLobjDelegacion= getDelegacion(lista,id,fecha);
+                    //                       VLsqlRS = VLsqlST.executeQuery("SELECT * FROM ano2006 WHERE clave =\'" + id + "\'");
+                    //                       VLobjDelegacion= getDelegacion(VLsqlRS,fecha);
+                        }
+                        if(fecha.equals("2003"))
+                        {
+                            lista = new DBComparativa().getInfoByYear(fecha);
+                            VLobjDelegacion= getDelegacion(lista,id,fecha);
+                    //                       VLsqlRS = VLsqlST.executeQuery("SELECT * FROM ano2003 WHERE clave =\'" + id + "\'");
+                    //                       VLobjDelegacion= getDelegacion(VLsqlRS,fecha);
+                        }
+                        if(fecha.equals("2000"))
+                        {
+                            lista = new DBComparativa().getInfoByYear(fecha);
+                            VLobjDelegacion= getDelegacion(lista,id,fecha);
+                    //                       VLsqlRS = VLsqlST.executeQuery("SELECT * FROM ano2000 WHERE clave =\'" + id + "\'");
+                    //                       VLobjDelegacion= getDelegacion(VLsqlRS,fecha);
+                        }
+                        
+             } catch (SQLException ex) {
+                    Logger.getLogger(DelegacionDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
              return VLobjDelegacion;
+}
+
+public Delegacion getDelegacion(List<List<PartidoPorDelegacion>> lista,String id,String fecha) throws SQLException{
+
+    String nom;
+    Delegacion  del=null;
+    String  val = null,nulos = null,total=null,li=null,par=null;
+    
+   ArrayList<String> votes;
+    votes = new ArrayList<>();
+    PartidoPorDelegacion delegacionTemp = null;
+    switch(fecha){
+        case "2015":
+                   
+                    nom="";
+                    
+                    for(List<PartidoPorDelegacion> list2 : lista)
+                    {
+                        for(PartidoPorDelegacion partido : list2)
+                        {
+                            if(partido.strCVE_Mun.equals(id))
+                            {
+                                if(delegacionTemp == null)
+                                {
+                                delegacionTemp = partido;
+                                }
+                                String n=String.valueOf(partido.votos);
+                                votes.add(n);
+                                nom=partido.strMunicipio;
+                            }
+                            
+                        }
+                    }
+                        val=String.valueOf(delegacionTemp.intValidos);
+                        nulos=String.valueOf(delegacionTemp.intNulo);
+                        total=String.valueOf(delegacionTemp.intTotal);
+                        li=String.valueOf(delegacionTemp.intLista_nominal);
+                        par=String.valueOf(delegacionTemp.intParticipacion);
+                        
+                        System.out.println("val"+val);
+                        System.out.println("nulos"+nulos);
+                        System.out.println("total"+total);
+                        System.out.println("li"+li);
+                        System.out.println("par"+par);
+  del = new Delegacion(id,nom,votes.get(0),votes.get(1),votes.get(2),votes.get(3),votes.get(4),votes.get(5),votes.get(6),votes.get(7),votes.get(8),votes.get(9),votes.get(10),votes.get(11),val,nulos,total,li,par,"");
+                            votes.clear();
+                           
+                           
+            break;
+        case "2012":
+                   nom="";
+                    
+                    for(List<PartidoPorDelegacion> list2 : lista)
+                    {
+                        for(PartidoPorDelegacion partido : list2)
+                        {
+                            if(partido.strCVE_Mun.equals(id))
+                            {
+                                if(delegacionTemp == null)
+                                {
+                                delegacionTemp = partido;
+                                }
+                                String n=String.valueOf(partido.votos);
+                                votes.add(n);
+                                nom=partido.strMunicipio;
+                            }
+                            
+                        }
+                    }
+                  
+                            
+                        val=String.valueOf(delegacionTemp.intValidos);
+                        nulos=String.valueOf(delegacionTemp.intNulo);
+                        total=String.valueOf(delegacionTemp.intTotal);
+                        li=String.valueOf(delegacionTemp.intLista_nominal);
+                        par=String.valueOf(delegacionTemp.intParticipacion);
+        del = new Delegacion(id,nom,votes.get(0),votes.get(1),votes.get(2),votes.get(3),votes.get(4),votes.get(5),votes.get(6),votes.get(7),votes.get(8),val,nulos,total,li,par);
+                            votes.clear();
+                           
+                            
+            break;
+        case "2009":
+                  nom="";
+                    
+                    for(List<PartidoPorDelegacion> list2 : lista)
+                    {
+                        for(PartidoPorDelegacion partido : list2)
+                        {
+                            if(partido.strCVE_Mun.equals(id))
+                            {
+                                if(delegacionTemp == null)
+                                {
+                                delegacionTemp = partido;
+                                }
+                                String n=String.valueOf(partido.votos);
+                                votes.add(n);
+                                nom=partido.strMunicipio;
+                            }
+                            
+                        }
+                    }
+                  
+                       val=String.valueOf(delegacionTemp.intValidos);
+                        nulos=String.valueOf(delegacionTemp.intNulo);
+                        total=String.valueOf(delegacionTemp.intTotal);
+                        li=String.valueOf(delegacionTemp.intLista_nominal);
+                        par=String.valueOf(delegacionTemp.intParticipacion);
+       del = new Delegacion(id,nom,votes.get(0),votes.get(1),votes.get(2),votes.get(3),votes.get(4),votes.get(5),votes.get(6),votes.get(7),votes.get(8),votes.get(9),votes.get(10),votes.get(11),val,nulos,total,li,par);
+                            votes.clear();
+                            
+                             
+            break;
+        case "2006":
+            nom="";
+                    
+                    for(List<PartidoPorDelegacion> list2 : lista)
+                    {
+                        for(PartidoPorDelegacion partido : list2)
+                        {
+                            if(partido.strCVE_Mun.equals(id))
+                            {
+                                if(delegacionTemp == null)
+                                {
+                                delegacionTemp = partido;
+                                }
+                                String n=String.valueOf(partido.votos);
+                                votes.add(n);
+                                nom=partido.strMunicipio;
+                            }
+                            
+                        }
+                    }
+                  
+        
+                        val=String.valueOf(delegacionTemp.intValidos);
+                        nulos=String.valueOf(delegacionTemp.intNulo);
+                        total=String.valueOf(delegacionTemp.intTotal);
+                        li=String.valueOf(delegacionTemp.intLista_nominal);
+                        par=String.valueOf(delegacionTemp.intParticipacion);
+                            del = new Delegacion(id,nom,votes.get(0),votes.get(1),votes.get(2),votes.get(3),votes.get(4),votes.get(5),val,nulos,total,li,par);
+                            votes.clear();
+                             
+                            
+            break;
+        case "2003":
+            nom="";
+                    
+                    for(List<PartidoPorDelegacion> list2 : lista)
+                    {
+                        for(PartidoPorDelegacion partido : list2)
+                        {
+                            if(partido.strCVE_Mun.equals(id))
+                            {
+                                if(delegacionTemp == null)
+                                {
+                                delegacionTemp = partido;
+                                }
+                                String n=String.valueOf(partido.votos);
+                                votes.add(n);
+                                nom=partido.strMunicipio;
+                            }
+                            
+                        }
+                    }
+                  
+        
+                       val=String.valueOf(delegacionTemp.intValidos);
+                        nulos=String.valueOf(delegacionTemp.intNulo);
+                        total=String.valueOf(delegacionTemp.intTotal);
+                        li=String.valueOf(delegacionTemp.intLista_nominal);
+                        par=String.valueOf(delegacionTemp.intParticipacion);
+                            del = new Delegacion(id,nom,votes.get(0),votes.get(1),votes.get(2),votes.get(3),votes.get(4),votes.get(5),votes.get(6),votes.get(7),votes.get(8),votes.get(9),votes.get(10),val,nulos,total,li,par);
+                            votes.clear();
+                             
+                           
+                  
+            break;
+        case "2000":
+                  nom="";
+                    
+                    for(List<PartidoPorDelegacion> list2 : lista)
+                    {
+                        for(PartidoPorDelegacion partido : list2)
+                        {
+                            if(partido.strCVE_Mun.equals(id))
+                            {
+                                if(delegacionTemp == null)
+                                {
+                                delegacionTemp = partido;
+                                }
+                                String n=String.valueOf(partido.votos);
+                                votes.add(n);
+                                nom=partido.strMunicipio;
+                            }
+                            
+                        }
+                    }
+                  
+        
+                       val=String.valueOf(delegacionTemp.intValidos);
+                        nulos=String.valueOf(delegacionTemp.intNulo);
+                        total=String.valueOf(delegacionTemp.intTotal);
+                        li=String.valueOf(delegacionTemp.intLista_nominal);
+                        par=String.valueOf(delegacionTemp.intParticipacion);
+                    del = new Delegacion(id,nom,votes.get(0),votes.get(1),votes.get(2),votes.get(3),votes.get(4),votes.get(5),votes.get(6),votes.get(7),votes.get(8),votes.get(9),val,nulos,total,li,par);
+                    votes.clear();
+                     
+                    
+                  
+            break;
+    }
+   
+    return del;
+    
 }
     
 public Delegacion getDelegacion(ResultSet VLsqlRS,String fecha) throws SQLException
 {
-        
+        Delegacion  del=null;
         if(fecha.equals("ano2015"))
         {
                 while(VLsqlRS.next())
@@ -349,30 +566,46 @@ public Delegacion getDelegacion(ResultSet VLsqlRS,String fecha) throws SQLExcept
 }
 
 
+
 @Override
-public String[][] compararParticipacion(String id) 
+public String[][] compararParticipacion(String cve) 
 {
         String a[][]=new String[6][5];
+        
+        int ide;int ano;
+        DBComparativa com = new DBComparativa();
         ResultSet a00=null;
         ResultSet a03=null;
         ResultSet a06=null;
         ResultSet a09=null;
         ResultSet a12=null;
         ResultSet a15=null;
-        
+        VMobjConn = ConexionBD.getConexion();
+          
+        String f1="1";
+        String f2="2";
+        String f3="3";
+        String f4="4";
+        String f5="5";
+        String f6="6";
     try 
     {
-        String query="";
-        VMobjConn = ConexionBD.getConexion();
-        Statement VLsqlST = VMobjConn.createStatement();
         
-        a00 = VLsqlST.executeQuery("SELECT v_lidos,nulos,total,lista_nominal,participacion FROM ano2000 WHERE clave =\'" + id + "\'");
+        Statement VLsqlST = VMobjConn.createStatement();       
+        ide=com.getIdDel(cve);
+        System.out.println(cve+"CVE->id"+ide+"...");
+        
+      
+        
+        
+        
+        a00 = VLsqlST.executeQuery("SELECT validos,nulo,total,lista_nominal,participacion FROM ResultadoElectoral WHERE id_Anio = \'"+f1+"\' AND Id_Delegacion = \'"+ide+"\'");
          
                 while(a00.next())
                 {
 
-                    a[0][0]=a00.getString("v_lidos");
-                    a[0][1]=a00.getString("nulos");
+                    a[0][0]=a00.getString("validos");
+                    a[0][1]=a00.getString("nulo");
                     a[0][2]=a00.getString("total");
                     a[0][3]=a00.getString("lista_nominal");
                     a[0][4]=a00.getString("participacion");
@@ -380,60 +613,60 @@ public String[][] compararParticipacion(String id)
                     
 
                 }   
-        a03 = VLsqlST.executeQuery("SELECT v_lidos,nulos,total,lista_nominal,participacion FROM ano2003 WHERE clave =\'" + id + "\'");
+        a03 = VLsqlST.executeQuery("SELECT validos,nulo,total,lista_nominal,participacion FROM ResultadoElectoral WHERE id_Anio = \'"+f2+"\' AND Id_Delegacion = \'"+ide+"\'");
          
                 while(a03.next())
                 {
 
-                    a[1][0]=a03.getString("v_lidos");
-                    a[1][1]=a03.getString("nulos");
+                    a[1][0]=a03.getString("validos");
+                    a[1][1]=a03.getString("nulo");
                     a[1][2]=a03.getString("total");
                     a[1][3]=a03.getString("lista_nominal");
                     a[1][4]=a03.getString("participacion");
 
                 }
-            a06 = VLsqlST.executeQuery("SELECT v_lidos,nulos,total,lista_nominal,participacion FROM ano2006 WHERE clave =\'" + id + "\'");
+            a06 = VLsqlST.executeQuery("SELECT validos,nulo,total,lista_nominal,participacion FROM ResultadoElectoral WHERE id_Anio = \'"+f3+"\' AND Id_Delegacion = \'"+ide+"\'");
                 while(a06.next())
                 {
 
-                    a[2][0]=a06.getString("v_lidos");
-                    a[2][1]=a06.getString("nulos");
+                    a[2][0]=a06.getString("validos");
+                    a[2][1]=a06.getString("nulo");
                     a[2][2]=a06.getString("total");
                     a[2][3]=a06.getString("lista_nominal");
                     a[2][4]=a06.getString("participacion");
 
                }
-            a09 = VLsqlST.executeQuery("SELECT v_lidos,nulos,total,lista_nominal,participacion FROM ano2009 WHERE clave =\'" + id + "\'");
+            a09 = VLsqlST.executeQuery("SELECT validos,nulo,total,lista_nominal,participacion FROM ResultadoElectoral WHERE id_Anio = \'"+f4+"\' AND Id_Delegacion = \'"+ide+"\'");
                 while(a09.next())
                 {
-                    a[3][0]=a09.getString("v_lidos");
-                    a[3][1]=a09.getString("nulos");
+                    a[3][0]=a09.getString("validos");
+                    a[3][1]=a09.getString("nulo");
                     a[3][2]=a09.getString("total");
                     a[3][3]=a09.getString("lista_nominal");
                     a[3][4]=a09.getString("participacion");
 
                }
          
-           a12 = VLsqlST.executeQuery("SELECT validos,nulos,total,lista_nominal,participacion FROM ano2012 WHERE clave =\'" + id + "\'");
+           a12 = VLsqlST.executeQuery("SELECT validos,nulo,total,lista_nominal,participacion FROM ResultadoElectoral WHERE id_Anio = \'"+f5+"\' AND Id_Delegacion = \'"+ide+"\'");
                 while(a12.next())
                 {
                     a[4][0]=a12.getString("validos");
-                    a[4][1]=a12.getString("nulos");
+                    a[4][1]=a12.getString("nulo");
                     a[4][2]=a12.getString("total");
                     a[4][3]=a12.getString("lista_nominal");
                     a[4][4]=a12.getString("participacion");
 
                  }
-            a15 = VLsqlST.executeQuery("SELECT validos,nulos,total,lista_nominal,participacion FROM ano2015 WHERE clave =\'" + id + "\'");
+            a15 = VLsqlST.executeQuery("SELECT validos,nulo,total,lista_nominal,participacion FROM ResultadoElectoral WHERE id_Anio = \'"+f6+"\' AND Id_Delegacion = \'"+ide+"\'");
                 while(a15.next())
                 {
                     
                     //int v=Integer.parseInt(a15.getString("total"))-Integer.parseInt(a15.getString("nulos"));
                     a[5][0]=a15.getString("validos");
-                    a[5][1]=a15.getString("nulos");
+                    a[5][1]=a15.getString("nulo");
                     a[5][2]=a15.getString("total");
                     a[5][3]=a15.getString("lista_nominal");
-                    a[5][4]=a15.getString("participacion");
+                    a[5][4]=a15.getString("participacion");;
 
                  }
     } 
@@ -445,6 +678,7 @@ public String[][] compararParticipacion(String id)
             {
                     try 
                     {
+                        
                         a00.close();
                         a03.close();
                         a09.close();
@@ -460,6 +694,8 @@ public String[][] compararParticipacion(String id)
     return a;
 
     }
+
+
 
  
 }

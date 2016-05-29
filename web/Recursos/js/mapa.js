@@ -15,7 +15,7 @@ var año;
 //parametro
 var par;
 
-$('#generarInforme').hide();
+//$('#generarInforme').hide();
 
 $('#idTabla1').hide();
 $('#idTabla2').hide();
@@ -97,25 +97,6 @@ function asignLayerGroup(cve)
   );
 }
 
-function nombreRealDelegacion(estado)
-{
-  if(estado == 'Cuauhtmoc')
-    return 'Cuauhtémoc';
-  if(estado == 'lvaro Obregn')
-    return 'Álvaro Obregón';
-  if(estado == 'Benito Jurez')
-    return 'Benito Juárez';
-  if(estado == 'Coyoacn')
-    return 'Coyoacán';
-  if(estado == 'Tlhuac')
-    return 'Tláhuac';
-
-  return estado;
-}
-
-
-
-
 var format = 'image/png';
 var untiled = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -144,9 +125,6 @@ var untiled = new ol.layer.Image({
   var map = new ol.Map
   (
   {
-
-
-
     layers: 
     [
           new ol.layer.Image
@@ -190,12 +168,8 @@ var untiled = new ol.layer.Image({
           {'INFO_FORMAT': 'text/html', 'FEATURE_COUNT': 50});
         if (url) 
         {
-
-          
-           //'<iframe seamless src="' + url + '"></iframe>';
-          var IFRAME = '<iframe seamless id="idIFRAME"></iframe>';
-
-          document.getElementById('nodelist').innerHTML = IFRAME;
+            var IFRAME = '<iframe seamless id="idIFRAME"></iframe>';
+            document.getElementById('nodelist').innerHTML = IFRAME;
 
           $('#nodelist').hide();
             $("#idIFRAME").load
@@ -212,22 +186,19 @@ var untiled = new ol.layer.Image({
                     localStorage.setItem("CVE", CVE);
                     localStorage.setItem("par",par);
                    
-                        datosDelegacion(CVE,año,par);
+                    datosDelegacion(CVE,año,par);
                     
                     Estado = $('#nodelist').get(0).children[0].contentDocument.children[0].children[1].children[0].children[1].children[1].children[5].innerHTML;
                     console.log(Estado + ":" + CVE);
                     Estado = nombreRealDelegacion(Estado);
                    
-                   $('#idEstadoActivo').get(0).innerHTML ="Delegación: "+delegacion;
+                    $('#idEstadoActivo').get(0).innerHTML ="Delegación: "+Estado;
                     $('#idEstadoActivo').hide();
                     $('#idEstadoActivo').fadeIn(0);
-                   
-                  
+                    
                     grafica(par,CVE);
                     comparativa(CVE,año);
                     
-                    
-                   
                     var newLayerGroup = asignLayerGroup(CVE);
                     map.setLayerGroup(newLayerGroup);
                   }
@@ -565,7 +536,6 @@ function grafica(par,idEstado)
                 
         }
         
-        
 }
 
 
@@ -673,9 +643,7 @@ function partido(nombre,ima,voto,color){
 
 function datosDelegacion(idEstado,fecha,par){
     
-    
     var p=par;
-    console.log(p);
     var f=fecha;
     
     
@@ -683,12 +651,11 @@ $.ajax({
             type: "GET",  
             async: false,
             url: "http://localhost:8080/TT/ObtenerDelegacion",  
-            data: "Clave=" +idEstado+ "&ano=ano" +fecha,  
+            data: "Clave=" +idEstado+ "&ano=" +fecha+"&sesion="+sessionStorage.getItem("SClave"),  
             success: function(result)
-            {
-                
-                        
-                          if(p.includes('partido'))
+            
+            
+    {                   if(p.includes('partido'))
                           {
                                     if(f.includes('2000'))
                                     {
@@ -844,15 +811,7 @@ $.ajax({
    
 }
 
-
-
-
-
-//**************************************************************
-
-///////////// =============== /////////////
 var respuesta;
-
 var cve_mun;
 var nombre;
 var partidoganador;
@@ -862,7 +821,6 @@ var delegacionesganadas;
 var delegacionesperdidas;
 var porcentaje;
 var votos;
-
 var root;
 
 function comparativa(CVE,año)
@@ -872,7 +830,7 @@ function comparativa(CVE,año)
                                   type: "GET",  
                                   async: false,
                                   url: "http://localhost:8080/TT/SComparativa",  
-                                  data: "cve=" +CVE+ "&anio=" +año,  
+                                  data: "cve=" +CVE+ "&anio=" +año+"&sesion="+sessionStorage.getItem("SClave"),  
                                   success: getComparativa
                                   ,
                                 error: function (xhr, ajaxOptions, thrownError)
@@ -1058,7 +1016,7 @@ function mostrarTabla1()
     var $row = $('<tr></tr>');
 
     $row.append('<th scope="row" >'+ (i+1) +'</th>');
-    $row.append('<td>'+ tabla1.children[i].children[0].textContent +'</td>');
+    $row.append('<td>'+ obtenerNombre(tabla1.children[i].children[0].textContent) +'</td>');
     $row.append('<td>'+ tabla1.children[i].children[1].textContent +'</td>');
 
     $('#idTabla1 tbody').append($row);
@@ -1073,13 +1031,131 @@ function mostrarTabla2()
   {
     var $row = $('<tr></tr>');
 
-      $row.append('<td>'+ tabla2.children[j].children[0].textContent +'</td>');
+      $row.append('<td>'+ nombreRealDelegacion(tabla2.children[j].children[0].textContent) +'</td>');
       $row.append('<td>'+ tabla2.children[j].children[2].textContent +'</td>');
 
     $('#idTabla2 table tbody').append($row);
   }
 
   $('#idTabla2').show();
+}
+
+function obtenerNombre(partidoGanador)
+{
+	if(partidoGanador == 'pan')
+		return  'PAN' ;
+
+	if(partidoGanador == 'pri')
+		return 'PRI' ;
+
+	if(partidoGanador == 'PPS')
+		return 'PPS.gif' ;
+
+	if(partidoGanador == 'prd')
+		return 'PRD' ;
+
+	if(partidoGanador == 'PFCRN')
+		return 'PFCRN.png' ;
+
+	if(partidoGanador == 'parm')
+		return 'PARM' ;
+
+	if(partidoGanador == 'pan_na') // falta
+		return 'Coalición PAN-Nueva Alianza' ;
+
+	if(partidoGanador == 'pt')
+		return 'PT' ;
+
+	if(partidoGanador == 'pvem')
+		return 'PVEM' ;
+
+	if(partidoGanador == 'psd')
+		return 'Alternativa' ;
+
+	if(partidoGanador == 'pas') // falta
+		return 'Partido Socialdemócrata' ;
+
+	if(partidoGanador == 'plm') // falta
+		return 'Partido Liberal Mexicano' ;
+
+	if(partidoGanador == 'fc') // falta
+		return 'Fuerza Ciudadana' ;
+
+	if(partidoGanador == 'pcd')
+		return 'PCD' ;
+
+	if(partidoGanador == 'prd_con') //falta
+		return 'Coalición PRD-Convergencia' ;
+
+	if(partidoGanador == 'Alianza por México')
+		return 'Alianza_por_México' ;
+
+	if(partidoGanador == 'prd_pt_con')
+		return 'Por El Bien De Todos' ;
+
+	if(partidoGanador == 'na')
+		return 'Nueva Alianza' ;
+
+	
+
+	if(partidoGanador == 'mc')
+		return 'Movimiento Ciudadano' ;
+            
+	if(partidoGanador == 'mp')
+		return 'México Posible' ;
+
+	if(partidoGanador == 'pri_pvem')
+		return 'Coalición PRI-PVEM' ;
+
+	if(partidoGanador == 'prd_pt_mc')
+		return 'Coalición PRD-PT-MC' ;
+
+	if(partidoGanador == 'prd_pt')
+		return 'Coalción PRD-PT' ;
+
+	if(partidoGanador == 'pt_con')
+		return 'Coalción PT-Convergencia' ;
+
+	if(partidoGanador == 'prd_pt_panal')// falta
+		return 'Coalición PRD-PT-NA' ;
+
+            
+    if(partidoGanador == 'pan_pvem')
+		return 'Coalición PAN-PVEM';
+
+	if(partidoGanador == 'dc')
+		return 'Democracia Social';
+
+	if(partidoGanador == 'con')
+		return 'Convergencia';
+
+	if(partidoGanador == 'pas')
+		return 'Partido Alianza Social';
+
+
+	if(partidoGanador == 'psn')
+		return 'Partido de la Sociedad Nacionalista';
+
+	if(partidoGanador == 'morena')
+		return 'Morena';
+
+	if(partidoGanador == 'pes')
+		return 'Encuentro Social';
+
+	if(partidoGanador == 'ph')
+		return 'Partido Humanista';
+
+	if(partidoGanador == 'panal')
+		return 'Nueva Alianza';
+            
+       if(partidoGanador == 'indep')
+		return 'Independiente';
+
+
+	
+
+
+
 }
 
 function obtenerURLPartido(partidoGanador)
@@ -1154,6 +1230,24 @@ function obtenerURLPartido(partidoGanador)
 
 	if(partidoGanador == 'morena') // falta
 		return URL + 'morena.jpg' ;
+            
+            if(partidoGanador == 'pan_pvem')
+		return URL + 'pan_pvem.JPG';
 
 }
 
+function nombreRealDelegacion(estado)
+{
+  if(estado == 'Cuauhtmoc')
+    return 'Cuauhtémoc';
+  if(estado == 'lvaro Obregn')
+    return 'Álvaro Obregón';
+  if(estado == 'Benito Jurez')
+    return 'Benito Juárez';
+  if(estado == 'Coyoacn')
+    return 'Coyoacán';
+  if(estado == 'Tlhuac')
+    return 'Tláhuac';
+
+  return estado;
+}

@@ -172,7 +172,7 @@ public class UsuarioDAOImpl implements UsuarioDAO
         {
             VMobjConn = ConexionBD.getConexion();
             VLsqlST = VMobjConn.createStatement();
-            VLsqlST.executeUpdate("insert into usuarios (Correo, Password, Nombre, APaterno, AMaterno, Perfil) values (\'"+ VPstrCorreo + "\',\'" + VPstrPassword + "\', \'" + VPstrNombre + "\',\'" + VPstrAPaterno + "\',\'" + VPstrAMaterno +"\',\'" + VPstrPerfil + "\');");
+            VLsqlST.executeUpdate("INSERT INTO Usuarios (correo, password, nombre, apaterno, amaterno, perfil) VALUES (\'"+ VPstrCorreo + "\',\'" + VPstrPassword + "\', \'" + VPstrNombre + "\',\'" + VPstrAPaterno + "\',\'" + VPstrAMaterno +"\',\'" + VPstrPerfil + "\');");
         
         } 
         catch (SQLException ex) 

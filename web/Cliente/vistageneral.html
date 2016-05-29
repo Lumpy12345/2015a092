@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">  
-    <title>TT1 2015-A092</title>
+    <title>TT 2015-A092</title>
     <!-- Bootstrap -->
     <script type="text/JavaScript" src="../Recursos/js/Funciones.js"></script>
     <link href="../Recursos/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -65,7 +65,7 @@
           <label for="sel1">Año de Elección</label>
             <select id="idSelectAnio" class="form-control" id="año" name="año" onchange="renderizarTabla();">
 
-              <option>2018</option>
+              
               <option selected="selected">2015</option>
               <option>2012</option>
               <option>2009</option>
@@ -177,6 +177,8 @@ function getURLIco(partido)
 
 	if(partido == 'pan')
 		return URL + 'pan_ico.png';
+        if(partido == 'pan_pvem')
+		return URL + 'panpvem_ico.png';
 
 	if(partido == 'pri_pvem')
 		return URL + 'pri_pvem_ico.png';
@@ -231,6 +233,25 @@ function getURLIco(partido)
 
 	if(partido == 'pan_na')
 		return URL + 'pan_na.jpg';
+        if(partido == 'plm')
+                return URL + 'plm_ico.png'
+        if(partido == 'mp')
+                return URL + 'mp_ico.png'
+        if(partido == 'pas')
+                return URL + 'pas_ico.png'
+        if(partido == 'fc')
+                return URL + 'fc_ico.png'
+        if(partido == 'psn')
+                return URL + 'psn_ico.png'
+        if(partido == 'dc')
+                return URL + 'dc.png'
+        
+        if(partido == 'pcd')
+                return URL + 'pcd_ico.png'
+        if(partido == 'parm')
+                return URL + 'parm_ico.png'
+            
+        
 
 
 	
@@ -258,7 +279,7 @@ for(var i = 2 ; i <= 16 ; i++ )
 		type: "GET",  
 		async: false,
 		url: "http://localhost:8080/TT/SComparativa",  
-		data: "cve=" + clave + "&anio=" +$('#idSelectAnio').val(),  
+		data: "cve=" + clave + "&anio=" +$('#idSelectAnio').val()+"&sesion="+sessionStorage.getItem("SClave"),  
 		success: generarTablas
 		,
 		error: function (xhr, ajaxOptions, thrownError)

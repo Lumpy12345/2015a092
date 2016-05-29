@@ -60,9 +60,8 @@ public class ObtenerUsuarios extends HttpServlet {
             VerificarSesion VLobjVerificar = new VerificarSesion();
 
             String VLstrSesion = VLobjVerificar.getClave(VLstrClave);
-            
                 
-                    if(VLstrSesion.contains("ERROR"))
+               if(VLstrSesion.contains("ERROR"))
                     {
                         out.println("<div>Datos de sesion no validos.</div>");
                     }
@@ -71,14 +70,11 @@ public class ObtenerUsuarios extends HttpServlet {
                             UsuarioDAOImpl VLobjUsuarioDAO = new UsuarioDAOImpl();
                             
                             Usuario VLobjUsuario = VLobjUsuarioDAO.getUsuario(VLstrSesion.trim());
-                            out.println("<table class=\"table table-striped table-advance table-hover\">");
+                            out.println("<table class=\"table table-striped\">");
                             out.println("<tbody>\n" +
 "                              <tr>\n" +
-"                                 <th><i class=\"icon_profile\"></i> Correo</th>\n" +
-"                                 <th><i class=\"icon_profile\"></i> Nombre</th>\n" +
-"                                 <th><i class=\"icon_profile\"></i> Apellido Paterno</th>\n" +
-"                                 <th><i class=\"icon_mail_alt\"></i>Apellido Materno</th>\n" +
-"                                 <th><i class=\"icon_mobile\"></i> Perfil</th>\n" +
+"                                 <th>Usuario</th>\n" +
+"                                 <th>Perfil</th>\n" +
 "                                 <th><i class=\"icon_cogs\"></i> Action</th>\n" +
 "                              </tr>");
                             if(VLobjUsuario.getVMstrPerfil().equals("Admin"))
@@ -89,10 +85,7 @@ public class ObtenerUsuarios extends HttpServlet {
                                 {
                                     out.println("<tr>");
                                     out.println("<td>" + VLobjUsuario2.getVMstrCorreo()+ "</td>");
-                                    out.println("<td>" + VLobjUsuario2.getVMstrNombre()+ "</td>");
-                                    out.println("<td>" + VLobjUsuario2.getVMstrAPaterno()+ "</td>");
-                                    out.println("<td>" + VLobjUsuario2.getVMstrAMaterno()+ "</td>");
-                                    out.println("<td>" + VLobjUsuario2.getVMstrPerfil()+ "</td>");
+                                    out.println("<td><span class=\"badge bg-red\">" + VLobjUsuario2.getVMstrPerfil()+ "</span></td>");
                                   /*  out.println(" <td ><button class=\"btn btn-primary\" onclick=editarU("+"\""
                                             + VLobjUsuario2.getVMstrCorreo()+"\"" +");><i class=\"fa fa-street-view fa-lg\"></i>Editar</button>\n" */
                                     out.println(" <td ><a class=\"btn btn-primary\" href=\"/TT/ObtenerUsuario?Correo="+VLobjUsuario2.getVMstrCorreo()+"\"><i class=\"fa fa-street-view fa-lg\"></i>Editar</a>\n" +

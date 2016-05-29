@@ -1,13 +1,4 @@
-/*
-
-Si se accede a una pagina que requiera de datos de sesion cuando estos no existen,
-se redirecciona a la pagina Inicio.html
-
-*/
-
 var paginaRedir = "/TT/Login.html";
-//////////////////// Funciones
-
 function existsOnDB(sesion)
 {
 	var solicitud = $.ajax({
@@ -16,8 +7,7 @@ function existsOnDB(sesion)
  					data: "Clave=" + sessionStorage.getItem(IDTSesion),
  					dataType : "xml"
  					});
-
-	solicitud.success(
+solicitud.success(
 			function Response(respuesta)
 			{
 				var Respuesta = respuesta.getElementsByTagName("Respuesta")[0].textContent;
@@ -35,9 +25,6 @@ function existsOnDB(sesion)
 			}
 		);
 }
-////////////////////
-
-
 var IDTSesion = "Clave";
 var sesion = sessionStorage.getItem(IDTSesion);
 

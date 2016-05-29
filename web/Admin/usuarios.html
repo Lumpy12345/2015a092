@@ -1,242 +1,162 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-   
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>SSGPE</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="../Recursos/admin/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../Recursos/admin/dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="../Recursos/admin/dist/css/skins/_all-skins.min.css">
+  <!-- Morris chart -->
+  <link rel="stylesheet" href="../Recursos/admin/plugins/morris/morris.css">
+    <script type="text/JavaScript" src="../Recursos/js/Funciones.js"></script>
 
-    <title>TT1-2015-A092</title>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
 
-   <!-- Bootstrap CSS -->    
-    <link href="../Recursos/admin/bootstrap.min.css" rel="stylesheet">
-    <!-- bootstrap theme -->
-    <link href="../Recursos/admin/bootstrap-theme.css" rel="stylesheet">
-    <!--external css-->
-    <!-- font icon -->
-    <link href="../Recursos/admin/elegant-icons-style.css" rel="stylesheet" />
-    <link href="../Recursos/admin/font-awesome.min.css" rel="stylesheet" />
-    <!-- Custom styles -->
-    <link href="../Recursos/admin/style.css" rel="stylesheet">
-    <link href="../Recursos/admin/style-responsive.css" rel="stylesheet" />
-<script type="text/JavaScript" src="../Recursos/js/Funciones.js"></script>
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
-    <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-      <script src="js/respond.min.js"></script>
-      <script src="js/lte-ie7.js"></script>
-    <![endif]-->
-    
-  </head>
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="index.html" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>SSGPE</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>SSGPE</b>/Admin</span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
 
-  <body>
-  <!-- container section start -->
-  <section id="container" class="">
-      <!--header start-->
-      <header class="header dark-bg">
-            <div class="toggle-nav">
-                <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"></div>
+     <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          
+          
+          
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              
+              <span class="hidden-xs">Administrador</span>
+            </a>
+            <ul class="dropdown-menu">
+              
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                 <span class="username" onclick="Cerrar_Sesion()">Cerrar Sesion</span>
+              </li>
+            </ul>
+          </li>
+          
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      
+      
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu">
+        <li class="header">Herramientas</li>
+        
+<!--       <li class="treeview">
+          <a href="#">
+            <i class="fa fa-edit"></i> <span>Consulta</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="../Admin/general.html"><i class="fa fa-circle-o"></i>Datos Electorales</a></li>
+           </ul>
+        </li>-->
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-edit"></i> <span>Usuarios</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="usuarios.html"><i class="fa fa-circle-o"></i> Administrar Usuario</a></li>
+              <li><a href="crear_usuario.html"><i class="fa fa-circle-o"></i> Crear Usuario</a></li>
+          </ul>
+        </li>
+        
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        
+        <small> </small>
+      </h1>
+      <ol class="breadcrumb">
+        <li>Administrador</li>
+        <li class="active">Herramientas</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+     
+      <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+       
+        <div class="col-md-12">
+
+          <div class="box box-success">
+            <div class="box-header">
+              <h3 class="box-title">Lista de Usuarios</h3>
+              <br>
+              <a  href="/TT/Admin/crear_usuario.html" style="font-size: 23px"><span>Nuevo <i class="fa fa-plus"></i></span></a>
             </div>
-
-            <!--logo start-->
-            <a href="index.html" class="logo"><span class="lite">SSGPE</span></a>
-            <!--logo end-->
-
-            <div class="nav search-row" id="top_menu">
-                <!--  search form start -->
-
-                <!--  search form end -->                
-            </div>
-
-            <div class="top-nav notification-row">                
-                <!-- notificatoin dropdown start-->
-                <ul class="nav pull-right top-menu">
-                    
-                    <!-- task notificatoin start -->
-                    <li id="task_notificatoin_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="icon-task-l"></span>
-                        </a>
-                        <ul class="dropdown-menu extended tasks-bar">
-                            <div class="notify-arrow notify-arrow-blue"></div>
-                            
-
-                            <li class="external">
-                                <a href="#">See All Tasks</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- task notificatoin end -->
-                    <!-- inbox notificatoin start-->
-                    <li id="mail_notificatoin_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="icon-envelope-l"></i>
-                        </a>
-                        <ul class="dropdown-menu extended inbox">
-                            <div class="notify-arrow notify-arrow-blue"></div>
-
-                            
-                            
-                            
-                            
-                            <li>
-                                <a href="#">See all messages</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- inbox notificatoin end -->
-                    <!-- alert notification start-->
-                    <li id="alert_notificatoin_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-
-                            <i class="icon-bell-l"></i>
-                        </a>
-                        <ul class="dropdown-menu extended notification">
-                            <div class="notify-arrow notify-arrow-blue"></div>
-                            
-                                              
-                            <li>
-                                <a href="#">See all notifications</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- alert notification end-->
-                    <!-- user login dropdown start-->
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="profile-ava">
-                            </span>
-                            <span class="username" onclick="Cerrar_Sesion()">Cerrar Sesion</span>
-                            <b class="caret"></b>
-                        </a>
-                        
-                    </li>
-                    <!-- user login dropdown end -->
-                </ul>
-                <!-- notificatoin dropdown end-->
-            </div>
-      </header>      
-      <!--header end-->
-
-      <!--sidebar start-->
-      <aside>
-          <div id="sidebar"  class="nav-collapse ">
-              <!-- sidebar menu start-->
-              <ul class="sidebar-menu">                
-                  <li class="active">
-                      <a class="" href="index.html">
-                          <i class="icon_house_alt"></i>
-                          <span>Home</span>
-                      </a>
-                  </li>
-                  
-                  <li class="sub-menu">
-                      <a href="javascript:;" class="">
-                          <i class="icon_desktop"></i>
-                          <span>Sistema</span>
-                          <span class="menu-arrow arrow_carrot-right"></span>
-                      </a>
-                      <ul class="sub">
-                          <li><a class="" href="cargar_base.html">Cargar Base de Datos</a></li>
-                      </ul>
-                  </li>
-                  
-                  <li>                     
-                      <a class="" href="informacion_general.html">
-                          <i class="icon_piechart"></i>
-                          <span>Información</span>
-                          
-                      </a>
-                                         
-                  </li>
-                             
-                  <li class="sub-menu">
-                      <a href="#" class="">
-                          <i class="icon_table"></i>
-                          <span>Usuarios</span>
-                          
-                          
-                          <span class="menu-arrow arrow_carrot-right"></span>
-                      </a>
-                      <ul class="sub">
-                          <li><a class="" href="usuarios.html">Adminstrar Usuarios</a></li>
-                          <li><a class="" href="crear_usuario.html">Crear Usuario</a></li>
-                          
-                      </ul>
-                  </li>
-                  
-                  
-              </ul>
-              <!-- sidebar menu end-->
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+              <div id="usuarios"></div>
+              
+              
+              
+               </div>
+            <!-- /.box-body -->
           </div>
-      </aside>
+          <!-- /.box -->
+       
+          
+        <!-- right col -->
+      </div>
+      <!-- /.row (main row) -->
 
-      <!--main content start-->
-      <section id="main-content">
-          <section class="wrapper">
-		  <div class="row">
-				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-table"></i>Usuarios</h3>
-					<ol class="breadcrumb">
-						<li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-						<li><i class="fa fa-user"></i>Usuarios</li>
-						<li><i class="fa fa-user"></i>Administrar Usuarios</li>
-					</ol>
-				</div>
-			</div>
-              <!-- page start-->
-              <div class="row">
-                  <div class="col-sm-6">
-                      
-              </div>        
-                  <div class="col-sm-6">
-                      
-              </div>
-              <div class="row">
-                  
-              </div>
-                  <div class="col-sm-6">
-                      
-                  </div>
-              </div>
-              <div class="row">
-                
-                  </div>
-                  <div class="col-sm-6">
-                      
-                  </div>
-              <div class="row">
-                  
-              </div>
-              <div class="row">
-                  <div class="col-lg-12">   
-                      <section class="panel">
-                          <header class="panel-heading">
-                              Tabla de Usuarios
-                              <a href="crear_usuario.html"><span class="navbar-right" >Agregar Usuario</span></a>
-                          </header>
-                          <div id="usuarios"></div>
-                          
-                           
-                       
-                          </section>
-                  </div>
-              </div>
-              <!-- page end-->
-          </section>
-      </section>
-      <!--main content end-->
-  </section>
-  <!-- container section end -->
-      <!-- javascripts -->
-    <script src="../Recursos/admin/jquery.js"></script>
-    <script src="../Recursos/admin/bootstrap.min.js"></script>
-    <!-- nice scroll -->
-    <script src="../Recursos/admin/jquery.scrollTo.min.js"></script>
-    <script src="../Recursos/admin/jquery.nicescroll.js" type="text/javascript"></script><!--custome script for all page-->
-    <script src="../Recursos/admin/scripts.js"></script>
-    
-    <script type='text/javascript'>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+ 
+ <script type='text/javascript'>
     function listaUsuarios(){
        $.ajax({
            type: "GET", 
@@ -249,8 +169,28 @@
  };
    setInterval(listaUsuarios, 1000);
 </script>
-    
+  
+</div>
 
+<!-- jQuery 2.2.0 -->
+<script src="../Recursos/admin/plugins/jQuery/jQuery-2.2.0.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
+</script>
+<!-- Bootstrap 3.3.6 -->
+<script src="../Recursos/admin/bootstrap/js/bootstrap.min.js"></script>
 
-  </body>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="../Recursos/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<!-- Slimscroll -->
+<script src="../Recursos/admin/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../Recursos/admin/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../Recursos/admin/dist/js/app.min.js"></script>
+
+</body>
 </html>

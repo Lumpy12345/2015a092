@@ -2,11 +2,12 @@
 
 <html>
 	<head>
-		<title>TT1 2015-A092</title>
+		<title>TT2 2015-A092</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="Recursos/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="Recursos/css/main.css" />
+                <script src="Recursos/js/vue.js"></script>
 		<!--[if lte IE 8]><link rel="stylesheet" href="Recursos/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="Recursos/css/ie9.css" /><![endif]-->
                 
@@ -40,7 +41,7 @@
 
 			<!-- Header -->
 				<header id="header" class="alt">
-					<h1 id="logo"><a href="index.html">TT1 <span>2015-A092</span></a></h1>
+					<h1 id="logo"><a href="index.html">TT2 <span>2015-A092</span></a></h1>
 					
 				</header>
 
@@ -92,7 +93,19 @@
 
 				</section>
 
-			
+                            <center>
+					<div id="app">
+					  <a id="show-modal" @click="showModal = true">Recuperar contraseña</a>
+					  <!-- use the modal component, pass in the prop -->
+					  <modal :show.sync="showModal">
+					    <!--
+					      you can use custom content here to overwrite
+					      default content
+					    -->
+					    <h3 slot="header">Recuperación de contraseña</h3>
+					  </modal>
+					</div>
+				</center>
 
 
 			<!-- Footer -->
@@ -111,7 +124,138 @@
 				</footer>
 
 		</div>
+                 <!-- template for the modal component -->
+                <script type="x/template" id="modal-template">
+                  <div class="modal-mask" v-show="show" transition="modal">
+                    <div class="modal-wrapper">
+                      <div class="modal-container">
+                        <div class="modal-header">
+                          <slot name="header">
+                          </slot>
+                        </div>
+                                <div class="modal-body">
+                                  <slot name="body">
+                                    <input id="idRecuperarContrasena" type="email" placeholder="example@example.com" ></input>
+                                  </slot>
+                                </div>
 
+                                <div class="modal-footer">
+                                  <slot name="footer">
+                                    <p id="idTextoRecuperacion"></p>
+                                    <button class="modal-default-button"
+                                      onclick="enviarCorreo();">
+                                      Enviar
+                                    </button>
+                                    <button class="modal-default-button"
+                                      @click="show = false" onclick="$('#idRecuperarContrasena').val('');$('#idTextoRecuperacion').get(0).textContent = '';">
+                                      Cerrar
+                                    </button>
+                                  </slot>
+                                </div>
+                      </div>
+                    </div>
+                  </div>
+                </script>
+
+		<style type="text/css">
+			.modal-mask {
+			  position: fixed;
+			  z-index: 9998;
+			  top: 0;
+			  left: 0;
+			  width: 100%;
+			  height: 100%;
+			  background-color: rgba(0, 0, 0, .5);
+			  display: table;
+			  transition: opacity .3s ease;
+			}
+
+			.modal-wrapper {
+			  display: table-cell;
+			  vertical-align: middle;
+			}
+
+			.modal-container {
+			  width: 300px;
+			  margin: 0px auto;
+			  padding: 20px 30px;
+			  background-color: #fff;
+			  border-radius: 2px;
+			  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+			  transition: all .3s ease;
+			  font-family: Helvetica, Arial, sans-serif;
+			}
+
+			.modal-header h3 {
+			  margin-top: 0;
+			  color: #42b983;
+			}
+
+			.modal-body {
+			  margin: 20px 0;
+			}
+
+			.modal-default-button {
+			  float: right;
+			}
+
+			/*
+			 * the following styles are auto-applied to elements with
+			 * v-transition="modal" when their visiblity is toggled
+			 * by Vue.js.
+			 *
+			 * You can easily play with the modal transition by editing
+			 * these styles.
+			 */
+
+			.modal-enter, .modal-leave {
+			  opacity: 0;
+			}
+
+			.modal-enter .modal-container,
+			.modal-leave .modal-container {
+			  -webkit-transform: scale(1.1);
+			  transform: scale(1.1);
+			}
+		</style>
+		<script type="text/javascript">
+			Vue.component('modal', {
+			  template: '#modal-template',
+			  props: {
+			    show: {
+			      type: Boolean,
+			      required: true,
+			      twoWay: true    
+			    }
+			  }
+			});
+
+			// start app
+			new Vue({
+			  el: '#app',
+			  data: {
+			    showModal: false
+			  }
+			});
+
+			function enviarCorreo()
+			{
+				$.ajax({  
+				      type: "GET",  
+				      async: false,
+				      url: "http://localhost:8080/TT/RecuperarContrasena",  
+				      data: "Correo=" + $('#idRecuperarContrasena').val(),  
+				      success: function(result)
+				      {
+				      	$('#idTextoRecuperacion').get(0).textContent = 'Un correo ha sido enviado a la dirección especificada';
+				      }
+				  });
+
+				
+			}
+
+
+		</script>                           
 		<!-- Scripts -->
 			<script src="Recursos/js/jquery.min.js"></script>
 			<script src="Recursos/js/jquery.dropotron.min.js"></script>
@@ -126,4 +270,22 @@
                
 
 	</body>
+        
+        <style type="text/css">
+		#divGroup {
+		    position: relative;
+		}
+
+		#recuperarContrasena {
+			margin: 0px !important;
+		    position: absolute;
+		    bottom: 0;
+		    left: 0;
+		}
+
+		#recuperarContrasena > p > a
+		{
+		    font-size: 0.6em !important;
+		}
+	</style>
 </html>

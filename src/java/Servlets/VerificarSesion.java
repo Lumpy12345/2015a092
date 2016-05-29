@@ -24,20 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Lucia
+ * @author Rodolfo
  */
 public class VerificarSesion extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+ protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
         String VLstrClave = request.getParameter("Clave");
@@ -115,9 +105,7 @@ public class VerificarSesion extends HttpServlet {
     public String getClave(String VPstrClave)
     {
         String VLstrEstado = "";
-        
         Connection VLsqlConn = ConexionBD.getConexion();
-        
         try 
         {
             Statement VLsqlST = VLsqlConn.createStatement();
@@ -147,17 +135,12 @@ public class VerificarSesion extends HttpServlet {
         finally
         {
             try 
-            {
-                VLsqlConn.close();
-            } 
+            {VLsqlConn.close();} 
             catch (SQLException ex) 
-            {
-                ex.printStackTrace();
-                VLstrEstado = "ERROR:Error interno.";
-            }
+            { ex.printStackTrace();
+                VLstrEstado = "ERROR:Error interno.";}
         }
-        
-        return VLstrEstado;
+            return VLstrEstado;
     }
 
 }

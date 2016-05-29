@@ -8,6 +8,8 @@ package Servlets;
 
 import Comparativa.AnioConcrete;
 import Comparativa.Comparativa;
+import Comparativa.DBComparativa.DBComparativa;
+import Comparativa.DBComparativa.Historial;
 import Comparativa.DBComparativa.PartidoPorDelegacion;
 import Comparativa.Strategy;
 import java.io.IOException;
@@ -36,7 +38,32 @@ public class SComparativa extends HttpServlet {
             throws ServletException, IOException {
         String strAnio = request.getParameter("anio");
         String strCVE = request.getParameter("cve");
+        //    ***********************************************
+    String sesion = request.getParameter("sesion");
+
         
+        try
+        {
+            int idDel = new DBComparativa().getIdDel(strCVE);
+            int idAnio = new DBComparativa().getIdAnio(strAnio);
+            int idResultadoElectoral =  new DBComparativa().getIdResultadoElectoral(idDel, idAnio);
+            
+            Historial historial = new Historial();
+
+            historial.intSesion = Integer.valueOf(sesion);
+            historial.intIdResultadoElectoral = idResultadoElectoral;
+            historial.strTipo = "Obtener delegacion";
+            historial.setDaemon(true);
+
+            historial.start();
+                
+            
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+//    ******************************************************
         Strategy strategy = new AnioConcrete(strAnio, strCVE);
         strategy.iniciarComparacion();
         Comparativa comparativa = strategy.getComparativa();
@@ -55,7 +82,7 @@ public class SComparativa extends HttpServlet {
         for(PartidoPorDelegacion partido : comparativa.listResultadosDelegacionSeleccionada )
         {
             out.println("<tr>");
-                out.println("<td>" + partido.strPartidoColumna +"</td>");
+                out.println("<td>" + partido.strNombrePartido +"</td>");
                 out.println("<td>" + partido.votos + "</td>");
             out.println("</tr>");
         }
@@ -66,7 +93,7 @@ public class SComparativa extends HttpServlet {
         {
             out.println("<tr>");
                 out.println("<td>" +  partido.strMunicipio + "</td>");
-                out.println("<td>" + partido.strPartidoColumna +"</td>");
+                out.println("<td>" + partido.strNombrePartido +"</td>");
                 out.println("<td>" + partido.votos + "</td>");
             out.println("</tr>");
         }

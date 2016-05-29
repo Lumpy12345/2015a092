@@ -34,26 +34,24 @@ public class AgregarUsuario extends HttpServlet {
             throws ServletException, IOException 
     {
         response.setContentType("text/xml");
-        String VLstrCorreo = new String();
-        String VLstrPassword = new String();
-        String VLstrNombre = new String(); 
-        String VLstrAPaterno = new String();
-        String VLstrAMaterno = new String();
-        String VLstrPerfil = new String();
+        String VLstrCorreo ;
+        String VLstrPassword ;
+        String VLstrNombre ; 
+        String VLstrAPaterno ;
+        String VLstrAMaterno ;
+        String VLstrPerfil ;
         System.out.println("servlet");
         
-        String VLstrClave = new String();
+        String VLstrClave ;
         try
         {
             VLstrClave = request.getParameter("Clave").trim();
             VLstrCorreo = request.getParameter("Correo").trim();
             VLstrPassword = request.getParameter("Password").trim();
-            VLstrNombre = request.getParameter("Nombre");
-            VLstrAPaterno = request.getParameter("APaterno");
-            VLstrAMaterno = request.getParameter("AMaterno");
-            VLstrPerfil = request.getParameter("Perfil");
-            System.out.println(""+VLstrClave+"/"+VLstrCorreo+"/"+VLstrPassword+"/"+VLstrNombre
-            +"/"+VLstrAPaterno+"/"+VLstrAMaterno+"/"+VLstrPerfil);
+            VLstrNombre = request.getParameter("Nombre").trim();
+            VLstrAPaterno = request.getParameter("APaterno").trim();
+            VLstrAMaterno = request.getParameter("AMaterno").trim();
+            VLstrPerfil = request.getParameter("Perfil").trim();
         }
         catch(NullPointerException ex)
         {

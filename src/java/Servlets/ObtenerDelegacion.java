@@ -6,6 +6,8 @@
 
 package Servlets;
 
+import Comparativa.DBComparativa.DBComparativa;
+import Comparativa.DBComparativa.Historial;
 import Delegacion.Delegacion;
 import DelegacionDAO.DelegacionDAOImpl;
 import java.io.IOException;
@@ -35,19 +37,46 @@ public class ObtenerDelegacion extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String sesion = request.getParameter("sesion");
         response.setContentType("application/map");
         response.setCharacterEncoding("utf-8");
-        PrintWriter out = response.getWriter();
-        String id="";String año="";
+        
+        String id;String año;
         id=request.getParameter("Clave").trim();
         año= request.getParameter("ano").trim();
+        
+        //    ***********************************************
+
+        
+        try
+        {
+            int idDel = new DBComparativa().getIdDel(id);
+            int idAnio = new DBComparativa().getIdAnio(año);
+            int idResultadoElectoral =  new DBComparativa().getIdResultadoElectoral(idDel, idAnio);
+            
+            Historial historial = new Historial();
+
+            historial.intSesion = Integer.valueOf(sesion);
+            historial.intIdResultadoElectoral = idResultadoElectoral;
+            historial.strTipo = "Obtener delegacion";
+            historial.setDaemon(true);
+
+            historial.start();
+                
+            
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+//    ******************************************************
+        
         DelegacionDAOImpl del= new DelegacionDAOImpl();
         Delegacion delegacion=del.getDelegacion(id,año);
         Map map=new HashMap();
        
 
-        if(año.equals("ano2000"))
+        if(año.equals("2000"))
         {
                 map.put("Delegacion", delegacion.getDNombre());
                 map.put("PANPVEM",delegacion.getPANPVEM());
@@ -65,8 +94,9 @@ public class ObtenerDelegacion extends HttpServlet {
                 map.put("Total",delegacion.getDTotal() );
                 map.put("Lista",delegacion.getDListaNominal() );
                 map.put("Participacion",delegacion.getDParticipacion() );
+                
         }
-        if(año.equals("ano2003"))
+        if(año.equals("2003"))
         {
                 map.put("Delegacion", delegacion.getDNombre());
                 map.put("PAN",delegacion.getPAN() );
@@ -85,8 +115,10 @@ public class ObtenerDelegacion extends HttpServlet {
                 map.put("Total",delegacion.getDTotal() );
                 map.put("Lista",delegacion.getDListaNominal() );
                 map.put("Participacion",delegacion.getDParticipacion() );
+                
+                
         }
-        if(año.equals("ano2006"))
+        if(año.equals("2006"))
         {
                 map.put("Delegacion",delegacion.getDNombre() );
                 map.put("PAN",delegacion.getPAN() );
@@ -100,8 +132,10 @@ public class ObtenerDelegacion extends HttpServlet {
                 map.put("Total",delegacion.getDTotal() );
                 map.put("Lista",delegacion.getDListaNominal() );
                 map.put("Participacion",delegacion.getDParticipacion() );
+                
+                
         }
-        if(año.equals("ano2009"))
+        if(año.equals("2009"))
         {
                 map.put("Delegacion",delegacion.getDNombre() );
                 map.put("PAN",delegacion.getPAN() );
@@ -121,9 +155,10 @@ public class ObtenerDelegacion extends HttpServlet {
                 map.put("Total",delegacion.getDTotal() );
                 map.put("Lista",delegacion.getDListaNominal() );
                 map.put("Participacion",delegacion.getDParticipacion() );
+                
     
         }
-        if(año.equals("ano2012"))
+        if(año.equals("2012"))
         {
                 map.put("Delegacion",delegacion.getDNombre() );
                 map.put("PAN",delegacion.getPAN() );
@@ -140,13 +175,9 @@ public class ObtenerDelegacion extends HttpServlet {
                 map.put("Total",delegacion.getDTotal() );
                 map.put("Lista",delegacion.getDListaNominal() );
                 map.put("Participacion",delegacion.getDParticipacion() );
-               /* System.out.println("pan:"+delegacion.getPAN()+"pri:"+delegacion.getPRI()+"prd:"+delegacion.getPRD()+"prdpt:"+delegacion.getPRDPT()+
-                        "pvem:"+delegacion.getPvem()+"movimiento:"+delegacion.getMovimiento()+"nuevalaianza:"+delegacion.getNuevaAlianza()+
-                        "pripvem:"+delegacion.getPRIPVEM()
-                +"prdptmov:"+delegacion.getPRDPTMovimiento()+"validos:"+delegacion.getValidos()+"nulos:"+delegacion.getDTotal()
-                +"total:"+delegacion.getDTotal()+"participacion"+delegacion.getDParticipacion());*/
+                
         }
-        if(año.equals("ano2015"))
+        if(año.equals("2015"))
         {
                 map.put("Delegacion",delegacion.getDNombre() );
                 map.put("PAN",delegacion.getPAN() );
@@ -166,10 +197,8 @@ public class ObtenerDelegacion extends HttpServlet {
                 map.put("Total",delegacion.getDTotal() );
                 map.put("Lista",delegacion.getDListaNominal() );
                 map.put("Participacion",delegacion.getDParticipacion() );
-             /*   System.out.println("pan:"+delegacion.getPAN()+"pripvem:"+delegacion.getPRIPVEM()+"prdpt:"+delegacion.getPRDPT()+"prdptnuevalainza:"+delegacion.getPRDPTNuevaAlianza()
-                +"prd:"+delegacion.getPRD()+"pt:"+delegacion.getPt()+"movimiento:"+"nuevalaianza:"+delegacion.getNuevaAlianza()+"morena:"+delegacion.getMorena()
-                +"ph:"+delegacion.getPH()+"pes:"+delegacion.getPES()+"inde:"+delegacion.getIndependiente()+"validos:"+delegacion.getValidos()+"nulos:"+delegacion.getDTotal()
-                +"total:"+delegacion.getDTotal()+"participacion"+delegacion.getDParticipacion());*/
+              
+               
         }
         
     write(response,map);

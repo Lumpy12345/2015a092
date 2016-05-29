@@ -60,6 +60,14 @@
         <servlet-name>SComparativa</servlet-name>
         <servlet-class>Servlets.SComparativa</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RecuperarContrasena</servlet-name>
+        <servlet-class>Servlets.RecuperarContrasena</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SHistorial</servlet-name>
+        <servlet-class>Servlets.SHistorial</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ActualizarUsuario</servlet-name>
         <url-pattern>/ActualizarUsuario</url-pattern>
@@ -119,6 +127,14 @@
     <servlet-mapping>
         <servlet-name>SComparativa</servlet-name>
         <url-pattern>/SComparativa</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecuperarContrasena</servlet-name>
+        <url-pattern>/RecuperarContrasena</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SHistorial</servlet-name>
+        <url-pattern>/SHistorial</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

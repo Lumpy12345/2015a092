@@ -5,14 +5,41 @@
  */
 package Comparativa;
 
+import Comparativa.DBComparativa.DBComparativa;
 import Comparativa.DBComparativa.PartidoPorDelegacion;
+import java.util.List;
 
 /**
  *
  * @author diegoleon
  */
 public class TestComparativa {
-    public static void smain(String[] args) {
+    public static void main(String[] args) {
+        
+//       List<List<PartidoPorDelegacion>> lista = new DBComparativa().getInfoByYear("2000");
+//        
+//        
+//        
+//        for(List<PartidoPorDelegacion> list2 : lista)
+//        {
+//            for(PartidoPorDelegacion partido : list2)
+//            {
+//                
+//                
+//                if(partido.strCVE_Mun.equals("002"))
+//                {
+//                    System.out.println("************************************");
+//                    System.out.println("CVE_MUN : " + partido.strCVE_Mun);
+//                    System.out.println("PArtido columna : " + partido.strPartidoColumna);
+//                    System.out.println("Municipio nombre : " + partido.strMunicipio);
+//                    System.out.println("Votos : " + partido.votos);
+//                    System.out.println("************************************");
+//                }
+//            }
+//            
+//        }
+       
+        
         Strategy strategy = new AnioConcrete("2012", "002");
         strategy.iniciarComparacion();
         
@@ -28,7 +55,7 @@ public class TestComparativa {
         {
             System.out.println("------------------------------------");
             System.out.println("CVE_MUN : " + partido.strCVE_Mun);
-            System.out.println("PArtido columna : " + partido.strPartidoColumna);
+            System.out.println("PArtido columna : " + partido.strNombrePartido);
             System.out.println("Municipio nombre : " + partido.strMunicipio);
             System.out.println("Votos : " + partido.votos);
             System.out.println("------------------------------------");
@@ -38,7 +65,7 @@ public class TestComparativa {
         {
             System.out.println("************************************");
             System.out.println("CVE_MUN : " + partido.strCVE_Mun);
-            System.out.println("PArtido columna : " + partido.strPartidoColumna);
+            System.out.println("PArtido columna : " + partido.strNombrePartido);
             System.out.println("Municipio nombre : " + partido.strMunicipio);
             System.out.println("Votos : " + partido.votos);
             System.out.println("************************************");

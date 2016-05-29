@@ -44,7 +44,7 @@ public class AnioConcrete implements Strategy{
             {
                 comparativa.strCVE_MUN = partidoGanadorPorDelegacion.strCVE_Mun;
                 comparativa.strNombreDelegacion = partidoGanadorPorDelegacion.strMunicipio;
-                comparativa.partidoGanador = partidoGanadorPorDelegacion.strPartidoColumna;
+                comparativa.partidoGanador = partidoGanadorPorDelegacion.strNombrePartido;
                 comparativa.votosPartidoGanador = partidoGanadorPorDelegacion.votos;
                 
                 comparativa.listResultadosDelegacionSeleccionada = listaPartidosPorDelegacion;
@@ -57,7 +57,7 @@ public class AnioConcrete implements Strategy{
         
         for(PartidoPorDelegacion partido : listPartidoGanadorPorDelegacion)
         {
-            if(partido.strPartidoColumna.equals(comparativa.partidoGanador))
+            if(partido.strNombrePartido.equals(comparativa.partidoGanador))
             {
                 comparativa.listOtrasDelegacionesGanadas.add(partido);
             }

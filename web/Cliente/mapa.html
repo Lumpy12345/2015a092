@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">  
-    <title>TT1 2015-A092</title>
+    <title>TT 2015-A092</title>
     <!-- Bootstrap -->
     <script type="text/JavaScript" src="../Recursos/js/Funciones.js"></script>
     <link href="../Recursos/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -75,7 +75,7 @@
           </select>
           
           </div>
-            <div class="col-md-3">
+            <div class="col-md-3" hidden>
            <label for="sel1">Parametros</label>
           
         <select class="form-control" id="param" name="param">
@@ -101,7 +101,17 @@
     
 <!--   <div id="prueba" style="height: 300px"></div>
    -->
-  
+  <div class="text-inter">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12" style="text-align: center;">
+          <h3>Procesos Electorales del 2000 al 2015.</h3>
+          <p>Al seleccionar una de las delegaciones de la Cuidad de México el sistema desplegará una gráfica de pastel donde se puede ver el porcentaje de votos que obtuvo cada partido. Además se muestra también una tabla con estos porcentajes expresados en cifras para un mejor análisis.
+Por último se presenta el logo del partido ganador así como una gráfica que especifica el porcentaje de victoria del partido para toda la Ciudad de México, una tabla que enumera a los partidos de mayor a menor cantidad de votos obtenidos así como una tabla que indica en que otras delegaciones resultó ganador el partido.</p>
+        </div>
+      </div>
+    </div>
+    </div>
     <div class="container-fluid">
          
          <div class="col-md-6">
@@ -186,9 +196,7 @@
         </div>
       </div>
 
-      <div class="row">
-        
-      </div>
+      
     </div>
 
     
@@ -198,7 +206,8 @@
         #idContainer{
             padding-top: 20px;
         }
-.ir-arriba {
+        .ir-arriba
+        {
 	display:none;
 	padding:20px;
         
@@ -209,7 +218,17 @@
 	position: fixed;
 	bottom:170px;
 	right:20px;
-}
+        }
+        #idTabla1 th
+        {
+            background-color: #63c6ae;
+            opacity: 0.8;
+        }
+        #idTabla2 th
+        {
+            background-color: #63c6ae;
+            opacity: 0.8;
+        }
        #tabla-par th{
         background-color: #63c6ae;
         opacity: 0.8;
